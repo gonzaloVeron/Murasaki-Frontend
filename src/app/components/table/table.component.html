@@ -1,0 +1,40 @@
+<p-table [value]="data" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <ng-content select="[header]"></ng-content>
+    <ng-container *ngIf="headers">
+      <tr>
+        <th *ngFor="let header of headers" (click)="onClickHeader(header)">
+          <div style="display: flex; align-items: center;">
+            {{ header.name | titlecase }}
+            <i *ngIf="header.sortable && !header.active" class="pi pi-sort"
+              style="font-size: 12px; color: #7a7a7a;  margin: 0 8px"></i>
+            <i *ngIf="header.sortable && header.active" class="pi pi-sort" style="font-size: 12px; margin: 0 8px"></i>
+          </div>
+        </th>
+      </tr>
+    </ng-container>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr *ngIf="loading">
+      <td *ngFor="let i of headers">
+        <p-skeleton></p-skeleton>
+      </td>
+    </tr>
+    <ng-content select="[body]"></ng-content>
+    <ng-container *ngIf="autofill">
+      <tr>
+        <td *ngFor="let header of headers" [ngSwitch]="header.type">
+          <ng-container *ngSwitchDefault>
+            {{ item[header.key] }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'date'">
+            {{ item[header.key] | date:header.format }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'number'">
+            {{ item[header.key] | number:header.format }}
+          </ng-container>
+        </td>
+      </tr>      
+    </ng-container>
+  </ng-template>
+</p-table>
