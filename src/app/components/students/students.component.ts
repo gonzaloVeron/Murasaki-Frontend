@@ -10,16 +10,6 @@ import { StudentsService } from './services/students.service';
 })
 export class StudentsComponent implements OnInit {
 
-  @Input() menuItems: any[] = [];
-  @Input() logo = "";
-  @Input() companyName = "";
-  @Input() normal = true;
-  @Input() mini = false;
-  @Input() profileImage = '';
-  @Input() name = '';
-  @Input() email = '';
-  @Input() link: string = 'https://aam.solutions';
-
   loading: boolean = false;
   students: any[] = [];
   total: number = 0;
@@ -55,7 +45,26 @@ export class StudentsComponent implements OnInit {
   }
 
   find(event: any){
-    console.log(event);
+    let toSend = {level: event.level, teacherName: event.teacherName};
+    if(event.mode == "nivel"){
+      this.studentsService.findStudentsByLevel(toSend).subscribe({
+        next: (response: any) => {
+          this.students = response;
+        },
+        error: (errMsg) => {
+          console.error(errMsg);
+        }
+      });
+    }else{
+      this.studentsService.findStudentsByTeacher(toSend).subscribe({
+        next: (response: any) => {
+          this.students = response;
+        },
+        error: (errMsg) => {
+          console.error(errMsg);
+        }
+      });
+    }
   }
 
 }

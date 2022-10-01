@@ -1,19 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
 
+  path: string = `${environment.basePath}/student`;
+
   constructor(private http: HttpClient) { }
 
-  getAllStudents(){
-    return this.http.get("http://localhost:8080/api/v1/student");
+  getAllStudents(){ 
+    return this.http.get(`${this.path}`);
   }
 
-  findStudents(searchText: string){
-    return this.http.get("http://localhost:8080/api/v1/student");
+  findStudentsByLevel(dto: any){
+    return this.http.post(`${this.path}/searchByLevel`, dto);
+    
+  }
+
+  findStudentsByTeacher(dto: any){
+    return this.http.post(`${this.path}/searchByTeacherName`, dto);
   }
 
 }

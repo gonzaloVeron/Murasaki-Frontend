@@ -17,7 +17,7 @@ export class TableComponent implements OnInit {
   @Input() multipleSort: boolean = false;
   @Output() sort: EventEmitter<{ sortBy: string, sort: string }> = new EventEmitter();
   @Output("pageChange") pageChange: EventEmitter<{page: number}> = new EventEmitter(); 
-  @Output("onSearch") onSearch: EventEmitter<string> = new EventEmitter();
+  @Output("onSearch") onSearch: EventEmitter<{mode: string, level: string | null, teacherName: string | null}> = new EventEmitter();
 
   searchText: string = "";
 
@@ -44,7 +44,7 @@ export class TableComponent implements OnInit {
   }
 
   emitSearch(){
-    this.onSearch.emit(this.searchText);
+    this.onSearch.emit((this.mode == "nivel") ? {mode: "nivel", level: this.searchText, teacherName: null} : {mode: "profesor", level: null, teacherName: this.searchText});
   }
 
   changeMode(newMode: string){
