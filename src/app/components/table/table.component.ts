@@ -16,6 +16,15 @@ export class TableComponent implements OnInit {
   @Input() headers: TableHeader[] = [];
   @Input() multipleSort: boolean = false;
   @Output() sort: EventEmitter<{ sortBy: string, sort: string }> = new EventEmitter();
+  @Output("pageChange") pageChange: EventEmitter<{page: number}> = new EventEmitter(); 
+  @Output("onSearch") onSearch: EventEmitter<string> = new EventEmitter();
+
+  searchText: string = "";
+
+  desde: string = "";
+  hasta: string = "";
+
+  mode: string = "profesor";
 
   constructor() {
 
@@ -34,12 +43,60 @@ export class TableComponent implements OnInit {
     }
   }
 
-  edit(item: any) {
-
+  emitSearch(){
+    this.onSearch.emit(this.searchText);
   }
 
-  delete(item: any) {
-
+  changeMode(newMode: string){
+    this.mode = newMode;
+    this.searchText = "";
+    this.desde = "";
+    this.hasta = "";
   }
+
+  changePage(event: any){
+    console.log(event);
+  }
+
+  search(){
+    console.log(this.desde);
+    console.log(this.hasta);
+    console.log(this.searchText);
+  }
+
+  changeSearchText(e: any){
+    this.searchText = e.target.value;
+  }
+
+  OnBlurDesde(event: any){
+    let day: number = parseInt(event.target.value.slice(0, 2));
+    let month: number = parseInt(event.target.value.slice(3, 5));
+    let year: number = parseInt(event.target.value.slice(6, 10));
+    
+    let result = `${year}-${month}-${day}`;
+
+    let hours: number = parseInt(event.target.value.slice(11, 13));
+    let minutes: number = parseInt(event.target.value.slice(14, 17));
+
+    result += ` ${hours}:${minutes}:00`;
+    
+    this.desde = result;
+  }
+
+  OnBlurHasta(event: any){
+    let day: number = parseInt(event.target.value.slice(0, 2));
+    let month: number = parseInt(event.target.value.slice(3, 5));
+    let year: number = parseInt(event.target.value.slice(6, 10));
+    
+    let result = `${year}-${month}-${day}`;
+
+    let hours: number = parseInt(event.target.value.slice(11, 13));
+    let minutes: number = parseInt(event.target.value.slice(14, 17));
+
+    result += ` ${hours}:${minutes}:00`;
+    
+    this.hasta = result;
+  }
+
 
 }

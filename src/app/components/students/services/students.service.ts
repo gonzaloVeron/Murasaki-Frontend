@@ -12,4 +12,8 @@ export class StudentsService {
     return this.http.get("http://localhost:8080/api/v1/student");
   }
 
+  findStudents(searchText: string){
+    return this.http.get("http://localhost:8080/api/v1/student");
+  }
+
 }

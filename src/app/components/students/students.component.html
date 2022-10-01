@@ -1,109 +1,27 @@
-<!-- <div class="d-flex justify-content-center align-items-center">
-  <app-table
-    [loading]="false"
-    [total]="total"
-    [headers]="headers"
-    [data]="students"
-    (sort)="onSort($event)"
-  >
-    <tr body *ngFor="let student of students">
-      <td *ngIf="!loading">{{ student.name }}</td>
-      <td *ngIf="!loading">{{ student.jlptLevel }}</td>
-      <td *ngIf="!loading">{{ student.teacherDTO.name }}</td>
-      <td *ngIf="!loading">
-        <div class="d-flex justify-content-end align-items-center">
-          <i class="fas fa-eye" style="font-size: 1.4rem; cursor: pointer; color: lightslategray" (click)="toStudentDetail(student)" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
-        </div>
-      </td>
-    </tr>
-  </app-table>
-</div> -->
-
-
-<div class="sidebar">
-  <div class="logo_content">
-    <div class="logo">
-      <i class="fas fa-torii-gate"></i>
-      <div class="logo_name">Murasaki</div>
-    </div>
-    <i class="fas fa-bars" id="btn"></i>
-  </div>
-  <ul class="nav_list">
-    <li>
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search...">
-      <span class="tooltip"> Search </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-border-all"></i>
-        <span class="links_name"> Dashboard </span>
-      </a>
-      <span class="tooltip"> Dashboard </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-user"></i>
-        <span class="links_name"> User </span>
-      </a>
-      <span class="tooltip"> User </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-comments"></i>
-        <span class="links_name"> Messages </span>
-      </a>
-      <span class="tooltip"> Messages </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-chart-pie"></i>
-        <span class="links_name"> Analytics </span>
-      </a>
-      <span class="tooltip"> Analytics </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-folder"></i>
-        <span class="links_name"> File Manager </span>
-      </a>
-      <span class="tooltip"> File Manager </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="links_name"> Order </span>
-      </a>
-      <span class="tooltip"> Order </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-heart"></i>
-        <span class="links_name"> Saved </span>
-      </a>
-      <span class="tooltip"> Saved </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-cog"></i>
-        <span class="links_name"> Settings </span>
-      </a>
-      <span class="tooltip"> Settings </span>
-    </li>
-  </ul>
-  <div class="profile_content">
-    <div class="profile">
-      <div class="profile_details">
-        <img src="../../../assets/images/profile.jpg" alt="">
-        <div class="name_job"> 
-          <div class="name"> Gonzalo Verón </div>
-          <div class="job"> Prof. Japonés </div>
-        </div>
-      </div>
-      <i class="fas fa-sign-out" id="log_out"></i>
+<div class="d-flex flex-column gap-4 justify-content-center align-items-center">
+  <div class="card w-100">
+    <div class="card-body">
+      <app-table
+        [loading]="false"
+        [total]="total"
+        [headers]="headers"
+        [data]="students"
+        (sort)="onSort($event)"
+        (onSearch)="find($event)"
+      >
+        <tr body *ngFor="let student of students">
+          <td *ngIf="!loading">{{ student.name }}</td>
+          <td *ngIf="!loading">{{ student.jlptLevel }}</td>
+          <td *ngIf="!loading">{{ student.teacherDTO.name }}</td>
+          <td *ngIf="!loading">
+            <div class="d-flex justify-content-end align-items-center">
+              <i class="fas fa-eye" style="font-size: 1.4rem; cursor: pointer; color: lightslategray" (click)="toStudentDetail(student)" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
+            </div>
+          </td>
+        </tr>
+      </app-table>
     </div>
   </div>
 </div>
-<div class="home_content">
-  <div class="text"> Home content </div>
-</div>
+
+

@@ -8,16 +8,7 @@ import { StudentsService } from './services/students.service';
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })
-export class StudentsComponent implements OnInit, AfterViewInit {
-
-  // @ViewChild('btn', {static: false}) btn: ElementRef | undefined;
-  // @ViewChild('sidebar', {static: false}) sidebar: ElementRef | undefined;
-  // @ViewChild('btn', {static: false}) btn: ElementRef | undefined;
-
-  // btn: any = document.querySelector("#btn");
-
-  sidebar = document.querySelector(".sidebar");
-  searchBtn = document.querySelector("bx-search");
+export class StudentsComponent implements OnInit {
 
   @Input() menuItems: any[] = [];
   @Input() logo = "";
@@ -29,9 +20,6 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   @Input() email = '';
   @Input() link: string = 'https://aam.solutions';
 
-
-  valueIconRight: string = "";
-
   loading: boolean = false;
   students: any[] = [];
   total: number = 0;
@@ -40,7 +28,7 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     { name: "Nombre", key: "name" },
     { name: "Nivel", key: "jlptLevel" },
     { name: "Id Profesor", key: "teacherDTO.name" },
-    { name: "Acciones", key: "" },
+    { name: "", key: "" },
   ];
 
   sort: { sortBy: string, sort: string } = { sortBy: '', sort: 'DESC' };
@@ -51,41 +39,23 @@ export class StudentsComponent implements OnInit, AfterViewInit {
 
   constructor(private studentsService: StudentsService, private router: Router) { }
 
-  ngAfterViewInit(): void {
-    let sidebar: any = document.getElementsByClassName("sidebar")[0];
-    let btn: any = document.getElementById("btn");
-    let searchBtn: any = document.getElementsByClassName("fa-search")[0];
-
-    btn.onclick = () => {
-      sidebar.classList.toggle("active");
-    }
-    searchBtn.onclick = () => {
-      sidebar.classList.toggle("active");
-    }
-  }
-
   ngOnInit() {
-
-    // this.studentsService.getAllStudents().subscribe({
-    //   next: (response: any) => {
-    //     console.log(response);
-    //     this.students = response;
-    //   },
-    //   error: (errMsg) => {
-    //     console.error(errMsg);
-    //   }
-    // })
-
-
-
+    this.studentsService.getAllStudents().subscribe({
+      next: (response: any) => {
+        this.students = response;
+      },
+      error: (errMsg) => {
+        console.error(errMsg);
+      }
+    })
   }
 
   toStudentDetail(student: any){
-    this.router.navigate(["app", "student", student.id]);
+    this.router.navigate(["app", "sidebar", "student", student.id]);
   }
 
-  find(){
-    console.log(this.valueIconRight);
+  find(event: any){
+    console.log(event);
   }
 
 }
