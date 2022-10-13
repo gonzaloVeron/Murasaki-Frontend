@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { PrimeIcons } from 'primeng/api';
+import { ToastService } from '../shared/services/toast.service';
 import { StudentDetailsService } from './services/student-details.service';
 
 @Component({
@@ -11,15 +13,27 @@ export class StudentDetailsComponent implements OnInit {
 
   student: any;
 
+  lessons: any[] = [];
+
   constructor(private routeSnapshot: ActivatedRoute, private studentDetailService: StudentDetailsService) { }
 
   ngOnInit() {
+    // this.events1 = [
+    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '16/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
+    //   {status: 'Tarea', date: '16/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'}
+    // ];
     this.routeSnapshot.paramMap.subscribe({
       next: (paramsAsMap: any) => {
-        // console.log(paramsAsMap.params["id"]);
         this.studentDetailService.getStudentById(paramsAsMap.params["id"]).subscribe({
           next: (resp: any) => {
             console.log(resp);
+            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Tarea', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f' } });
             this.student = resp;
           },
           error: (resp: any) => {

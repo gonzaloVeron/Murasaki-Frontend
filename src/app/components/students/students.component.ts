@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableHeader } from 'src/app/components/table/models/table-header';
+import { ToastService } from '../shared/services/toast.service';
 import { StudentsService } from './services/students.service';
 
 @Component({
@@ -30,14 +31,11 @@ export class StudentsComponent implements OnInit {
   constructor(private studentsService: StudentsService, private router: Router) { }
 
   ngOnInit() {
-    this.studentsService.getAllStudents().subscribe({
-      next: (response: any) => {
+    this.studentsService.getAllStudents().subscribe(
+      (response: any) => {
         this.students = response;
-      },
-      error: (errMsg) => {
-        console.error(errMsg);
       }
-    })
+    )
   }
 
   toStudentDetail(student: any){
@@ -45,26 +43,11 @@ export class StudentsComponent implements OnInit {
   }
 
   find(event: any){
-    let toSend = {level: event.level, teacherName: event.teacherName};
-    if(event.mode == "nivel"){
-      this.studentsService.findStudentsByLevel(toSend).subscribe({
-        next: (response: any) => {
-          this.students = response;
-        },
-        error: (errMsg) => {
-          console.error(errMsg);
-        }
-      });
-    }else{
-      this.studentsService.findStudentsByTeacher(toSend).subscribe({
-        next: (response: any) => {
-          this.students = response;
-        },
-        error: (errMsg) => {
-          console.error(errMsg);
-        }
-      });
-    }
+    this.studentsService.find(event).subscribe(
+      (response: any) => {
+        this.students = response;
+      }
+    );
   }
 
 }

@@ -44,59 +44,46 @@ export class TableComponent implements OnInit {
   }
 
   emitSearch(){
-    this.onSearch.emit((this.mode == "nivel") ? {mode: "nivel", level: this.searchText, teacherName: null} : {mode: "profesor", level: null, teacherName: this.searchText});
-  }
-
-  changeMode(newMode: string){
-    this.mode = newMode;
-    this.searchText = "";
-    this.desde = "";
-    this.hasta = "";
+    // this.onSearch.emit((this.mode == "nivel") ? {mode: "nivel", level: this.searchText, teacherName: null} : {mode: "profesor", level: null, teacherName: this.searchText});
   }
 
   changePage(event: any){
     console.log(event);
   }
 
-  search(){
-    console.log(this.desde);
-    console.log(this.hasta);
-    console.log(this.searchText);
-  }
+  // changeSearchText(e: any){
+  //   this.searchText = e.target.value;
+  // }
 
-  changeSearchText(e: any){
-    this.searchText = e.target.value;
-  }
-
-  OnBlurDesde(event: any){
-    let day: number = parseInt(event.target.value.slice(0, 2));
-    let month: number = parseInt(event.target.value.slice(3, 5));
-    let year: number = parseInt(event.target.value.slice(6, 10));
+  // OnBlurDesde(event: any){
+  //   let day: number = parseInt(event.target.value.slice(0, 2));
+  //   let month: number = parseInt(event.target.value.slice(3, 5));
+  //   let year: number = parseInt(event.target.value.slice(6, 10));
     
-    let result = `${year}-${month}-${day}`;
+  //   let result = `${year}-${month}-${day}`;
 
-    let hours: number = parseInt(event.target.value.slice(11, 13));
-    let minutes: number = parseInt(event.target.value.slice(14, 17));
+  //   let hours: number = parseInt(event.target.value.slice(11, 13));
+  //   let minutes: number = parseInt(event.target.value.slice(14, 17));
 
-    result += ` ${hours}:${minutes}:00`;
+  //   result += ` ${hours}:${minutes}:00`;
     
-    this.desde = result;
-  }
+  //   this.desde = result;
+  // }
 
-  OnBlurHasta(event: any){
-    let day: number = parseInt(event.target.value.slice(0, 2));
-    let month: number = parseInt(event.target.value.slice(3, 5));
-    let year: number = parseInt(event.target.value.slice(6, 10));
+  // OnBlurHasta(event: any){
+  //   let day: number = parseInt(event.target.value.slice(0, 2));
+  //   let month: number = parseInt(event.target.value.slice(3, 5));
+  //   let year: number = parseInt(event.target.value.slice(6, 10));
     
-    let result = `${year}-${month}-${day}`;
+  //   let result = `${year}-${month}-${day}`;
 
-    let hours: number = parseInt(event.target.value.slice(11, 13));
-    let minutes: number = parseInt(event.target.value.slice(14, 17));
+  //   let hours: number = parseInt(event.target.value.slice(11, 13));
+  //   let minutes: number = parseInt(event.target.value.slice(14, 17));
 
-    result += ` ${hours}:${minutes}:00`;
+  //   result += ` ${hours}:${minutes}:00`;
     
-    this.hasta = result;
-  }
+  //   this.hasta = result;
+  // }
 
 
 }

@@ -12,7 +12,7 @@
 >
   <ng-template pTemplate="caption">
     <div class="p-fluid grid">
-      <div class="col-12 md:col-7">
+      <!-- <div class="col-12 md:col-7">
         <div class="flex justify-content-around flex-wrap" style="width: 150px; font-size: xx-large;">
           <div class="align-self-center">
             <i [ngClass]="['fas', 'fa-calendar-alt', (mode == 'fecha') ? 'selected' : '']" (click)="changeMode('fecha')" style="cursor: pointer"></i>
@@ -24,15 +24,15 @@
             <i [ngClass]="['fas', 'fa-chalkboard-teacher', (mode == 'profesor') ? 'selected' : '']" (click)="changeMode('profesor')" style="cursor: pointer"></i>
           </div>
         </div>
-      </div>
-      <div class="col-12 md:col-1">
+      </div> -->
+      <!-- <div class="col-12 md:col-1">
         <div class="flex justify-content-end flex-wrap" style="cursor: pointer; font-size: xx-large;">
           <div class="align-self-center">
             <i class="fas fa-search" (click)="emitSearch()" style="cursor: pointer"></i>
           </div>
         </div>
-      </div>
-      <div class="col-12 md:col-2" *ngIf="mode == 'fecha'">
+      </div> -->
+      <!-- <div class="col-12 md:col-2" *ngIf="mode == 'fecha'">
         <p-inputMask placeholder="Fecha desde" inputId="inputmask" mask="99/99/9999 99:99" slotChar="dd/mm/aaaa hh:mm"></p-inputMask>
       </div>
       <div class="col-12 md:col-2" *ngIf="mode == 'fecha'">
@@ -43,7 +43,11 @@
       </div>
       <div class="col-12 md:col-4" *ngIf="mode == 'nivel'">
         <input pInputText type="number" [value]="searchText" (change)="changeSearchText($event)" [disabled]="false" placeholder="Busqueda por nivel de alumno"/>
-      </div>
+      </div> -->
+      <span class="p-input-icon-left">
+        <i class="pi pi-search" (click)="emitSearch()"></i>
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" />
+      </span>
     </div>
   </ng-template>
   <ng-template pTemplate="header">

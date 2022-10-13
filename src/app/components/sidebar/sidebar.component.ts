@@ -61,4 +61,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  navigate(path: string){
+    console.log("Navigating to: " + path);
+    this.router.navigateByUrl(path);
+  }
+
 }

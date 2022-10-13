@@ -14,6 +14,7 @@ body{
     background: #11101d;
     padding: 6px 14px;
     transition: all 0.5s ease;
+    z-index: 99;
 }
 
 .sidebar.active{
@@ -89,13 +90,18 @@ ul{
     height: 35px;
     width: 122px;
     background: #fff;
-    line-height: 35px;
+    // line-height: 35px;
     text-align: center;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0s;
     opacity: 0;
     pointer-events: none;
     display: block;
+}
+
+.sidebar ul li .tooltip .tooltip-text{
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .sidebar.active ul li .tooltip{
@@ -255,6 +261,11 @@ ul{
 }
 
 .home_content .text{
+    position: fixed;
+    // top: 0;
+    width: 100%;
+    z-index: 9;
+    // margin-bottom: 40px;
     font-size: 25px;
     font-weight: 500;
     color: antiquewhite;

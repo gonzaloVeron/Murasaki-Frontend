@@ -19,6 +19,8 @@ import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { TimelineModule } from 'primeng/timeline';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +28,8 @@ import { TableComponent } from './components/table/table.component';
 import { StudentsComponent } from './components/students/students.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SharedModule } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,
+    SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
     TableModule,
@@ -54,9 +59,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     TagModule,
     SkeletonModule,
     InputTextModule,
-    InputNumberModule
+    InputNumberModule,
+    ToastModule,
+    TimelineModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

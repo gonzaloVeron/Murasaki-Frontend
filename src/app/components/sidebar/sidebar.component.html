@@ -10,63 +10,44 @@
     <li>
       <i class="fas fa-search"></i>
       <input type="text" placeholder="Search...">
-      <span class="tooltip"> Search </span>
+      <span class="tooltip"> 
+        <label class="tooltip-text">
+          Search 
+        </label>
+      </span>
     </li>
     <li>
-      <a href="#">
-        <i class="fas fa-border-all"></i>
-        <span class="links_name"> Dashboard </span>
-      </a>
-      <span class="tooltip"> Dashboard </span>
-    </li>
-    <li>
-      <a href="#">
+      <a class="cursor-pointer" (click)="navigate('app/sidebar/students')">
         <i class="fas fa-user"></i>
-        <span class="links_name"> User </span>
+        <span class="links_name"> Estudiantes </span>
       </a>
-      <span class="tooltip"> User </span>
+      <span class="tooltip"> 
+        <label class="tooltip-text">
+          Estudiantes 
+        </label>
+      </span>
     </li>
     <li>
-      <a href="#">
-        <i class="fas fa-comments"></i>
-        <span class="links_name"> Messages </span>
+      <a class="cursor-pointer" (click)="navigate('')">
+        <i class="fas fa-user"></i>
+        <span class="links_name"> Profesores </span>
       </a>
-      <span class="tooltip"> Messages </span>
+      <span class="tooltip"> 
+        <label class="tooltip-text">
+          Profesores 
+        </label>
+      </span>
     </li>
     <li>
-      <a href="#">
-        <i class="fas fa-chart-pie"></i>
-        <span class="links_name"> Analytics </span>
+      <a class="cursor-pointer" (click)="navigate('')">
+        <i class="fas fa-user"></i>
+        <span class="links_name"> Intereses </span>
       </a>
-      <span class="tooltip"> Analytics </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-folder"></i>
-        <span class="links_name"> File Manager </span>
-      </a>
-      <span class="tooltip"> File Manager </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="links_name"> Order </span>
-      </a>
-      <span class="tooltip"> Order </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-heart"></i>
-        <span class="links_name"> Saved </span>
-      </a>
-      <span class="tooltip"> Saved </span>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-cog"></i>
-        <span class="links_name"> Settings </span>
-      </a>
-      <span class="tooltip"> Settings </span>
+      <span class="tooltip"> 
+        <label class="tooltip-text">
+          Intereses 
+        </label>
+      </span>
     </li>
   </ul>
   <div class="profile_content">
@@ -82,7 +63,7 @@
     </div>
   </div>
 </div>
-<div class="home_content">
+<div class="home_content" style="overflow-y: auto;">
 
   <div class="text"> 
     <label class="title">
@@ -90,7 +71,7 @@
     </label>
   </div>
 
-  <div class="p-5">
+  <div class="p-5" style="margin-top: 43px">
     <router-outlet></router-outlet>
   </div>
 </div>
