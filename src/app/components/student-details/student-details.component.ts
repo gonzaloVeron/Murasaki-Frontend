@@ -18,22 +18,12 @@ export class StudentDetailsComponent implements OnInit {
   constructor(private routeSnapshot: ActivatedRoute, private studentDetailService: StudentDetailsService) { }
 
   ngOnInit() {
-    // this.events1 = [
-    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '16/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '15/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'},
-    //   {status: 'Tarea', date: '16/10/2020', icon: PrimeIcons.BOOK, color: '#59558f'}
-    // ];
     this.routeSnapshot.paramMap.subscribe({
       next: (paramsAsMap: any) => {
         this.studentDetailService.getStudentById(paramsAsMap.params["id"]).subscribe({
           next: (resp: any) => {
             console.log(resp);
-            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Tarea', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f' } });
+            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Clase', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f' } });
             this.student = resp;
           },
           error: (resp: any) => {

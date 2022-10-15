@@ -31,18 +31,40 @@
           </div>
         </div>
         <div class="card-footer">
-          <div class="d-flex justify-content-around w-50">
+          <div class="d-flex justify-content-start gap-2 w-100">
             <p-tag *ngFor="let interest of student.interests" [icon]="interest.icon" [value]="interest.name" [style]="{'background-color': '#b680c5'}"></p-tag>
           </div>
         </div>
       </div>
     </div>
     <div class="col-6">
-
+      <div class="card h-100" *ngIf="student">
+        <div class="card-header">
+          <h3 class="text-center"> Contacto </h3>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-column justify-content-around h-100">
+            <div class="d-flex justify-content-start align-items-center gap-2">
+              <i class="fa-solid fa-envelope contact-number"></i>
+              <label class="contact-number"> {{ student.email + " [Alumno]" }} </label>
+            </div>
+            <div class="d-flex justify-content-start align-items-center gap-2">
+              <i class="fa-solid fa-envelope contact-number"></i>
+              <label class="contact-number"> {{ student.emailTutor + " [Tutor]" }} </label>
+            </div>
+            <div class="d-flex justify-content-start align-items-center gap-2">
+              <i class="fa-solid fa-phone contact-number"></i>
+              <label class="contact-number"> {{ student.tel }} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <button class="btn btn-primary"> AAA </button> -->
     </div>
     <div class="col-12">
-      <div class="card" style="padding: 15px">
-        <h3 class="text-center mb-3">Historial de clases</h3>
+      <div class="card" *ngIf="lessons.length > 0">
+        <div class="card-body">
+          <h3 class="text-center mb-3">Historial de clases</h3>
           <p-timeline [value]="lessons" align="alternate" styleClass="customized-timeline">
             <ng-template pTemplate="marker" let-event>
                 <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
@@ -60,6 +82,7 @@
             </ng-template>
           </p-timeline>
         </div>
+      </div>
     </div>
   </div>
 </div>

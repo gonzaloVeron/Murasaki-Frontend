@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
+import { StudentFormComponent } from './components/student-form/student-form.component';
 import { StudentsComponent } from './components/students/students.component';
 
 const routes: Routes = [
@@ -17,7 +18,7 @@ const routes: Routes = [
     pathMatch: "full"
   },
   {
-    path:'app',
+    path: 'app',
     component: AppComponent,
     children: [
       {
@@ -25,12 +26,20 @@ const routes: Routes = [
         component: SidebarComponent,
         children: [
           {
-            path:'students',
+            path: 'students',
             component: StudentsComponent,
           },
           {
-            path:'student/:id',
+            path: 'student/:id',
             component: StudentDetailsComponent,
+          },
+          {
+            path: 'student-form',
+            component: StudentFormComponent
+          },
+          {
+            path: 'student-form/:id',
+            component: StudentFormComponent
           }
         ]
       }

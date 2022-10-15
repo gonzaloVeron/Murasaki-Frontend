@@ -16,8 +16,11 @@ export class StudentsService {
     return this.apiRestBase.get("/student");
   }
 
-  find(searchText: string){
-    return this.apiRestBase.get(`/find/${searchText}`);
+  find(searchText: string, page: number, size: number){
+    return this.apiRestBase.get(`/student/find/${searchText}?page=${page}&size=${size}`);
   }
-
+  
+  delete(id: number){
+    return this.apiRestBase.delete(`/student/${id}`);
+  }
 }

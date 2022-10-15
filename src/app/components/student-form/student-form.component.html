@@ -1,0 +1,102 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="text-center">
+      Formulario de nuevo estudiante
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="p-fluid grid" [formGroup]="studentForm">
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
+          <label for="inputtext">Nombre completo <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <!-- <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
+          <label for="inputtext">Edad <span class="mandatory">(*)</span></label>
+        </span>
+      </div> -->
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [ngClass]="[checkInvalid('email')]" pInputText formControlName="email"> 
+          <label for="inputtext">Correo electrónico <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
+          <label for="inputtext">Edad <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [ngClass]="[checkInvalid('emailTutor')]" pInputText formControlName="emailTutor"> 
+          <label for="inputtext">Correo electrónico del tutor <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-4">
+        <span class="p-float-label">
+          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('tel')]" [useGrouping]="false" formControlName="tel"></p-inputNumber> 
+          <label for="inputtext">Teléfono <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-4">
+        <span class="p-float-label">
+          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('jlptLevel')]" [useGrouping]="false" formControlName="jlptLevel"></p-inputNumber> 
+          <label for="inputtext">Nivel de japonés <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-4">
+        <span class="p-float-label">
+          <p-dropdown
+            styleClass="p-dropdown"
+            [ngClass]="[checkInvalid('teacherAsignedId')]"
+            [options]="teachersAvailables" 
+            formControlName="teacherAsignedId" 
+            optionLabel="name"
+            optionValue="id"
+            [autoDisplayFirst]="false"
+          >
+          </p-dropdown>
+          <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <p-multiSelect
+            inputId="interests"
+            formControlName = "interests"
+            [ngClass]="[checkInvalid('interests')]"
+            [options]="interestsList"
+            optionLabel="name"
+            display="chip"
+          >
+          </p-multiSelect>
+          <label for="inputtext">Intereses <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" formControlName="priorKnowledge" pInputTextarea></textarea>
+          <label for="inputtext">Conocimientos previos</label>
+        </span>
+      </div>
+      <div class="col-12 md:col-12">
+        <label class="mandatory">(*) Campos obligatorios.</label>
+      </div>
+      <div class="field col-12 md:col-12">
+        <div class="w-100">
+          <app-button
+            [text]="'Agregar'"
+            [isLoading]="false"
+            [isDisabled]="false"
+            (onClick)="saveOrUpdate()"  
+          >
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

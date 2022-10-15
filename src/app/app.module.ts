@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -21,6 +20,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { TimelineModule } from 'primeng/timeline';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,8 +29,9 @@ import { TableComponent } from './components/table/table.component';
 import { StudentsComponent } from './components/students/students.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { SharedModule } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import { SharedModule } from './components/shared/shared.module';
+import { StudentFormComponent } from './components/student-form/student-form.component';
+import { StudentFormService } from './components/student-form/services/student-form.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { MessageService } from 'primeng/api';
     TableComponent,
     StudentsComponent,
     StudentDetailsComponent,
+    StudentFormComponent,
     SidebarComponent
   ],
   imports: [
@@ -49,21 +52,22 @@ import { MessageService } from 'primeng/api';
     ReactiveFormsModule,
     TableModule,
     PaginatorModule,
-    ButtonModule,
     DialogModule,
     SplitButtonModule,
     ToggleButtonModule,
     InputMaskModule,
     CardModule,
-    RippleModule,
     TagModule,
     SkeletonModule,
     InputTextModule,
     InputNumberModule,
     ToastModule,
-    TimelineModule
+    TimelineModule,
+    InputTextareaModule,
+    MultiSelectModule,
+    RippleModule
   ],
-  providers: [MessageService],
+  providers: [StudentFormService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

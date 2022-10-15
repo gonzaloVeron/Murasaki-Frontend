@@ -9,7 +9,8 @@ import { TableHeader } from 'src/app/components/table/models/table-header';
 })
 export class TableComponent implements OnInit {
 
-  @Input() loading: boolean = false;
+  @Input() isLoading: boolean = false;
+  @Input() totalRecords: number = 0;
   @Input() data: Array<any> = [];
   @Input() autofill: boolean = false;
   @Input() total: number = 0;
@@ -17,14 +18,10 @@ export class TableComponent implements OnInit {
   @Input() multipleSort: boolean = false;
   @Output() sort: EventEmitter<{ sortBy: string, sort: string }> = new EventEmitter();
   @Output("pageChange") pageChange: EventEmitter<{page: number}> = new EventEmitter(); 
-  @Output("onSearch") onSearch: EventEmitter<{mode: string, level: string | null, teacherName: string | null}> = new EventEmitter();
+  @Output("onSearch") onSearch: EventEmitter<string> = new EventEmitter();
+  @Output("onAdd") onAdd: EventEmitter<void> = new EventEmitter();
 
   searchText: string = "";
-
-  desde: string = "";
-  hasta: string = "";
-
-  mode: string = "profesor";
 
   constructor() {
 
@@ -45,10 +42,15 @@ export class TableComponent implements OnInit {
 
   emitSearch(){
     // this.onSearch.emit((this.mode == "nivel") ? {mode: "nivel", level: this.searchText, teacherName: null} : {mode: "profesor", level: null, teacherName: this.searchText});
+    this.onSearch.emit(this.searchText);
   }
 
   changePage(event: any){
-    console.log(event);
+    this.pageChange.emit(event);
+  }
+
+  add(){
+    this.onAdd.emit();
   }
 
   // changeSearchText(e: any){

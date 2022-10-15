@@ -18,36 +18,86 @@ export class StudentsComponent implements OnInit {
   headers: TableHeader[] = [
     { name: "Nombre", key: "name" },
     { name: "Nivel", key: "jlptLevel" },
-    { name: "Id Profesor", key: "teacherDTO.name" },
+    { name: "Profesor", key: "teacherDTO.name" },
     { name: "", key: "" },
   ];
 
-  sort: { sortBy: string, sort: string } = { sortBy: '', sort: 'DESC' };
+  totalRecords: number = 0;
+  page: number = 0;
+  size: number = 5;
+  searchText: string = "";
 
-  onSort(event: any){
+  /** Modal */
+  studentToDestroy: any;
+  displayDestroyStudentModal: boolean = false;
+  modalButtonLoading: boolean = false;
+
+  onSort(event: any){ //falta tipar
     console.log(event);
   }
 
-  constructor(private studentsService: StudentsService, private router: Router) { }
+  constructor(
+    private studentsService: StudentsService, 
+    private router: Router,
+    private toastService: ToastService
+  ) { }
 
   ngOnInit() {
-    this.studentsService.getAllStudents().subscribe(
+    this.studentsService.find("", 0, 5).subscribe(
+      (response: any) => { //falta tipar
+        this.students = response.content;
+        this.totalRecords = response.totalElements;
+        console.log(response);
+      }
+    );
+  }
+
+  toStudentDetail(student: any){ //falta tipar
+    this.router.navigate(["app", "sidebar", "student", student.id]);
+  }
+
+  onAdd(){
+    this.router.navigate(["app", "sidebar", "student-form"]);
+  }
+
+  changePage(event: any){ // falta tipar
+    this.page = event.page;
+    this.size = event.rows;
+    this.findStudents()
+  }
+
+  search(event: string){
+    this.searchText = event;
+    this.findStudents();
+  }
+
+  findStudents(){
+    this.studentsService.find(this.searchText, this.page, this.size).subscribe(
       (response: any) => {
-        this.students = response;
+        this.students = response.content;
+        console.log(response);
+      }
+    );
+  }
+
+  displayDestroyModal(student: any){
+    this.studentToDestroy = student;
+    this.displayDestroyStudentModal = true;
+  }
+  
+  destroyStudent(){    
+    this.studentsService.delete(this.studentToDestroy.id).subscribe(
+      (response: any) => {
+        let indexToSplice = this.students.indexOf(this.studentToDestroy);
+        this.students.splice(indexToSplice, 1);
+        this.toastService.displaySuccess("Estudiante borrado correctamente");
       }
     )
   }
 
-  toStudentDetail(student: any){
-    this.router.navigate(["app", "sidebar", "student", student.id]);
-  }
-
-  find(event: any){
-    this.studentsService.find(event).subscribe(
-      (response: any) => {
-        this.students = response;
-      }
-    );
+  hideDestroyModal(){
+    this.displayDestroyStudentModal = false;
+    this.studentToDestroy = null;
   }
 
 }
