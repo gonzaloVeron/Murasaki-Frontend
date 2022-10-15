@@ -32,6 +32,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SharedModule } from './components/shared/shared.module';
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { StudentFormService } from './components/student-form/services/student-form.service';
+import { TeachersComponent } from './components/teachers/teachers.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StudentFormService } from './components/student-form/services/student-f
     StudentsComponent,
     StudentDetailsComponent,
     StudentFormComponent,
-    SidebarComponent
+    SidebarComponent,
+    TeachersComponent
   ],
   imports: [
     BrowserModule,

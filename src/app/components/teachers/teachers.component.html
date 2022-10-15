@@ -1,0 +1,62 @@
+<div class="d-flex flex-column gap-4 justify-content-center align-items-center">
+  <div class="card w-100">
+    <div class="card-body">
+      <app-table
+        [isLoading]="loading"
+        [total]="total"
+        [headers]="headers"
+        [data]="teachers"
+        [totalRecords]="totalRecords"
+        (sort)="onSort($event)"
+        (pageChange)="changePage($event)"
+        (onSearch)="search($event)"
+        (onAdd)="onAdd()"
+      >
+        <tr body *ngFor="let teacher of teachers">
+          <td *ngIf="!loading">{{ teacher.name }}</td>
+          <td *ngIf="!loading">
+            <div class="d-flex justify-content-end gap-2 align-items-center">
+              <i class="fa-solid fa-pen" style="font-size: 1.4rem; cursor: pointer; color: rgb(134, 184, 184)" (click)="onUpdate(teacher)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
+              <i class="fa-solid fa-trash-can" style="font-size: 1.4rem; cursor: pointer; color: red" (click)="displayDestroyModal(teacher)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
+            </div>
+          </td>
+        </tr>
+      </app-table>
+    </div>
+  </div>
+</div>
+
+<app-modal 
+  [title]="'Eliminar profesor'" 
+  [isVisible]="displayDestroyTeacherModal" 
+  [isLoading]="destroyModalButtonLoading" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideDestroyModal()"
+  (onAccept)="destroyTeacher()"
+>
+  <div body>
+    <h3 class="text-center" *ngIf="teacherToDestroy"> {{ "Desea eliminar a " + teacherToDestroy.name + " ?"}} </h3>
+  </div>
+</app-modal>
+
+<app-modal 
+  [title]="(!teacherId) ? 'Agregar profesor' : 'Modificar profesor'" 
+  [isVisible]="displayAddOrUpdateTeacherModal" 
+  [isLoading]="addModalButtonLoading" 
+  [minWidth]="{ width: '35vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideAddOrUpdateModal()"
+  (onAccept)="addOrUpdateTeacher()"
+>
+  <div body>
+    <div class="p-fluid grid mt-4" [formGroup]="teacherForm">
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
+          <label for="inputtext">Nombre completo <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+    </div>
+  </div>
+</app-modal>

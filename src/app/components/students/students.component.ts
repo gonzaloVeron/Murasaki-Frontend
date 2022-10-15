@@ -63,7 +63,7 @@ export class StudentsComponent implements OnInit {
   changePage(event: any){ // falta tipar
     this.page = event.page;
     this.size = event.rows;
-    this.findStudents()
+    this.findStudents();
   }
 
   search(event: string){
@@ -75,6 +75,7 @@ export class StudentsComponent implements OnInit {
     this.studentsService.find(this.searchText, this.page, this.size).subscribe(
       (response: any) => {
         this.students = response.content;
+        this.totalRecords = response.totalElements;
         console.log(response);
       }
     );
@@ -86,11 +87,14 @@ export class StudentsComponent implements OnInit {
   }
   
   destroyStudent(){    
+    this.modalButtonLoading = true;
     this.studentsService.delete(this.studentToDestroy.id).subscribe(
       (response: any) => {
-        let indexToSplice = this.students.indexOf(this.studentToDestroy);
-        this.students.splice(indexToSplice, 1);
+        // let indexToSplice = this.students.indexOf(this.studentToDestroy);
+        // this.students.splice(indexToSplice, 1);
+        this.findStudents();
         this.toastService.displaySuccess("Estudiante borrado correctamente");
+        this.modalButtonLoading = false;
       }
     )
   }

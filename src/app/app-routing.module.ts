@@ -5,6 +5,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { StudentsComponent } from './components/students/students.component';
+import { TeachersComponent } from './components/teachers/teachers.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
           {
             path: 'student-form/:id',
             component: StudentFormComponent
+          },
+          {
+            path: 'teachers',
+            component: TeachersComponent
           }
         ]
       }
