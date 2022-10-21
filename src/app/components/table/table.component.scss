@@ -4,6 +4,21 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.selected{
+.selected {
   color: violet;
+}
+
+.header-font { 
+  font-size: 12px;
+  color: #7a7a7a;
+  margin: 0 8px;
+}
+
+.header-font-without-color {
+  font-size: 12px;
+  margin: 0 8px
+}
+
+.pointer {
+  cursor: pointer;
 }

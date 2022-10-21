@@ -16,8 +16,8 @@
           <td *ngIf="!loading">{{ teacher.name }}</td>
           <td *ngIf="!loading">
             <div class="d-flex justify-content-end gap-2 align-items-center">
-              <i class="fa-solid fa-pen" style="font-size: 1.4rem; cursor: pointer; color: rgb(134, 184, 184)" (click)="onUpdate(teacher)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
-              <i class="fa-solid fa-trash-can" style="font-size: 1.4rem; cursor: pointer; color: red" (click)="displayDestroyModal(teacher)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
+              <i class="fa-solid fa-pen icon-pen-color" (click)="onUpdate(teacher)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
+              <i class="fa-solid fa-trash-can icon-trash-color" (click)="displayDestroyModal(teacher)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
             </div>
           </td>
         </tr>
@@ -51,6 +51,12 @@
 >
   <div body>
     <div class="p-fluid grid mt-4" [formGroup]="teacherForm">
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [ngClass]="[checkInvalid('email')]" pInputText formControlName="email"> 
+          <label for="inputtext">Email <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
           <input type="text" id="inputtext" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 

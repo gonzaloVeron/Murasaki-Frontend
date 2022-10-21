@@ -40,9 +40,16 @@ export class ApiRestBase {
     }
 
     private handleError<T>(operation = 'operation', result?: T) {
-      return (error: any): Observable<T> => {
-        console.error(error);
-        this.toastService.displayError(error.message);
+      return (response: any): Observable<T> => {
+        switch(response.error.status){
+          case 401:
+            this.toastService.displayError(response.error.message);
+            //logout
+            break;
+          default: 
+            console.error(response.error.message);
+            break;
+        }
         return of(result as T);
       };
     }

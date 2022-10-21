@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableHeader } from 'src/app/components/table/models/table-header';
 import { ToastService } from '../shared/services/toast.service';
+import { SidebarService } from '../sidebar/services/sidebar.service';
 import { StudentsService } from './services/students.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { StudentsService } from './services/students.service';
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit{
 
   loading: boolean = false;
   students: any[] = [];
@@ -39,10 +40,12 @@ export class StudentsComponent implements OnInit {
   constructor(
     private studentsService: StudentsService, 
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private sidebarService: SidebarService
   ) { }
 
   ngOnInit() {
+    this.sidebarService.changeTitle("Estudiantes");
     this.studentsService.find("", 0, 5).subscribe(
       (response: any) => { //falta tipar
         this.students = response.content;
@@ -58,6 +61,10 @@ export class StudentsComponent implements OnInit {
 
   onAdd(){
     this.router.navigate(["app", "sidebar", "student-form"]);
+  }
+
+  onUpdate(student: any){
+    this.router.navigate(["app", "sidebar", "student-form", student.id]);
   }
 
   changePage(event: any){ // falta tipar

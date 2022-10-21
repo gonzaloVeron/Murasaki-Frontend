@@ -9,6 +9,7 @@ import { ButtonComponent } from './button/button.component';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ModalComponent } from './modal/modal.component';
+import { LocalUserService } from './services/local-user.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { ModalComponent } from './modal/modal.component';
   ],
   providers: [
     ToastService, 
-    MessageService
+    MessageService,
+    LocalUserService
   ],
   declarations: [
     SharedComponent,

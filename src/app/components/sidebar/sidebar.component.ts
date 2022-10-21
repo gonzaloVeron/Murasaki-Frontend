@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableHeader } from '../table/models/table-header';
+import { SidebarService } from './services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,43 +10,14 @@ import { TableHeader } from '../table/models/table-header';
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
 
-  @Input() menuItems: any[] = [];
-  @Input() logo = "";
-  @Input() companyName = "";
-  @Input() normal = true;
-  @Input() mini = false;
-  @Input() profileImage = '';
-  @Input() name = '';
-  @Input() email = '';
-  @Input() link: string = 'https://aam.solutions';
-
+  title: string = "Estudiantes";
 
   valueIconRight: string = "";
 
-  loading: boolean = false;
-  students: any[] = [];
-  total: number = 0;
-  limit: number = 5;
-  headers: TableHeader[] = [
-    { name: "Nombre", key: "name" },
-    { name: "Nivel", key: "jlptLevel" },
-    { name: "Id Profesor", key: "teacherDTO.name" },
-    { name: "Acciones", key: "" },
-  ];
-
-  sort: { sortBy: string, sort: string } = { sortBy: '', sort: 'DESC' };
-
-  onSort(event: any){
-    console.log(event);
-  }
-
-  toStudentDetail(student: any){
-    this.router.navigate(["app", "student", student.id]);
-  }
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private sidebarService: SidebarService) { }
 
   ngOnInit() {
+    this.sidebarService.register(this);
   }
 
   ngAfterViewInit(): void {
@@ -62,8 +34,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   navigate(path: string){
-    console.log("Navigating to: " + path);
+    // console.log("Navigating to: " + path);
     this.router.navigateByUrl(path);
+  }
+
+  changeTitle(title: string){
+    this.title = title;
   }
 
 }

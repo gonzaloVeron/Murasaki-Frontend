@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from '../shared/services/toast.service';
+import { SidebarService } from '../sidebar/services/sidebar.service';
 import { TableHeader } from '../table/models/table-header';
 import { TeachersService } from './services/teachers.service';
 
@@ -47,10 +48,12 @@ export class TeachersComponent implements OnInit {
   constructor(
     private toastService: ToastService,
     private teachersService: TeachersService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sidebarService: SidebarService
   ) { }
 
   ngOnInit() {
+    this.sidebarService.changeTitle("Profesores");
     this.buildForm();
     this.teachersService.find("", 0, 5).subscribe(
       (response: any) => {
@@ -63,6 +66,7 @@ export class TeachersComponent implements OnInit {
 
   buildForm(){
     this.teacherForm = this.formBuilder.group({
+      email: [null, Validators.compose([Validators.required, Validators.email])],
       name: [null, Validators.required]
     });
   }

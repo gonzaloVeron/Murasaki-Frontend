@@ -21,7 +21,7 @@ export class TeachersService {
   }
 
   save(data: any){
-    return this.apiRestBase.post("/teacher", data);
+    return this.apiRestBase.post("/user/register", data);
   }
 
   update(id: number, data: any){

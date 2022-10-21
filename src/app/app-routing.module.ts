@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { IsAuthGuard } from './components/shared/guards/is-auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentFormComponent } from './components/student-form/student-form.component';
@@ -21,6 +23,7 @@ const routes: Routes = [
   {
     path: 'app',
     component: AppComponent,
+    canActivate: [IsAuthGuard],
     children: [
       {
         path: 'sidebar',
@@ -49,6 +52,10 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

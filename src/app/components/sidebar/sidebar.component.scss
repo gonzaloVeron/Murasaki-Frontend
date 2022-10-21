@@ -280,9 +280,14 @@ ul{
     padding-left: 7px;
     padding-right: 7px;
     text-align: center;
+    overflow-y: auto;
 }
 
 .sidebar.active ~ .home_content{
     width: calc(100% - 240px);
     left: 240px;
+}
+
+.sidebar-content-container {
+    margin-top: 43px;
 }

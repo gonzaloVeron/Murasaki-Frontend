@@ -10,7 +10,7 @@
     <div class="p-fluid grid">
       <div class="col-10 md:col-10">
         <span class="p-input-icon-left">
-          <i class="pi pi-search" (click)="emitSearch()" style="cursor: pointer"></i>
+          <i class="pi pi-search pointer" (click)="emitSearch()"></i>
           <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" />
         </span>
       </div>
@@ -32,11 +32,10 @@
     <ng-container *ngIf="headers">
       <tr>
         <th *ngFor="let header of headers" (click)="onClickHeader(header)">
-          <div style="display: flex; align-items: center;">
+          <div class="d-flex align-items-center">
             {{ header.name | titlecase }}
-            <i *ngIf="header.sortable && !header.active" class="pi pi-sort"
-              style="font-size: 12px; color: #7a7a7a;  margin: 0 8px"></i>
-            <i *ngIf="header.sortable && header.active" class="pi pi-sort" style="font-size: 12px; margin: 0 8px"></i>
+            <i *ngIf="header.sortable && !header.active" class="pi pi-sort header-font"></i>
+            <i *ngIf="header.sortable && header.active" class="pi pi-sort header-font-without-color"></i>
           </div>
         </th>
       </tr>

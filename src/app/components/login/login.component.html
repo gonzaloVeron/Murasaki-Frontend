@@ -1,0 +1,45 @@
+<div class="blurred"></div>
+<div class="card login">
+  <div class="d-flex w-100 h-100 justify-content-between">
+    <div class="login-image w-50" stlye="position: relative">
+      <img class="ii" src="../../../assets/images/mura2.png">
+      <img class="w-100 h-100 img-filter" src="../../../assets/images/back5.png">
+    </div>
+    <div class="login-form w-50">
+      <h1 class="text-center mt-5 text-color2"> Murasaki </h1>
+      <h6 class="text-center mb-5 text-color2"> Bienvenido </h6>
+      <div class="p-fluid grid" [formGroup]="loginForm">
+        <div class="field col-12 md:col-12">
+          <span class="p-input-icon-left">
+            <i class="fa-solid fa-user icon-color"></i>
+            <input type="text" pInputText placeholder="Usuario" formControlName="email"/>
+          </span>
+        </div>
+        <div class="field col-12 md:col-12">
+          <span class="p-input-icon-left">
+            <i class="fa-solid fa-lock icon-color"></i>
+            <input type="password" pInputText placeholder="Contraseña" formControlName="password"/>
+          </span>
+        </div>
+        <div class="field col-12 md:col-6">
+          <button pButton pRipple type="button" label="Olvidé mi contraseña" class="p-button-text"></button>
+        </div>
+        <div class="field col-12 md:col-6">
+          <button 
+            class="p-button-primary" 
+            pButton
+            pRipple
+            label=""  
+            (click)="login()"
+            [disabled]="isLoading"
+          >
+            <div class="d-flex w-100 gap-2 justify-content-center align-items-center">
+              <p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>
+              <label class="p-button-label label-width"> Ingresar </label> 
+            </div>
+          </button>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>
