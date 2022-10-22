@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { handleErrorPosta } from '../shared/services/api_rest_base.service';
 import { ToastService } from '../shared/services/toast.service';
 import { StudentFormService } from './services/student-form.service';
 
@@ -32,14 +33,14 @@ export class StudentFormComponent implements OnInit {
       this.getAllTeachers();
       this.getAllInterests();
       this.buildForm();
-      if(params.id){
-        this.studentId = params.id;      
-        this.getStudentToModify();  
+      if (params.id) {
+        this.studentId = params.id;
+        this.getStudentToModify();
       }
     });
   }
 
-  buildForm(){
+  buildForm() {
     this.studentForm = this.formBuilder.group({
       name: [null, Validators.required],
       jlptLevel: [null, Validators.required],
@@ -53,27 +54,27 @@ export class StudentFormComponent implements OnInit {
     });
   }
 
-  checkInvalid(fieldName: string){
+  checkInvalid(fieldName: string) {
     return (this.studentForm.get(fieldName).invalid && this.studentForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
   }
 
-  getAllTeachers(){
+  getAllTeachers() {
     this.studentFormService.getAllTeachers().subscribe(
       (response: any) => {
         this.teachersAvailables = response.map(elem => {
-          return {id: elem.id, name: elem.name};
+          return { id: elem.id, name: elem.name };
         });
       }
     )
   }
 
-  getStudentToModify(){
+  getStudentToModify() {
     this.studentFormService.getStudentById(this.studentId).subscribe(
       (response: any) => {
         let keys = Object.keys(response);
         console.log(response);
         keys.forEach(k => {
-          if(!(k == 'lessons' || k == 'id')){
+          if (!(k == 'lessons' || k == 'id')) {
             this.studentForm.get(k).setValue(response[k]);
           }
         });
@@ -81,7 +82,7 @@ export class StudentFormComponent implements OnInit {
     )
   }
 
-  getAllInterests(){
+  getAllInterests() {
     this.studentFormService.getAllInterests().subscribe(
       (response: any) => {
         this.interestsList = response;
@@ -89,17 +90,22 @@ export class StudentFormComponent implements OnInit {
     )
   }
 
-  saveOrUpdate(){
+  saveOrUpdate() {
     //console.log(this.studentForm.getRawValue());
-    if(this.studentForm.valid){
-      if(this.studentId){
+    if (this.studentForm.valid) {
+      if (this.studentId) {
         this.studentFormService.update(this.studentId, this.studentForm.getRawValue()).subscribe(
-          (response: any) => {
-            this.toastService.displaySuccess("Estudiante actualizado correctamente");
-            this.router.navigate(["app", "sidebar", "students"])
-          }
-        );
-      }else{
+          {
+            next: (response: any) => {
+              this.toastService.displaySuccess("Estudiante actualizado correctamente");
+              this.router.navigate(["app", "sidebar", "students"])
+            },
+            error: (err) => {
+              console.info('hubo error');
+              handleErrorPosta(err);
+            },
+          })
+      } else {
         this.studentFormService.save(this.studentForm.getRawValue()).subscribe(
           (response: any) => {
             this.toastService.displaySuccess("Estudiante guardado correctamente");
