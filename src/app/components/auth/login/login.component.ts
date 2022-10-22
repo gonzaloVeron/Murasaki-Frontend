@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LocalUserService } from '../shared/services/local-user.service';
+import { LocalUserService } from '../../shared/services/local-user.service';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -45,9 +45,8 @@ export class LoginComponent implements OnInit {
           }
         );
         this.isLoading = false;
-        // this.router.navigate([""])
+        this.router.navigate(["app"])
       }
     );
   }
-
 }

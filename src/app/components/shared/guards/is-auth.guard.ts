@@ -18,7 +18,7 @@ export class IsAuthGuard implements CanActivate {
     const token = this.localUserService.getToken();
 
     if (!token) {
-      return this.router.navigate(['/login']);
+      return this.router.navigate(['/auth']);
     }
 
     return true;

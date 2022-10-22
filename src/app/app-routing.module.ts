@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 import { IsAuthGuard } from './components/shared/guards/is-auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
@@ -13,6 +12,7 @@ const routes: Routes = [
   {
     path: "",
     redirectTo: "app/sidebar/students",
+    // redirectTo: "auth",
     pathMatch: "full"
   },
   {
@@ -54,9 +54,9 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'login',
-    component: LoginComponent
-  }
+    path: "auth",
+    loadChildren: () => import("./components/auth/auth.module").then((m) => m.AuthModule),
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiRestBase } from '../../shared/services/api_rest_base.service';
+import { ApiRestBase } from 'src/app/components/shared/services/api_rest_base.service';
+
 
 @Injectable({
   providedIn: 'root'

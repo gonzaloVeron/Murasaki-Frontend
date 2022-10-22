@@ -23,6 +23,7 @@ import { TimelineModule } from 'primeng/timeline';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,8 +37,7 @@ import { StudentFormService } from './components/student-form/services/student-f
 import { TeachersComponent } from './components/teachers/teachers.component';
 import { SidebarService } from './components/sidebar/services/sidebar.service';
 import { TeachersService } from './components/teachers/services/teachers.service';
-import { LoginComponent } from './components/login/login.component';
-import { LoginService } from './components/login/services/login.service';
+import { AuthModule } from './components/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -48,8 +48,7 @@ import { LoginService } from './components/login/services/login.service';
     StudentFormComponent,
     SidebarComponent,
     TeachersComponent,
-    LoginComponent
-    
+    //LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -75,9 +74,10 @@ import { LoginService } from './components/login/services/login.service';
     InputTextareaModule,
     MultiSelectModule,
     RippleModule,
-    ProgressSpinnerModule
+    ButtonModule,
+    AuthModule
   ],
-  providers: [StudentFormService, SidebarService, TeachersService, LoginService],
+  providers: [StudentFormService, SidebarService, TeachersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
