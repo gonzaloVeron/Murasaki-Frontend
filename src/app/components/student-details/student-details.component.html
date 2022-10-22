@@ -32,7 +32,7 @@
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-start gap-2 w-100">
-            <p-tag *ngFor="let interest of student.interests" [icon]="interest.icon" [value]="interest.name" [style]="{'background-color': '#b680c5'}"></p-tag>
+            <p-tag *ngFor="let interest of student.interests" [icon]="interest.icon" [value]="interest.name" [style]="{'background-color': '#59558f'}"></p-tag>
           </div>
         </div>
       </div>
@@ -72,12 +72,31 @@
                 </span>
             </ng-template>
             <ng-template pTemplate="content" let-event>
-                <p-card [header]="event.status" [subheader]="event.date">
+                <p-card>
+                  <ng-template pTemplate="header">
+                    <div class="p-3">
+                      <h3 class="lesson-title">
+                        {{ event.status }}
+                      </h3>
+                      <label style="color: #6c757d">
+                        {{ event.date | date: 'fullDate' }}
+                      </label>
+                    </div>
+                  </ng-template>
                   <p>
                     {{ event.content }}
+                    
                     <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
                       quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas! -->
                   </p>
+                  <ng-template pTemplate="footer">
+                    
+                    <app-link *ngFor="let link of event.links" [title]="link.title" [url]="link.url"></app-link>
+                    <!-- <app-link [title]="'Google'" [url]="'http://www.google.com.ar'"></app-link>
+                    <app-link [title]="'Github'" [url]="'https://github.com'"></app-link>
+                    <app-link [title]="'Stack overflow'" [url]="'https://es.stackoverflow.com'"></app-link> -->
+                    
+                  </ng-template>
                 </p-card>
             </ng-template>
           </p-timeline>

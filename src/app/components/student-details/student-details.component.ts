@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { PrimeIcons } from 'primeng/api';
 import { ToastService } from '../shared/services/toast.service';
@@ -7,7 +7,8 @@ import { StudentDetailsService } from './services/student-details.service';
 @Component({
   selector: 'app-student-details',
   templateUrl: './student-details.component.html',
-  styleUrls: ['./student-details.component.scss']
+  styleUrls: ['./student-details.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StudentDetailsComponent implements OnInit {
 
@@ -23,7 +24,7 @@ export class StudentDetailsComponent implements OnInit {
         this.studentDetailService.getStudentById(paramsAsMap.params["id"]).subscribe({
           next: (resp: any) => {
             console.log(resp);
-            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Clase', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f' } });
+            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Clase', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f', links: elem.links } });
             this.student = resp;
           },
           error: (resp: any) => {

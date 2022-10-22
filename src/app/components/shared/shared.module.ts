@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ModalComponent } from './modal/modal.component';
 import { LocalUserService } from './services/local-user.service';
+import { LinkComponent } from './link/link.component';
 
 @NgModule({
   imports: [
@@ -23,13 +24,15 @@ import { LocalUserService } from './services/local-user.service';
     LocalUserService
   ],
   declarations: [
+    LinkComponent,
     SharedComponent,
     ButtonComponent,
     ModalComponent
   ],
   exports:[
     ButtonComponent,
-    ModalComponent
+    ModalComponent,
+    LinkComponent
   ]
 })
 export class SharedModule { }

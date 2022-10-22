@@ -19,11 +19,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     ButtonModule
   ],
-  exports: [
-    LoginComponent
-  ],
   declarations: [
-    //AuthComponent,
     LoginComponent
   ],
   providers: [

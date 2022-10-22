@@ -58,11 +58,11 @@
       <div class="profile_details">
         <img src="../../../assets/images/profile.jpg" alt="">
         <div class="name_job"> 
-          <div class="name"> Gonzalo Verón </div>
+          <div class="name"> {{ userName }} </div>
           <div class="job"> Prof. Japonés </div>
         </div>
       </div>
-      <i class="fas fa-sign-out" id="log_out"></i>
+      <i class="fas fa-sign-out pointer" id="log_out" (click)="logout()"></i>
     </div>
   </div>
 </div>

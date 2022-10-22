@@ -6,7 +6,7 @@ import { LocalUserService } from '../services/local-user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class IsAuthGuard implements CanActivate {
+export class IsNotAuthGuard implements CanActivate {
 
   constructor(
     private readonly router: Router,
@@ -17,8 +17,8 @@ export class IsAuthGuard implements CanActivate {
 
     const token = this.localUserService.getToken();
 
-    if (!token) {
-      return this.router.navigate(['auth']);
+    if (token) {
+      return this.router.navigate(['app']);
     }
 
     return true;

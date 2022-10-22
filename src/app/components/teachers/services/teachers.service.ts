@@ -32,4 +32,8 @@ export class TeachersService {
     return this.apiRestBase.get(`/teacher/${id}`);
   }
 
+  getUserTeacherById(id: number){
+    return this.apiRestBase.get(`/user/getByTeacherId/${id}`);
+  }
+
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { IsAuthGuard } from './components/shared/guards/is-auth.guard';
+import { IsNotAuthGuard } from './components/shared/guards/is-not-auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
 import { StudentFormComponent } from './components/student-form/student-form.component';
@@ -11,8 +12,8 @@ import { TeachersComponent } from './components/teachers/teachers.component';
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "app/sidebar/students",
-    // redirectTo: "auth",
+    //redirectTo: "app/sidebar/students",
+    redirectTo: "auth",
     pathMatch: "full"
   },
   {
@@ -23,11 +24,12 @@ const routes: Routes = [
   {
     path: 'app',
     component: AppComponent,
-    canActivate: [IsAuthGuard],
+    //canActivate: [IsAuthGuard],
     children: [
       {
         path: 'sidebar',
         component: SidebarComponent,
+        canActivate: [IsAuthGuard],
         children: [
           {
             path: 'students',
@@ -55,6 +57,7 @@ const routes: Routes = [
   },
   {
     path: "auth",
+    canActivate: [IsNotAuthGuard],
     loadChildren: () => import("./components/auth/auth.module").then((m) => m.AuthModule),
   },
 ];

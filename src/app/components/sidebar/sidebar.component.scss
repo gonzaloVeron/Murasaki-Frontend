@@ -258,6 +258,7 @@ ul{
     width: calc(100% - 78px);
     left: 78px;
     transition: all 0.5s ease;
+    overflow-y: auto;
 }
 
 .home_content .text{
@@ -280,7 +281,6 @@ ul{
     padding-left: 7px;
     padding-right: 7px;
     text-align: center;
-    overflow-y: auto;
 }
 
 .sidebar.active ~ .home_content{
@@ -289,5 +289,5 @@ ul{
 }
 
 .sidebar-content-container {
-    margin-top: 43px;
+    margin-top: 67px;
 }

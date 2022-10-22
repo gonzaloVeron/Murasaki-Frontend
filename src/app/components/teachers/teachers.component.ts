@@ -58,8 +58,8 @@ export class TeachersComponent implements OnInit {
     this.teachersService.find("", 0, 5).subscribe(
       (response: any) => {
         this.teachers = response.content;
+        console.log(this.teachers);
         this.totalRecords = response.totalElements;
-        console.log(response);
       }
     );
   }
@@ -82,10 +82,9 @@ export class TeachersComponent implements OnInit {
   }
 
   getTeacherToModify(){
-    this.teachersService.getTeacherById(this.teacherId).subscribe(
+    this.teachersService.getUserTeacherById(this.teacherId).subscribe(
       (response: any) => {
         let keys = Object.keys(response);
-        console.log(keys)
         keys.forEach(k => {
           console.log(k)
           if(!(k == "id" || k == "students")){

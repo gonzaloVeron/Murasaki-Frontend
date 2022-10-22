@@ -90,7 +90,7 @@ export class StudentFormComponent implements OnInit {
   }
 
   saveOrUpdate(){
-    console.log(this.studentForm.getRawValue());
+    //console.log(this.studentForm.getRawValue());
     if(this.studentForm.valid){
       if(this.studentId){
         this.studentFormService.update(this.studentId, this.studentForm.getRawValue()).subscribe(

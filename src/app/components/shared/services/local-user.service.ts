@@ -7,20 +7,20 @@ export class LocalUserService {
 
   constructor() { }
 
-  saveUserData(data: any){
+  saveUserData(data: any): void {
     localStorage.setItem("userName", JSON.stringify(data.teacherName));
     localStorage.setItem("token", JSON.stringify(data.token));
   }
 
-  getUser(){
+  getUser(): string {
     return JSON.parse(localStorage.getItem("userName"));
   }
 
-  getToken(){
+  getToken(): string {
     return JSON.parse(localStorage.getItem("token"));
   }
 
-  removeUser(){
+  removeUser(): void {
     localStorage.clear();
   }
 
