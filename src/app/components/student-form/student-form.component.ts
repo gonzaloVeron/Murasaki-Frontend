@@ -94,24 +94,29 @@ export class StudentFormComponent implements OnInit {
     //console.log(this.studentForm.getRawValue());
     if (this.studentForm.valid) {
       if (this.studentId) {
-        this.studentFormService.update(this.studentId, this.studentForm.getRawValue()).subscribe(
-          {
-            next: (response: any) => {
-              this.toastService.displaySuccess("Estudiante actualizado correctamente");
-              this.router.navigate(["app", "sidebar", "students"])
-            },
-            error: (err) => {
-              console.info('hubo error');
-              handleErrorPosta(err);
-            },
-          })
+        this.studentFormService.update(this.studentId, this.studentForm.getRawValue()).subscribe({
+          next: (response: any) => {
+            this.toastService.displaySuccess("Estudiante actualizado correctamente");
+            this.router.navigate(["app", "sidebar", "students"])
+          },
+          // error: (err: any) => {
+          //   console.info('hubo error');
+          //   handleErrorPosta(err);
+          // }
+        });
       } else {
-        this.studentFormService.save(this.studentForm.getRawValue()).subscribe(
-          (response: any) => {
+        this.studentFormService.save(this.studentForm.getRawValue()).subscribe({
+          next: (response: any) => {
             this.toastService.displaySuccess("Estudiante guardado correctamente");
             this.router.navigate(["app", "sidebar", "students"])
+          },
+          error: (error: any) => {
+            console.info('hubo error');
+            console.log("y esto?", error); 
+            //handleErrorPosta(error);
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
           }
-        );
+        });
       }
     }
   }

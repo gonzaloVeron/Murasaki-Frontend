@@ -24,12 +24,11 @@ const routes: Routes = [
   {
     path: 'app',
     component: AppComponent,
-    //canActivate: [IsAuthGuard],
     children: [
       {
         path: 'sidebar',
         component: SidebarComponent,
-        canActivate: [IsAuthGuard],
+        //canActivate: [IsAuthGuard],
         children: [
           {
             path: 'students',
