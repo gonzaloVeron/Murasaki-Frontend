@@ -22,7 +22,8 @@ export class StudentsComponent implements OnInit{
   headers: TableHeader[] = [
     { name: "Nombre", key: "name" },
     { name: "Nivel", key: "jlptLevel" },
-    //{ name: "Estado", key: "status"},
+    { name: "Email", key: "email"},
+    { name: "teléfono", key: "tel"},
     { name: "", key: "" },
   ];
 
@@ -44,7 +45,7 @@ export class StudentsComponent implements OnInit{
   links: any[] = [];
 
   onSort(event: any){ //falta tipar
-    console.log(event);
+
   }
 
   constructor(
@@ -64,7 +65,6 @@ export class StudentsComponent implements OnInit{
         next: (response: any) => { //falta tipar
           this.students = response.content;
           this.totalRecords = response.totalElements;
-          console.log(response);
         },
         error: (responseError: any) => {
           this.errorHandlerService.handle(responseError);
@@ -102,7 +102,6 @@ export class StudentsComponent implements OnInit{
         next: (response: any) => {
           this.students = response.content;
           this.totalRecords = response.totalElements;
-          console.log(response);
         },
         error: (responseError: any) => {
           this.errorHandlerService.handle(responseError);

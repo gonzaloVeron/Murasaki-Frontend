@@ -12,7 +12,9 @@ export class SidebarService {
   constructor() { }
 
   changeTitle(title: string){
-    this.sidebar.changeTitle(title);
+    setTimeout(() => {
+      this.sidebar.changeTitle(title);
+    }, 10);
   }
 
   register(sidebar: SidebarComponent){

@@ -36,13 +36,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     btn.onclick = () => {
       sidebar.classList.toggle("active");
     }
-    searchBtn.onclick = () => {
-      sidebar.classList.toggle("active");
-    }
+    // searchBtn.onclick = () => {
+    //   sidebar.classList.toggle("active");
+    // }
   }
 
   navigate(path: string){
-    // console.log("Navigating to: " + path);
     this.router.navigateByUrl(path);
   }
 

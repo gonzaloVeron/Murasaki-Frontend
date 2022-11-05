@@ -30,7 +30,6 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe({
       next: (params: any) => {
-        console.log(params);
         this.token = params.token;
       },
       error: (error: any) => {

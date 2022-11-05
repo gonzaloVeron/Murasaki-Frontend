@@ -9,6 +9,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { ToastService } from '../shared/services/toast.service';
+import { PrimeIcons } from 'primeng/api';
 
 library.add(fas, far, fab)
 
@@ -56,28 +57,19 @@ export class InterestsComponent implements OnInit {
 
   ngOnInit() {
     this.sidebarService.changeTitle("Intereses");
-    this.icons = [{ name: "house", icon: "fa-house" }]
+    this.icons = this.parseIcons(PrimeIcons);
     this.buildForm();
     this.findAllInterests();
   }
 
   parseIcons(icons){
-    let result = Object.keys(icons).map(key => { 
-        let res = "";
-        for(let c of key){
-          if(/^\p{Lu}/u.test(c)){
-            res += "-" + c.toLowerCase();
-          }else{
-            res += c.toLowerCase();
-          }
-        }
+    let result = Object.keys(icons).map(key => {         
         return {
-          label: key,
-          value: res
+          name: key,
+          icon: PrimeIcons[key]
         }
       }
     );
-    result.splice(0, 10);
     return result;
   }
 
@@ -105,7 +97,7 @@ export class InterestsComponent implements OnInit {
   }
 
   onSort(event: any){ //falta tipar
-    console.log(event);
+
   }
 
   onAdd(){

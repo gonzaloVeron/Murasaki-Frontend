@@ -45,15 +45,15 @@
       </div>
       <div class="field col-4 md:col-4">
         <span class="p-float-label">
-          <p-dropdown [options]="icons" formControlName="icon" optionLabel="name" optionValue="icon" appendTo="body" [autoDisplayFirst]="false"> 
+          <p-dropdown [options]="icons" formControlName="icon" [ngClass]="[checkInvalid('icon')]" optionLabel="name" optionValue="icon" appendTo="body" [autoDisplayFirst]="false"> 
             <ng-template let-icon pTemplate="selectedItem">
               <div class="flex justify-content-center align-items-center">
-                <i [ngClass]="['fas', icon.icon, 'icon-eye-color']" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
+                <i [ngClass]="[icon.icon, 'icons']"></i>
               </div>
             </ng-template>
             <ng-template let-icon pTemplate="item">
               <div class="flex justify-content-center align-items-center">
-                <i [ngClass]="['fas', icon.icon, 'icon-eye-color']" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
+                <i [ngClass]="[icon.icon, 'icons']"></i>
               </div>
             </ng-template>
           </p-dropdown>

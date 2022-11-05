@@ -81,7 +81,7 @@ import { InterestsComponent } from './components/interests/interests.component';
     AuthModule,
     OverlayPanelModule
   ],
-  providers: [StudentFormService, SidebarService, TeachersService],
+  providers: [StudentFormService, TeachersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

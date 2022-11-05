@@ -43,7 +43,7 @@ export class TeachersComponent implements OnInit {
 
 
   onSort(event: any){ //falta tipar
-    console.log(event);
+
   }
 
   constructor(
@@ -61,7 +61,7 @@ export class TeachersComponent implements OnInit {
       {
         next: (response: any) => {
           this.teachers = response.content;
-          console.log(this.teachers);
+
           this.totalRecords = response.totalElements;
         },
         error: (responseError: any) => {
@@ -94,7 +94,6 @@ export class TeachersComponent implements OnInit {
         next: (response: any) => {
           let keys = Object.keys(response);
           keys.forEach(k => {
-            //console.log(k)
             if(!(k == "id" || k == "students")){
               this.teacherForm.get(k).setValue(response[k]);
             }

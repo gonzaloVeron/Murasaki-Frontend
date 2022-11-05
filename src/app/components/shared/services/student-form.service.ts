@@ -13,7 +13,7 @@ export class StudentFormService {
   }
 
   getStudentById(id: number){
-    return this.apiRestBase.get(`/student/${id}`);
+    return this.apiRestBase.get(`/student/jwt/${id}`);
   }
 
   getAllInterests(){

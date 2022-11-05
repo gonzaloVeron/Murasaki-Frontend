@@ -13,7 +13,7 @@ export class InterestsService {
   }
 
   findAll(page: number, size: number){
-    return this.apiRestBase.get(`/interest/jwt/findAll?page=${page}&size=${size}`);
+    return this.apiRestBase.get(`/interest/jwt/find?page=${page}&size=${size}`);
   }
 
   create(data: any){

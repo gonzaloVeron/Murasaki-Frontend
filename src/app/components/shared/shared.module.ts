@@ -15,6 +15,7 @@ import { LinkComponent } from './link/link.component';
 import { RecoveryService } from './services/recovery.service';
 import { InputDateComponent } from './input-date/input-date.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SidebarService } from './services/sidebar.service';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MessageService,
     LocalUserService,
     RecoveryService,
+    SidebarService
   ],
   declarations: [
     LinkComponent,

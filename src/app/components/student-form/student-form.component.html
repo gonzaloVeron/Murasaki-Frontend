@@ -8,7 +8,7 @@
     <div class="p-fluid grid" [formGroup]="studentForm">
       <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <input type="text" id="inputtext" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
+          <input type="text" id="inputtext" data-test-id="user_name" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
           <label for="inputtext">Nombre completo <span class="mandatory">(*)</span></label>
         </span>
       </div>
