@@ -1,0 +1,79 @@
+<div class="d-flex flex-column gap-4 justify-content-center align-items-center">
+  <div class="card w-100">
+    <div class="card-body">
+      <app-table
+        [isLoading]="loading"
+        [total]="total"
+        [headers]="headers"
+        [data]="interests"
+        [totalRecords]="totalRecords"
+        (sort)="onSort($event)"
+        (pageChange)="changePage($event)"
+        (onSearch)="search($event)"
+        (onAdd)="onAdd()"
+      >
+        <tr body *ngFor="let interest of interests">
+          <td *ngIf="!loading">{{ interest.name }}</td>
+          <td *ngIf="!loading">
+            <div class="d-flex justify-content-end gap-2 align-items-center">
+              <!-- <i class="fa-solid fa-pen icon-pen-color" (click)="test(interest)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i> -->
+              <i class="fa-solid fa-trash-can icon-trash-color" (click)="openDestroy(interest)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
+            </div>
+          </td>
+        </tr>
+      </app-table>
+    </div>
+  </div>
+</div>
+
+<app-modal 
+  [title]="(!interestId) ? 'Agregar Interés' : 'Modificar Interés'" 
+  [isVisible]="display" 
+  [isLoading]="modalLoading" 
+  [minWidth]="{ width: '35vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideModal()"
+  (onAccept)="addOrUpdateInterest()"
+>
+  <div body>
+    <div class="p-fluid grid mt-4" [formGroup]="interestForm">
+      <div class="field col-8 md:col-8">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
+          <label for="inputtext">Nombre <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-4 md:col-4">
+        <span class="p-float-label">
+          <p-dropdown [options]="icons" formControlName="icon" optionLabel="name" optionValue="icon" appendTo="body" [autoDisplayFirst]="false"> 
+            <ng-template let-icon pTemplate="selectedItem">
+              <div class="flex justify-content-center align-items-center">
+                <i [ngClass]="['fas', icon.icon, 'icon-eye-color']" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
+              </div>
+            </ng-template>
+            <ng-template let-icon pTemplate="item">
+              <div class="flex justify-content-center align-items-center">
+                <i [ngClass]="['fas', icon.icon, 'icon-eye-color']" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <label for="inputtext">Icono <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal 
+  [title]="'Eliminar profesor'" 
+  [isVisible]="displayDestroy" 
+  [isLoading]="isLoadingDestroy" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideDestroyModal()"
+  (onAccept)="destroyInterest()"
+>
+  <div body>
+    <h3 class="text-center" *ngIf="interestToDestroy"> {{ "Desea eliminar a " + interestToDestroy.name + " ?"}} </h3>
+  </div>
+</app-modal>

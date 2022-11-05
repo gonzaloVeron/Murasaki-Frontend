@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { ToastService } from '../shared/services/toast.service';
-import { SidebarService } from '../sidebar/services/sidebar.service';
+import { SidebarService } from '../shared/services/sidebar.service';
 import { TableHeader } from '../table/models/table-header';
-import { TeachersService } from './services/teachers.service';
+import { TeachersService } from '../shared/services/teachers.service';
 
 @Component({
   selector: 'app-teachers',
@@ -49,17 +50,23 @@ export class TeachersComponent implements OnInit {
     private toastService: ToastService,
     private teachersService: TeachersService,
     private formBuilder: FormBuilder,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
     this.sidebarService.changeTitle("Profesores");
     this.buildForm();
     this.teachersService.find("", 0, 5).subscribe(
-      (response: any) => {
-        this.teachers = response.content;
-        console.log(this.teachers);
-        this.totalRecords = response.totalElements;
+      {
+        next: (response: any) => {
+          this.teachers = response.content;
+          console.log(this.teachers);
+          this.totalRecords = response.totalElements;
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+        }
       }
     );
   }
@@ -83,14 +90,19 @@ export class TeachersComponent implements OnInit {
 
   getTeacherToModify(){
     this.teachersService.getUserTeacherById(this.teacherId).subscribe(
-      (response: any) => {
-        let keys = Object.keys(response);
-        keys.forEach(k => {
-          console.log(k)
-          if(!(k == "id" || k == "students")){
-            this.teacherForm.get(k).setValue(response[k]);
-          }
-        });
+      {
+        next: (response: any) => {
+          let keys = Object.keys(response);
+          keys.forEach(k => {
+            //console.log(k)
+            if(!(k == "id" || k == "students")){
+              this.teacherForm.get(k).setValue(response[k]);
+            }
+          });
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+        }
       }
     )
   }
@@ -108,10 +120,14 @@ export class TeachersComponent implements OnInit {
 
   findTeachers(){
     this.teachersService.find(this.searchText, this.page, this.size).subscribe(
-      (response: any) => {
-        this.teachers = response.content;
-        this.totalRecords = response.totalElements;
-        console.log(response);
+      {
+        next: (response: any) => {
+          this.teachers = response.content;
+          this.totalRecords = response.totalElements;
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+        }
       }
     );
   }
@@ -124,11 +140,16 @@ export class TeachersComponent implements OnInit {
   destroyTeacher(){    
     this.destroyModalButtonLoading = true;
     this.teachersService.delete(this.teacherToDestroy.id).subscribe(
-      (response: any) => {
-        this.findTeachers();
-        this.toastService.displaySuccess("Profesor borrado correctamente");
-        this.destroyModalButtonLoading = false;
-        this.displayDestroyTeacherModal = false;
+      {
+        next: (response: any) => {
+          this.findTeachers();
+          this.toastService.displaySuccess("Profesor borrado correctamente");
+          this.destroyModalButtonLoading = false;
+          this.displayDestroyTeacherModal = false;
+        },
+        error: (error: any) => {
+          this.errorHandlerService.handle(error);
+        }
       }
     );
   }
@@ -148,24 +169,34 @@ export class TeachersComponent implements OnInit {
       this.addModalButtonLoading = true;
       if(this.teacherId){
         this.teachersService.update(this.teacherId, this.teacherForm.getRawValue()).subscribe(
-          (response: any) => {
-            this.findTeachers();
-            this.toastService.displaySuccess("Profesor modificado correctamente")
-            this.addModalButtonLoading = false;
-            this.teacherForm.reset();
-            this.hideAddOrUpdateModal();
-            this.teacherId = null;
+          {
+            next: (response: any) => {
+              this.findTeachers();
+              this.toastService.displaySuccess("Profesor modificado correctamente")
+              this.addModalButtonLoading = false;
+              this.teacherForm.reset();
+              this.hideAddOrUpdateModal();
+              this.teacherId = null;
+            },
+            error: (responseError: any) => {
+              this.errorHandlerService.handle(responseError);
+            }
           }
          );
       }else{
         this.teachersService.save(this.teacherForm.getRawValue()).subscribe(
-         (response: any) => {
-           this.findTeachers();
-           this.toastService.displaySuccess("Profesor agregado correctamente")
-           this.addModalButtonLoading = false;
-           this.teacherForm.reset();
-           this.hideAddOrUpdateModal();
-         }
+          {
+            next: (response: any) => {
+              this.findTeachers();
+              this.toastService.displaySuccess("Profesor agregado correctamente")
+              this.addModalButtonLoading = false;
+              this.teacherForm.reset();
+              this.hideAddOrUpdateModal();
+            },
+            error: (responseError: any) => {
+              this.errorHandlerService.handle(responseError);
+            }
+          }
         );
       }
     }

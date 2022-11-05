@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SidebarComponent } from '../sidebar.component';
+import { SidebarComponent } from '../../sidebar/sidebar.component';
 
 @Injectable({
   providedIn: 'root'

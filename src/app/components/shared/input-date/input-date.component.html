@@ -1,0 +1,17 @@
+<div [formGroup]="form">
+  <span class="p-float-label">
+      <p-inputMask 
+        [mask]="setMask()" 
+        [placeholder]="setMask()" 
+        [slotChar]="setSlotChar()" 
+        formControlName="date"
+        [ngClass]="checkInvalid('date')"
+        (onBlur)="OnBlur($event)"
+      >
+      </p-inputMask>
+      <label for="calendar"> 
+        {{ title }} 
+        <span style="color: #e75e5e" *ngIf="isImportant">(*)</span>
+      </label>
+  </span>
+</div>

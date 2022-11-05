@@ -24,6 +24,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,11 +34,12 @@ import { StudentDetailsComponent } from './components/student-details/student-de
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SharedModule } from './components/shared/shared.module';
 import { StudentFormComponent } from './components/student-form/student-form.component';
-import { StudentFormService } from './components/student-form/services/student-form.service';
+import { StudentFormService } from './components/shared/services/student-form.service';
 import { TeachersComponent } from './components/teachers/teachers.component';
-import { SidebarService } from './components/sidebar/services/sidebar.service';
-import { TeachersService } from './components/teachers/services/teachers.service';
+import { SidebarService } from './components/shared/services/sidebar.service';
+import { TeachersService } from './components/shared/services/teachers.service';
 import { AuthModule } from './components/auth/auth.module';
+import { InterestsComponent } from './components/interests/interests.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { AuthModule } from './components/auth/auth.module';
     SidebarComponent,
     TeachersComponent,
     //LoginComponent
+    InterestsComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,8 @@ import { AuthModule } from './components/auth/auth.module';
     MultiSelectModule,
     RippleModule,
     ButtonModule,
-    AuthModule
+    AuthModule,
+    OverlayPanelModule
   ],
   providers: [StudentFormService, SidebarService, TeachersService],
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalUserService } from '../shared/services/local-user.service';
 import { TableHeader } from '../table/models/table-header';
-import { SidebarService } from './services/sidebar.service';
+import { SidebarService } from '../shared/services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',

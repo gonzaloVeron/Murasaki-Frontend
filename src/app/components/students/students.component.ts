@@ -2,8 +2,11 @@ import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, Elemen
 import { Router } from '@angular/router';
 import { TableHeader } from 'src/app/components/table/models/table-header';
 import { ToastService } from '../shared/services/toast.service';
-import { SidebarService } from '../sidebar/services/sidebar.service';
-import { StudentsService } from './services/students.service';
+import { SidebarService } from '../shared/services/sidebar.service';
+import { StudentsService } from '../shared/services/students.service';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Link } from '../shared/models/link';
 
 @Component({
   selector: 'app-students',
@@ -19,7 +22,7 @@ export class StudentsComponent implements OnInit{
   headers: TableHeader[] = [
     { name: "Nombre", key: "name" },
     { name: "Nivel", key: "jlptLevel" },
-    { name: "Profesor", key: "teacherDTO.name" },
+    //{ name: "Estado", key: "status"},
     { name: "", key: "" },
   ];
 
@@ -33,6 +36,13 @@ export class StudentsComponent implements OnInit{
   displayDestroyStudentModal: boolean = false;
   modalButtonLoading: boolean = false;
 
+  /** Modal */
+  displayLessonModal: boolean = false;
+  modalLessonLoading: boolean = false;
+  lessonForm: FormGroup;
+
+  links: any[] = [];
+
   onSort(event: any){ //falta tipar
     console.log(event);
   }
@@ -41,16 +51,24 @@ export class StudentsComponent implements OnInit{
     private studentsService: StudentsService, 
     private router: Router,
     private toastService: ToastService,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private errorHandlerService: ErrorHandlerService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.buildLessonForm();
     this.sidebarService.changeTitle("Estudiantes");
     this.studentsService.find("", 0, 5).subscribe(
-      (response: any) => { //falta tipar
-        this.students = response.content;
-        this.totalRecords = response.totalElements;
-        console.log(response);
+      {
+        next: (response: any) => { //falta tipar
+          this.students = response.content;
+          this.totalRecords = response.totalElements;
+          console.log(response);
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+        }
       }
     );
   }
@@ -80,10 +98,15 @@ export class StudentsComponent implements OnInit{
 
   findStudents(){
     this.studentsService.find(this.searchText, this.page, this.size).subscribe(
-      (response: any) => {
-        this.students = response.content;
-        this.totalRecords = response.totalElements;
-        console.log(response);
+      {
+        next: (response: any) => {
+          this.students = response.content;
+          this.totalRecords = response.totalElements;
+          console.log(response);
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+        }
       }
     );
   }
@@ -96,12 +119,15 @@ export class StudentsComponent implements OnInit{
   destroyStudent(){    
     this.modalButtonLoading = true;
     this.studentsService.delete(this.studentToDestroy.id).subscribe(
-      (response: any) => {
-        // let indexToSplice = this.students.indexOf(this.studentToDestroy);
-        // this.students.splice(indexToSplice, 1);
-        this.findStudents();
-        this.toastService.displaySuccess("Estudiante borrado correctamente");
-        this.modalButtonLoading = false;
+      {
+        next: (response: any) => {
+          this.findStudents();
+          this.toastService.displaySuccess("Estudiante borrado correctamente");
+          this.modalButtonLoading = false;
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+        }
       }
     )
   }
@@ -110,5 +136,73 @@ export class StudentsComponent implements OnInit{
     this.displayDestroyStudentModal = false;
     this.studentToDestroy = null;
   }
+
+  displayAddLessonModal(student: any){
+    this.studentToDestroy = student; // utilizado temporalmente para agregar clases
+    this.displayLessonModal = true;
+  }
+  
+  hideLessonModal(){
+    this.studentToDestroy = null;
+    this.displayLessonModal = false;
+    this.links = [];
+    this.lessonForm.reset();
+  }
+
+  addLesson(){
+    this.links = this.links.filter(link => link.title != "" && link.url != "");
+    this.lessonForm.get("linkDTOS").setValue(this.links);
+    if(this.lessonForm.valid){
+      this.modalLessonLoading = true;
+      this.studentsService.addLesson(this.studentToDestroy.id, this.lessonForm.getRawValue()).subscribe(
+        {
+          next: (response: any) => {
+            this.modalLessonLoading = false;
+            this.hideLessonModal();
+            this.toastService.displaySuccess("Clase agregada correctamente");
+          },  
+          error: (resposneError: any) => {
+            this.modalLessonLoading = false;
+            this.errorHandlerService.handle(resposneError);
+          }
+        }
+      )
+    }
+  }
+
+  checkInvalid(fieldName: string) {
+    return (this.lessonForm.get(fieldName).invalid && this.lessonForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
+  }
+
+  buildLessonForm(){
+    this.lessonForm = this.formBuilder.group({
+      date: [null, Validators.required],
+      content: [null, Validators.required],
+      homework: [null],
+      linkDTOS: [null, Validators.required]
+    });
+  }
+
+  setDateInForm(event){
+    this.lessonForm.get("date").setValue(event);
+  }
+  
+  updateTitleLink(link, event){
+    link.title = event.target.value;
+  }
+
+  updateUrlLink(link, event){
+    link.url = event.target.value; 
+  }
+
+  addLink(){
+    this.links.push(new Link("", ""));
+  }
+
+  removeLink(link){
+    let index = this.links.indexOf(link);
+    this.links.splice(index, 1);
+  }
+  
 
 }

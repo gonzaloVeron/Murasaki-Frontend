@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiRestBase } from '../../shared/services/api_rest_base.service';
+import { ApiRestBase } from './api_rest_base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +17,11 @@ export class StudentFormService {
   }
 
   getAllInterests(){
-    return this.apiRestBase.get("/interest");
+    return this.apiRestBase.get("/interest/jwt");
   }
 
   save(data: any){
-    return this.apiRestBase.post("/student", data);
+    return this.apiRestBase.post("/student/jwt", data);
   }
 
   update(id: number, data: any){

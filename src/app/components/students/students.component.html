@@ -15,10 +15,11 @@
         <tr body *ngFor="let student of students">
           <td *ngIf="!loading">{{ student.name }}</td>
           <td *ngIf="!loading">{{ student.jlptLevel }}</td>
-          <td *ngIf="!loading">{{ student.teacherDTO.name }}</td>
+          <!-- <td *ngIf="!loading">{{ student.teacherDTO.name }}</td> -->
           <td *ngIf="!loading">
             <div class="d-flex justify-content-end gap-2 align-items-center">
               <i class="fas fa-eye icon-eye-color" (click)="toStudentDetail(student)" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
+              <i class="fa-solid fa-clipboard-list add-class-color" (click)="displayAddLessonModal(student)" [pTooltip]="'Agregar clase'" [tooltipPosition]="'top'"></i>
               <i class="fa-solid fa-pen icon-pen-color" (click)="onUpdate(student)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
               <i class="fa-solid fa-trash-can icon-trash-color" (click)="displayDestroyModal(student)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
             </div>
@@ -40,5 +41,83 @@
 >
   <div body>
     <h3 class="text-center" *ngIf="studentToDestroy"> {{ "Desea eliminar a " + studentToDestroy.name + " ?"}} </h3>
+  </div>
+</app-modal>
+
+<app-modal 
+  [isVisible]="displayLessonModal" 
+  [isLoading]="modalLessonLoading" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideLessonModal()"
+  (onAccept)="addLesson()"
+  [title]="'Agregar clase'" 
+>
+  <div body>
+    <div class="p-fluid grid pt-4" [formGroup]="lessonForm">
+      <div class="field col-12 md:col-6">
+        <app-input-date
+          [title]="'Fecha de la clase'"
+          [isImportant]="true"
+          [needHours]="false"
+          (setDate)="setDateInForm($event)"
+        >
+        </app-input-date>
+      </div>
+      <div class="field col-12 md:col-6">
+        <button 
+          class="p-button-primary" 
+          pButton
+          pRipple
+          label="Adjuntar enlace externo"  
+          (click)="op.show($event, actualTarget)"
+        >
+        </button>
+        <p-overlayPanel #op >
+            <ng-template pTemplate>
+              <div style="width: 500px;">
+                <div class="p-fluid grid pt-4">
+                  <div class="col-12 md:col-12" *ngFor="let l of links">
+                    <div class="p-fluid grid">
+                      <div class="field col-12 md:col-3">
+                        <span class="p-float-label">
+                          <input type="text" id="inputtext" pInputText [value]="l.title" (change)="updateTitleLink(l, $event)"> 
+                          <label for="inputtext">Titulo</label>
+                        </span>
+                      </div>
+                      <div class="field col-12 md:col-8">
+                        <span class="p-float-label">
+                          <input type="text" id="inputtext" pInputText placeholder="https://www.google.com.ar" [value]="l.url" (change)="updateUrlLink(l, $event)"> 
+                          <label for="inputtext">Enlace</label>
+                        </span>
+                      </div>
+                      <div class="field col-12 md:col-1 d-flex align-items-center">
+                        <i class="fas fa-circle-xmark icon-eye-color" [pTooltip]="'Eliminar'" (click)="removeLink(l)" [tooltipPosition]="'top'"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="field col-12 md:col-12 d-flex justify-content-center align-items-center">
+                    <i class="fas fa-circle-plus icon-eye-color" [pTooltip]="'Agregar'" (click)="addLink()" [tooltipPosition]="'top'"></i>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+        </p-overlayPanel>
+        
+        <div #actualTarget></div>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" [ngClass]="[checkInvalid('content')]" formControlName="content" pInputTextarea></textarea>
+          <label for="inputtext">Contenido de la clase <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" formControlName="homework" pInputTextarea></textarea>
+          <label for="inputtext">Tarea de la clase</label>
+        </span>
+      </div>
+    </div>
   </div>
 </app-modal>

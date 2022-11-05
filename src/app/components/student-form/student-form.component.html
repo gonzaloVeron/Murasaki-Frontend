@@ -49,7 +49,7 @@
         </span>
       </div>
       <div class="field col-12 md:col-4">
-        <span class="p-float-label">
+        <!-- <span class="p-float-label">
           <p-dropdown
             styleClass="p-dropdown"
             [ngClass]="[checkInvalid('teacherAsignedId')]"
@@ -60,6 +60,10 @@
             [autoDisplayFirst]="false"
           >
           </p-dropdown>
+          <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
+        </span> -->
+        <span class="p-float-label">
+          <input type="text" id="inputtext" [value]="actualTeacherName" pInputText disabled> 
           <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
         </span>
       </div>
@@ -89,9 +93,9 @@
       <div class="field col-12 md:col-12">
         <div class="w-100">
           <app-button
-            [text]="'Agregar'"
-            [isLoading]="false"
-            [isDisabled]="false"
+            [text]="(studentId) ? 'Modificar' : 'Agregar'"
+            [isLoading]="isLoading"
+            [isDisabled]="isLoading || !studentForm.valid"
             (onClick)="saveOrUpdate()"  
           >
           </app-button>

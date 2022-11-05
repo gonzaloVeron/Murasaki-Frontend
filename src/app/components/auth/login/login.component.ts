@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 import { LocalUserService } from '../../shared/services/local-user.service';
-import { LoginService } from './services/login.service';
+import { LoginService } from '../../shared/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private loginService: LoginService, 
     private localUserService: LocalUserService,
-    private router: Router
+    private router: Router,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -37,16 +39,27 @@ export class LoginComponent implements OnInit {
   login(){
     this.isLoading = true;
     this.loginService.authenticate(this.loginForm.getRawValue()).subscribe(
-      (response: any) => {        
-        this.localUserService.saveUserData(
-          {
-            teacherName: response.teacherName,
-            token: response.token
-          }
-        );
-        this.isLoading = false;
-        this.router.navigate(["app"]);
-      }
+      {
+        next: (response: any) => {
+          this.localUserService.saveUserData(
+            {
+              teacherName: response.teacherName,
+              token: response.token
+            }
+          );
+          this.isLoading = false;
+          this.router.navigate(["app"]);
+        },
+        error: (responseError) => {
+          this.isLoading = false;
+          this.errorHandlerService.handle(responseError);
+        }
+      }      
     );
   }
+
+  toRecovery(){
+    this.router.navigate(["auth", "recovery"]);
+  }
+  
 }
