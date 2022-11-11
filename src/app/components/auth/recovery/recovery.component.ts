@@ -47,7 +47,7 @@ export class RecoveryComponent implements OnInit {
           this.isLoading = false;
           this.toastService.displaySuccess("Se ha enviado un mail para la recuperación");
           this.router.navigate(["auth"]);
-          this.errorHandlerService.handle(responseError);
+          //this.errorHandlerService.handle(responseError);
         }
       }      
     );

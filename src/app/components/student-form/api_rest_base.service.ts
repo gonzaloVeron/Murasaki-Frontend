@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { ToastService } from './toast.service';
+import { ToastService } from '../shared/services/toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiRestBase {
 
-  constructor(private http: HttpClient, private toastService: ToastService) { }
+  constructor(private http: HttpClient) { }
 
   get<T>(url: string) {
     const options = this.generateHeader();

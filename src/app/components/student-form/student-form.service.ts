@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 import { ApiRestBase } from './api_rest_base.service';
 
 @Injectable({
@@ -25,7 +26,7 @@ export class StudentFormService {
   }
 
   update(id: number, data: any){
-    return this.apiRestBase.put(`/student/${id}`, data);
+    return this.apiRestBase.put(`/student/jwt/${id}`, data);
   }
 
 }

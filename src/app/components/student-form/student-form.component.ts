@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { ToastService } from '../shared/services/toast.service';
-import { StudentFormService } from '../shared/services/student-form.service';
+import { StudentFormService } from './student-form.service';
 import { LocalUserService } from '../shared/services/local-user.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class StudentFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private studentFormService: StudentFormService,
+    public studentFormService: StudentFormService,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
     private errorHandlerService: ErrorHandlerService,

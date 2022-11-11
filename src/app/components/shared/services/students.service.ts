@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ApiRestBase } from './api_rest_base.service';
+import { ApiRestBase } from '../../student-form/api_rest_base.service';
 
 @Injectable({
   providedIn: 'root'

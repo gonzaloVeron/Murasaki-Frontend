@@ -1,6 +1,7 @@
+import { HttpHeaders } from "@angular/common/http";
 import { of } from "rxjs";
 
-const basePath = "http://localhost:9000/api/v1";
+const basePath = "http://localhost:8080/api/v1";
 
 const interestsList = [
     {
@@ -33,8 +34,30 @@ const user = {
     tel: 1162641228
 };
 
+function generateHeader(contentType: any = "application/json") {
+    let httpOptions = {};
+    if (localStorage.getItem("token")) {
+      httpOptions = {
+        headers: new HttpHeaders({
+          "Content-Type": contentType,
+          // "Access-Control-Allow-Origin": "*",
+          Authorization: JSON.parse(localStorage.getItem("token")!),
+        }),
+      };
+    } else {
+      httpOptions = {
+        headers: new HttpHeaders({
+          "Content-Type": contentType,
+          // "Access-Control-Allow-Origin": "*",
+        }),
+      };
+    }
+    return httpOptions;
+  }
+
 export const httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'put', 'post']);
 
-httpClientSpy.get.withArgs(`http://localhost:8080/api/v1/interest/jwt`).and.returnValue(of(interestsList));
-
+httpClientSpy.get.withArgs(`${basePath}/interest/jwt`).and.returnValue(of(interestsList));
+// httpClientSpy.get.withArgs(`http://localhost:8080/api/v1/interest/jwt`).and.returnValue(of(interestsList));
+// http://localhost:8080/api/v1/interest/jwt
 // httpClientSpy.get.withArgs(`${basePath}/student/jwt/1`).and.returnValue(of(user));

@@ -45,21 +45,20 @@
         <div class="card-body">
           <div class="d-flex flex-column justify-content-around h-100">
             <div class="d-flex justify-content-start align-items-center gap-2">
-              <i class="fa-solid fa-envelope contact-number"></i>
+              <i class="fa-solid fa-envelope contact-number icons"></i>
               <label class="contact-number"> {{ student.email + " [Alumno]" }} </label>
             </div>
             <div class="d-flex justify-content-start align-items-center gap-2">
-              <i class="fa-solid fa-envelope contact-number"></i>
+              <i class="fa-solid fa-envelope contact-number icons"></i>
               <label class="contact-number"> {{ student.emailTutor + " [Tutor]" }} </label>
             </div>
             <div class="d-flex justify-content-start align-items-center gap-2">
-              <i class="fa-solid fa-phone contact-number"></i>
+              <i class="fa-solid fa-phone contact-number icons"></i>
               <label class="contact-number"> {{ student.tel }} </label>
             </div>
           </div>
         </div>
       </div>
-      <!-- <button class="btn btn-primary"> AAA </button> -->
     </div>
     <div class="col-12">
       <div class="card" *ngIf="lessons.length > 0">
@@ -67,8 +66,8 @@
           <h3 class="text-center mb-3">Historial de clases</h3>
           <p-timeline [value]="lessons" align="alternate" styleClass="customized-timeline">
             <ng-template pTemplate="marker" let-event>
-                <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
-                    <i [ngClass]="event.icon"></i>
+                <span class="custom-marker shadow-2 test" [style.backgroundColor]="event.color">
+                    <i [ngClass]="[event.icon]"></i>
                 </span>
             </ng-template>
             <ng-template pTemplate="content" let-event>
@@ -85,17 +84,15 @@
                   </ng-template>
                   <p>
                     {{ event.content }}
-                    
-                    <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                      quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas! -->
+                  </p>
+                  <p-divider align="center">
+                    <b>Tarea</b>
+                  </p-divider>
+                  <p>
+                    {{ event.homework }}
                   </p>
                   <ng-template pTemplate="footer">
-                    
                     <app-link *ngFor="let link of event.links" [title]="link.title" [url]="link.url"></app-link>
-                    <!-- <app-link [title]="'Google'" [url]="'http://www.google.com.ar'"></app-link>
-                    <app-link [title]="'Github'" [url]="'https://github.com'"></app-link>
-                    <app-link [title]="'Stack overflow'" [url]="'https://es.stackoverflow.com'"></app-link> -->
-                    
                   </ng-template>
                 </p-card>
             </ng-template>

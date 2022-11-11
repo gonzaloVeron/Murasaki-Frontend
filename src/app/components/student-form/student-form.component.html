@@ -1,3 +1,6 @@
+<!-- <div>
+  asd
+</div> -->
 <div class="card">
   <div class="card-header">
     <h3 class="text-center">
@@ -8,68 +11,50 @@
     <div class="p-fluid grid" [formGroup]="studentForm">
       <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <input type="text" id="inputtext" data-test-id="user_name" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
+          <input type="text" id="inputtext" data-testid="student_name" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
           <label for="inputtext">Nombre completo <span class="mandatory">(*)</span></label>
         </span>
       </div>
-      <!-- <div class="field col-12 md:col-6">
-        <span class="p-float-label">
-          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
-          <label for="inputtext">Edad <span class="mandatory">(*)</span></label>
-        </span>
-      </div> -->
       <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <input type="text" id="inputtext" [ngClass]="[checkInvalid('email')]" pInputText formControlName="email"> 
+          <input type="text" id="inputtext" data-testid="student_email" [ngClass]="[checkInvalid('email')]" pInputText formControlName="email"> 
           <label for="inputtext">Correo electrónico <span class="mandatory">(*)</span></label>
         </span>
       </div>
       <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
+          <p-inputNumber id="inputnumber" data-testid="student_age" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
           <label for="inputtext">Edad <span class="mandatory">(*)</span></label>
         </span>
       </div>
       <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <input type="text" id="inputtext" [ngClass]="[checkInvalid('emailTutor')]" pInputText formControlName="emailTutor"> 
+          <input type="text" id="inputtext" data-testid="student_emailTutor" [ngClass]="[checkInvalid('emailTutor')]" pInputText formControlName="emailTutor"> 
           <label for="inputtext">Correo electrónico del tutor <span class="mandatory">(*)</span></label>
         </span>
       </div>
       <div class="field col-12 md:col-4">
         <span class="p-float-label">
-          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('tel')]" [useGrouping]="false" formControlName="tel"></p-inputNumber> 
+          <p-inputNumber id="inputnumber" data-testid="student_tel" [ngClass]="[checkInvalid('tel')]" [useGrouping]="false" formControlName="tel"></p-inputNumber> 
           <label for="inputtext">Teléfono <span class="mandatory">(*)</span></label>
         </span>
       </div>
       <div class="field col-12 md:col-4">
         <span class="p-float-label">
-          <p-inputNumber id="inputnumber" [ngClass]="[checkInvalid('jlptLevel')]" [useGrouping]="false" formControlName="jlptLevel"></p-inputNumber> 
+          <p-inputNumber id="inputnumber" data-testid="student_jlptLevel" [ngClass]="[checkInvalid('jlptLevel')]" [useGrouping]="false" formControlName="jlptLevel"></p-inputNumber> 
           <label for="inputtext">Nivel de japonés <span class="mandatory">(*)</span></label>
         </span>
       </div>
       <div class="field col-12 md:col-4">
-        <!-- <span class="p-float-label">
-          <p-dropdown
-            styleClass="p-dropdown"
-            [ngClass]="[checkInvalid('teacherAsignedId')]"
-            [options]="teachersAvailables" 
-            formControlName="teacherAsignedId" 
-            optionLabel="name"
-            optionValue="id"
-            [autoDisplayFirst]="false"
-          >
-          </p-dropdown>
-          <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
-        </span> -->
         <span class="p-float-label">
-          <input type="text" id="inputtext" [value]="actualTeacherName" pInputText disabled> 
+          <input type="text" id="inputtext" data-testid="teacher_name" [value]="actualTeacherName" pInputText disabled> 
           <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
         </span>
       </div>
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
           <p-multiSelect
+            data-testid="student_interests"
             inputId="interests"
             formControlName = "interests"
             [ngClass]="[checkInvalid('interests')]"
@@ -83,7 +68,7 @@
       </div>
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
-          <textarea inputId="textarea" rows="3" cols="30" formControlName="priorKnowledge" pInputTextarea></textarea>
+          <textarea inputId="textarea" rows="3" cols="30" data-testid="student_priorKnowledge" formControlName="priorKnowledge" pInputTextarea></textarea>
           <label for="inputtext">Conocimientos previos</label>
         </span>
       </div>
@@ -93,6 +78,7 @@
       <div class="field col-12 md:col-12">
         <div class="w-100">
           <app-button
+            data-testid="saveOrUpdateButton"
             [text]="(studentId) ? 'Modificar' : 'Agregar'"
             [isLoading]="isLoading"
             [isDisabled]="isLoading || !studentForm.valid"
@@ -104,3 +90,19 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- <span class="p-float-label">
+  <p-dropdown
+    styleClass="p-dropdown"
+    [ngClass]="[checkInvalid('teacherAsignedId')]"
+    [options]="teachersAvailables" 
+    formControlName="teacherAsignedId" 
+    optionLabel="name"
+    optionValue="id"
+    [autoDisplayFirst]="false"
+  >
+  </p-dropdown>
+  <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
+</span> -->

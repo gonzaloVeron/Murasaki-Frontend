@@ -25,6 +25,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DividerModule } from 'primeng/divider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +35,7 @@ import { StudentDetailsComponent } from './components/student-details/student-de
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SharedModule } from './components/shared/shared.module';
 import { StudentFormComponent } from './components/student-form/student-form.component';
-import { StudentFormService } from './components/shared/services/student-form.service';
+import { StudentFormService } from './components/student-form/student-form.service';
 import { TeachersComponent } from './components/teachers/teachers.component';
 import { SidebarService } from './components/shared/services/sidebar.service';
 import { TeachersService } from './components/shared/services/teachers.service';
@@ -79,7 +80,8 @@ import { InterestsComponent } from './components/interests/interests.component';
     RippleModule,
     ButtonModule,
     AuthModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    DividerModule
   ],
   providers: [StudentFormService, TeachersService],
   bootstrap: [AppComponent]

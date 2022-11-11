@@ -24,7 +24,7 @@ export class StudentDetailsComponent implements OnInit {
       next: (paramsAsMap: any) => {
         this.studentDetailService.getStudentById(paramsAsMap.params["id"]).subscribe({
           next: (resp: any) => {
-            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Clase', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f', links: elem.links } });
+            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Clase', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f', links: elem.links, homework: elem.homework } });
             this.student = resp;
           },
           error: (responseError: any) => {
