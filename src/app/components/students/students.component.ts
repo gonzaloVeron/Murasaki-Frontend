@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableHeader } from 'src/app/components/table/models/table-header';
 import { ToastService } from '../shared/services/toast.service';
@@ -11,7 +11,8 @@ import { Link } from '../shared/models/link';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
-  styleUrls: ['./students.component.scss']
+  styleUrls: ['./students.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StudentsComponent implements OnInit{
 
@@ -123,9 +124,11 @@ export class StudentsComponent implements OnInit{
           this.findStudents();
           this.toastService.displaySuccess("Estudiante borrado correctamente");
           this.modalButtonLoading = false;
+          this.hideDestroyModal();
         },
         error: (responseError: any) => {
           this.errorHandlerService.handle(responseError);
+          this.modalButtonLoading = false;
         }
       }
     )

@@ -57,6 +57,7 @@ export class TeachersComponent implements OnInit {
   ngOnInit() {
     this.sidebarService.changeTitle("Profesores");
     this.buildForm();
+    this.teacherForm.get("email").disable();
     this.teachersService.find("", 0, 5).subscribe(
       {
         next: (response: any) => {

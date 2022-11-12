@@ -53,11 +53,11 @@
   [isModal]="true" 
   (onCancel)="hideLessonModal()"
   (onAccept)="addLesson()"
-  [title]="'Agregar clase'" 
+  [title]="'Agregar clase ' + '(' + studentToDestroy?.name + ')'" 
 >
   <div body>
     <div class="p-fluid grid pt-4" [formGroup]="lessonForm">
-      <div class="field col-12 md:col-6">
+      <div class="field col-12 md:col-12">
         <app-input-date
           [title]="'Fecha de la clase'"
           [isImportant]="true"
@@ -66,7 +66,7 @@
         >
         </app-input-date>
       </div>
-      <div class="field col-12 md:col-6">
+      <!-- <div class="field col-12 md:col-6">
         <button 
           class="p-button-primary" 
           pButton
@@ -107,7 +107,7 @@
         </p-overlayPanel>
         
         <div #actualTarget></div>
-      </div>
+      </div> -->
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
           <textarea inputId="textarea" rows="3" cols="30" [ngClass]="[checkInvalid('content')]" formControlName="content" pInputTextarea></textarea>
@@ -120,6 +120,31 @@
           <label for="inputtext">Tarea de la clase</label>
         </span>
       </div>
+      <div class="col-12 md:col-12" *ngFor="let l of links">
+        <div class="p-fluid grid">
+          <div class="field col-12 md:col-3">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText [value]="l.title" (change)="updateTitleLink(l, $event)"> 
+              <label for="inputtext">Titulo</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-8">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText placeholder="https://www.google.com.ar" [value]="l.url" (change)="updateUrlLink(l, $event)"> 
+              <label for="inputtext">Enlace</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-1 d-flex align-items-center">
+            <i class="fas fa-circle-xmark icon-eye-color" [pTooltip]="'Eliminar'" (click)="removeLink(l)" [tooltipPosition]="'top'"></i>
+          </div>
+        </div>
+      </div>
+      <div class="field col-12 md:col-12 d-flex justify-content-center align-items-center gap-2">
+        <!-- <label>Agregar enlace externo</label> -->
+        <!-- <i class="fas fa-circle-plus icon-eye-color" [pTooltip]="'Agregar'" (click)="addLink()" [tooltipPosition]="'top'"></i> -->
+        <button pButton pRipple type="button" label="Agregar enlace externo" class="p-button-text" (click)="addLink()"></button>
+      </div>
+      
     </div>
   </div>
 </app-modal>

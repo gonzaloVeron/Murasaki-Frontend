@@ -41,7 +41,7 @@
               pRipple
               label=""  
               (click)="recover()"
-              [disabled]="isLoading"
+              [disabled]="isLoading || recoveryForm.invalid"
             >
               <div class="d-flex w-100 gap-2 justify-content-center align-items-center">
                 <p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>

@@ -17,9 +17,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { StudentFormService } from './student-form.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { ApiRestBase } from './api_rest_base.service';
+import { ApiRestBase } from '../shared/services/api_rest_base.service';
 import { SharedModule } from '../shared/shared.module';
-import { httpClientSpy } from './http-client-spy';
 import { DividerModule } from 'primeng/divider';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AuthModule } from '../auth/auth.module';
@@ -35,10 +34,9 @@ import { DialogModule } from 'primeng/dialog';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { apiRestBaseSpy } from './api-rest-base-spy';
+import { apiRestBaseSpy } from '../shared/spies/api-rest-base-spy';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 import { LocalUserService } from '../shared/services/local-user.service';
-import { localUserServiceSpy } from './local-user-service-spy';
 
 describe('StudentFormComponent', () => {
   let component: StudentFormComponent;
@@ -98,7 +96,7 @@ describe('StudentFormComponent', () => {
             })
           },
         },
-        { provide: LocalUserService, useValue: localUserService },
+        // { provide: LocalUserService, useValue: localUserService },
         { provide: Router, useValue: routerSpy },
       ]
     })
@@ -113,6 +111,23 @@ describe('StudentFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should go to auth path when click button and get an error with code 401', () => {
+    spyOn(component.studentFormService, "update").and.returnValue(throwError(() => { return { error: { status: 401 } } }));
+    const button = getByTestId("saveOrUpdateButton");
+    button.children[0].click();
+    fixture.detectChanges();
+    expect(apiRestBaseSpy.put).toHaveBeenCalled();
+    const navigateArgs = routerSpy.navigate.calls.first().args[0];
+    expect(navigateArgs).toContain("auth");
+  });
+
+  it('should trigger edit when click button', () => {
+    const button = getByTestId("saveOrUpdateButton");
+    button.children[0].click();
+    fixture.detectChanges();
+    expect(apiRestBaseSpy.put).toHaveBeenCalled();
   });
 
   it('should contain the name of the selected student', () => {
@@ -172,7 +187,7 @@ describe('StudentFormComponent', () => {
     expect(input.value).toBe("No sabe nada de japones");
   });
 
-  it('should see save button with Modificar label', () => {
+  it('should see save button with name Modificar', () => {
     const button = getByTestId('saveOrUpdateButton');
     expect(button.textContent).toBe("Modificar");
   });
@@ -189,13 +204,6 @@ describe('StudentFormComponent', () => {
     expect(button.children[0].disabled).toBeTruthy();
   });
 
-  it('should trigger edit when click button', () => {
-    const button = getByTestId("saveOrUpdateButton");
-    button.children[0].click();
-    fixture.detectChanges();
-    expect(apiRestBaseSpy.put).toHaveBeenCalled();
-  });
-
   it('should go to other page when click button', () => {
     apiRestBaseSpy.put.and.returnValue(of({}));
     const button = getByTestId("saveOrUpdateButton");
@@ -207,26 +215,6 @@ describe('StudentFormComponent', () => {
     expect(navigateArgs).toContain("sidebar");
     expect(navigateArgs).toContain("students");
   });
-
-  it('should go to other auth path when click button and get an error with code 401', () => {
-    spyOn(component.studentFormService, "update").and.returnValue(throwError(() => { return { error: { status: 401 } } }));
-    const button = getByTestId("saveOrUpdateButton");
-    button.children[0].click();
-    fixture.detectChanges();
-    expect(apiRestBaseSpy.put).toHaveBeenCalled();
-    const navigateArgs = routerSpy.navigate.calls.first().args[0];
-    expect(navigateArgs).toContain("auth");
-  });
-
-  // it('aaaa', () => {
-  //   component.studentForm.get("email").setValue(null);
-  //   fixture.detectChanges();
-  //   const button = getByTestId("saveOrUpdateButton");
-  //   button.children[0].click();
-  //   fixture.detectChanges();
-  //   console.log(component.studentForm.valid);
-  //   expect(apiRestBaseSpy.put).not.toHaveBeenCalled();
-  // })
 
   function getByTestId(testId: string){
     const resultHtml = fixture.debugElement.nativeElement;

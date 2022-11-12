@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiRestBase } from 'src/app/components/student-form/api_rest_base.service';
+import { ApiRestBase } from 'src/app/components/shared/services/api_rest_base.service';
 
 
 @Injectable({

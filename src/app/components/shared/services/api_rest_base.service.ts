@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { ToastService } from '../shared/services/toast.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'

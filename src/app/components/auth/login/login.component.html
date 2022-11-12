@@ -32,11 +32,11 @@
               pRipple
               label=""  
               (click)="login()"
-              [disabled]="isLoading"
+              [disabled]="isLoading || loginForm.invalid"
             >
               <div class="d-flex w-100 gap-2 justify-content-center align-items-center">
                 <p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>
-                <label class="p-button-label label-width"> Ingresar </label> 
+                <label [ngClass]="['p-button-label', (isLoading || loginForm.invalid) ? 'label-width' : 'label-width-pointer']"> Ingresar </label> 
               </div>
             </button>
           </div>

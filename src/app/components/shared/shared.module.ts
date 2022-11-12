@@ -16,7 +16,7 @@ import { RecoveryService } from './services/recovery.service';
 import { InputDateComponent } from './input-date/input-date.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarService } from './services/sidebar.service';
-import { ApiRestBase } from '../student-form/api_rest_base.service';
+import { ApiRestBase } from './services/api_rest_base.service';
 
 @NgModule({
   imports: [

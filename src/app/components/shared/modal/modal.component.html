@@ -1,6 +1,6 @@
 <p-dialog  [(visible)]="isVisible" [modal]="isModal" (onHide)="cancel()" [style]="minWidth">
   <ng-template pTemplate="header">
-    <label class="title">
+    <label class="title title-color">
       {{ title }}
     </label>
   </ng-template>
@@ -8,6 +8,22 @@
     <ng-content select="[body]"></ng-content>
   </ng-template>
   <ng-template *ngIf="needFooter" pTemplate="footer">
+    <!-- <button 
+      class="p-button-primary" 
+      pButton
+      pRipple
+      label="Cancelar"  
+      (click)="cancel()"
+      [disabled]="isLoading"
+    ></button>
+    <button 
+      class="p-button-primary" 
+      pButton
+      pRipple
+      label="Aceptar"
+      (click)="accept()"
+      [disabled]="isLoading"
+    ></button> -->
     <app-button
       [text]="'Cancelar'"
       (onClick)="cancel()"
@@ -23,7 +39,7 @@
       [icon]="''"
       [isDisabled]="isLoading"
       [isLoading]="isLoading"
-      >  
+    > 
     </app-button>
   </ng-template>
 </p-dialog>
