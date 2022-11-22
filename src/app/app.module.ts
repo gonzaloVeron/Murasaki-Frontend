@@ -26,6 +26,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DividerModule } from 'primeng/divider';
+import { CalendarModule } from 'primeng/calendar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -81,7 +82,8 @@ import { InterestsComponent } from './components/interests/interests.component';
     ButtonModule,
     AuthModule,
     OverlayPanelModule,
-    DividerModule
+    DividerModule,
+    CalendarModule
   ],
   providers: [StudentFormService, TeachersService],
   bootstrap: [AppComponent]

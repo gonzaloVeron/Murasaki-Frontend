@@ -7,6 +7,15 @@
     border-bottom: none;
 }
 
+.p-card{
+    box-shadow: none;
+    border-style: dashed;
+    border-color: #59558f;
+    //border: none;
+    background-color: white;
+    //border-bottom: none;
+}
+
 .card-footer{
     background-color: white;
     border-top: none;
@@ -62,6 +71,10 @@
     margin-bottom: 0.5rem;
 }
 
+.title-color {
+    color: #59558f;
+}
+
 .p-tag-icon {
     color: antiquewhite;
 }
@@ -74,6 +87,12 @@
     color: #6c757d;
 }
 
-.test {
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+.title-icon {
     cursor: pointer;
+    font-size: 22px;
+    margin-bottom: 0.5rem;
 }

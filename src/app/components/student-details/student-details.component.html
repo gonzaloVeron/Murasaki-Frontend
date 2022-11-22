@@ -3,7 +3,7 @@
     <div class="col-6">
       <div class="card" *ngIf="student">
         <div class="card-header">
-          <h3 class="text-center"> {{ student.name }} </h3>
+          <h3 class="text-center title-color"> {{ student.name }} </h3>
         </div>
         <div class="card-body">
           <div class="grid">
@@ -40,7 +40,7 @@
     <div class="col-6">
       <div class="card h-100" *ngIf="student">
         <div class="card-header">
-          <h3 class="text-center"> Contacto </h3>
+          <h3 class="text-center title-color"> Contacto </h3>
         </div>
         <div class="card-body">
           <div class="d-flex flex-column justify-content-around h-100">
@@ -61,24 +61,33 @@
       </div>
     </div>
     <div class="col-12">
-      <div class="card" *ngIf="lessons.length > 0">
+      <div class="card">
         <div class="card-body">
-          <h3 class="text-center mb-3">Historial de clases</h3>
-          <p-timeline [value]="lessons" align="alternate" styleClass="customized-timeline">
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <h3 class="text-center mb-3 title-color">Historial de clases</h3>
+            <i class="fa-solid fa-plus-circle title-icon title-color" (click)="displayAdd()" [pTooltip]="'Agregar'" [tooltipPosition]="'top'"></i>
+          </div>
+          <p-timeline *ngIf="lessons.length > 0" [value]="lessons" align="alternate" styleClass="customized-timeline">
             <ng-template pTemplate="marker" let-event>
-                <span class="custom-marker shadow-2 test" [style.backgroundColor]="event.color">
-                    <i [ngClass]="[event.icon]"></i>
+                <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
+                  <i [ngClass]="[event.icon]"></i>
                 </span>
             </ng-template>
             <ng-template pTemplate="content" let-event>
                 <p-card>
                   <ng-template pTemplate="header">
                     <div class="p-3">
-                      <h3 class="lesson-title">
-                        {{ event.status }}
-                      </h3>
+                      <div [ngClass]="['d-flex', 'justify-content-between', (esPar(event)) ? 'row-reverse' : '']">
+                        <h3 class="lesson-title title-color">
+                          {{ event.status }}
+                        </h3>
+                        <div class="d-flex justify-content-between gap-2">
+                          <i class="fa-solid fa-pen icon-pen-color" (click)="displayUpdate(event)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
+                          <i class="fa-solid fa-trash-can icon-trash-color" (click)="displayDestroy(event)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
+                        </div>
+                      </div>
                       <label class="date-color">
-                        {{ event.date | date: 'fullDate' }}
+                        {{ event.date | timePipe: 'dd-MM-yyyy' }}
                       </label>
                     </div>
                   </ng-template>
@@ -102,5 +111,144 @@
     </div>
   </div>
 </div>
+
+<app-modal 
+  [title]="'Eliminar clase'" 
+  [isVisible]="isVisibleDestroy" 
+  [isLoading]="isLoadingDestroy" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideDestroy()"
+  (onAccept)="destroyLesson()"
+>
+  <div body>
+    <h3 class="text-center" *ngIf="lessonSelected"> {{ "Desea eliminar la clase " + lessonSelected.status + " ?"}} </h3>
+  </div>
+</app-modal>
+
+<app-modal 
+  [isVisible]="isVisibleAdd" 
+  [isLoading]="isLoadingAdd" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideAdd()"
+  (onAccept)="addLesson()"
+  [title]="'Agregar clase'" 
+>
+  <div body>
+    <div class="p-fluid grid pt-4" [formGroup]="lessonForm">
+      <div class="field col-12 md:col-12">
+        <app-input-date
+          [title]="'Fecha de la clase'"
+          [isImportant]="true"
+          [needHours]="false"
+          (setDate)="setDateInForm($event)"
+        >
+        </app-input-date>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" [ngClass]="[checkInvalid('content')]" formControlName="content" pInputTextarea></textarea>
+          <label for="inputtext">Contenido de la clase <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" formControlName="homework" pInputTextarea></textarea>
+          <label for="inputtext">Tarea de la clase</label>
+        </span>
+      </div>
+      <div class="col-12 md:col-12" *ngFor="let l of links">
+        <div class="p-fluid grid">
+          <div class="field col-12 md:col-3">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText [value]="l.title" (change)="updateTitleLink(l, $event)"> 
+              <label for="inputtext">Titulo</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-8">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText placeholder="https://www.google.com.ar" [value]="l.url" (change)="updateUrlLink(l, $event)"> 
+              <label for="inputtext">Enlace</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-1 d-flex align-items-center">
+            <i class="fas fa-circle-xmark icon-eye-color" [pTooltip]="'Eliminar'" (click)="removeLink(l)" [tooltipPosition]="'top'"></i>
+          </div>
+        </div>
+      </div>
+      <div class="field col-12 md:col-12 d-flex justify-content-center align-items-center gap-2">
+        <button pButton pRipple type="button" label="Agregar enlace externo" class="p-button-text" (click)="addLink()"></button>
+      </div>
+      
+    </div>
+  </div>
+</app-modal>
+
+<app-modal 
+  [isVisible]="isVisibleUpdate" 
+  [isLoading]="isLoadingUpdate" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideUpdate()"
+  (onAccept)="updateLesson()"
+  [title]="'Modificar clase'" 
+>
+  <div body>
+    <div class="p-fluid grid pt-4" [formGroup]="lessonForm">
+      <div class="field col-12 md:col-12">
+        <!-- <app-input-date
+          [title]="'Fecha de la clase'"
+          [isImportant]="true"
+          [needHours]="false"
+          (setDate)="setDateInForm($event)"
+        >
+        </app-input-date> -->
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <p-calendar placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" inputId="basic" formControlName="date"></p-calendar>
+          <label for="inputtext">Fecha de la clase <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" [ngClass]="[checkInvalid('content')]" formControlName="content" pInputTextarea></textarea>
+          <label for="inputtext">Contenido de la clase <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <textarea inputId="textarea" rows="3" cols="30" formControlName="homework" pInputTextarea></textarea>
+          <label for="inputtext">Tarea de la clase</label>
+        </span>
+      </div>
+      <div class="col-12 md:col-12" *ngFor="let l of links">
+        <div class="p-fluid grid">
+          <div class="field col-12 md:col-3">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText [value]="l.title" (change)="updateTitleLink(l, $event)"> 
+              <label for="inputtext">Titulo</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-8">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText placeholder="https://www.google.com.ar" [value]="l.url" (change)="updateUrlLink(l, $event)"> 
+              <label for="inputtext">Enlace</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-1 d-flex align-items-center">
+            <i class="fas fa-circle-xmark icon-eye-color" [pTooltip]="'Eliminar'" (click)="removeLink(l)" [tooltipPosition]="'top'"></i>
+          </div>
+        </div>
+      </div>
+      <div class="field col-12 md:col-12 d-flex justify-content-center align-items-center gap-2">
+        <button pButton pRipple type="button" label="Agregar enlace externo" class="p-button-text" (click)="addLink()"></button>
+      </div>
+      
+    </div>
+  </div>
+</app-modal>
+
 
 

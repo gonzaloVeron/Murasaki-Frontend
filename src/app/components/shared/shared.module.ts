@@ -17,6 +17,7 @@ import { InputDateComponent } from './input-date/input-date.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarService } from './services/sidebar.service';
 import { ApiRestBase } from './services/api_rest_base.service';
+import { TimePipe } from './pipes/time.pipe';
 
 @NgModule({
   imports: [
@@ -39,13 +40,15 @@ import { ApiRestBase } from './services/api_rest_base.service';
     SharedComponent,
     ButtonComponent,
     ModalComponent,
-    InputDateComponent
+    InputDateComponent,
+    TimePipe
   ],
   exports:[
     ButtonComponent,
     ModalComponent,
     LinkComponent,
-    InputDateComponent
+    InputDateComponent,
+    TimePipe
   ]
 })
 export class SharedModule { }

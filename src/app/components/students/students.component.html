@@ -21,7 +21,7 @@
           <td *ngIf="!loading">
             <div class="d-flex justify-content-end gap-2 align-items-center">
               <i class="fas fa-eye icon-eye-color" (click)="toStudentDetail(student)" [pTooltip]="'Ver detalle'" [tooltipPosition]="'top'"></i>
-              <i class="fa-solid fa-clipboard-list add-class-color" (click)="displayAddLessonModal(student)" [pTooltip]="'Agregar clase'" [tooltipPosition]="'top'"></i>
+              <!-- <i class="fa-solid fa-clipboard-list add-class-color" (click)="displayAddLessonModal(student)" [pTooltip]="'Agregar clase'" [tooltipPosition]="'top'"></i> -->
               <i class="fa-solid fa-pen icon-pen-color" (click)="onUpdate(student)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
               <i class="fa-solid fa-trash-can icon-trash-color" (click)="displayDestroyModal(student)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
             </div>
@@ -66,48 +66,6 @@
         >
         </app-input-date>
       </div>
-      <!-- <div class="field col-12 md:col-6">
-        <button 
-          class="p-button-primary" 
-          pButton
-          pRipple
-          label="Adjuntar enlace externo"  
-          (click)="op.show($event, actualTarget)"
-        >
-        </button>
-        <p-overlayPanel #op >
-            <ng-template pTemplate>
-              <div class="w-500">
-                <div class="p-fluid grid pt-4">
-                  <div class="col-12 md:col-12" *ngFor="let l of links">
-                    <div class="p-fluid grid">
-                      <div class="field col-12 md:col-3">
-                        <span class="p-float-label">
-                          <input type="text" id="inputtext" pInputText [value]="l.title" (change)="updateTitleLink(l, $event)"> 
-                          <label for="inputtext">Titulo</label>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-8">
-                        <span class="p-float-label">
-                          <input type="text" id="inputtext" pInputText placeholder="https://www.google.com.ar" [value]="l.url" (change)="updateUrlLink(l, $event)"> 
-                          <label for="inputtext">Enlace</label>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-1 d-flex align-items-center">
-                        <i class="fas fa-circle-xmark icon-eye-color" [pTooltip]="'Eliminar'" (click)="removeLink(l)" [tooltipPosition]="'top'"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field col-12 md:col-12 d-flex justify-content-center align-items-center">
-                    <i class="fas fa-circle-plus icon-eye-color" [pTooltip]="'Agregar'" (click)="addLink()" [tooltipPosition]="'top'"></i>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-        </p-overlayPanel>
-        
-        <div #actualTarget></div>
-      </div> -->
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
           <textarea inputId="textarea" rows="3" cols="30" [ngClass]="[checkInvalid('content')]" formControlName="content" pInputTextarea></textarea>
@@ -140,8 +98,6 @@
         </div>
       </div>
       <div class="field col-12 md:col-12 d-flex justify-content-center align-items-center gap-2">
-        <!-- <label>Agregar enlace externo</label> -->
-        <!-- <i class="fas fa-circle-plus icon-eye-color" [pTooltip]="'Agregar'" (click)="addLink()" [tooltipPosition]="'top'"></i> -->
         <button pButton pRipple type="button" label="Agregar enlace externo" class="p-button-text" (click)="addLink()"></button>
       </div>
       

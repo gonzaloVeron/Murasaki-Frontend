@@ -4,6 +4,8 @@ import { PrimeIcons } from 'primeng/api';
 import { ToastService } from '../shared/services/toast.service';
 import { StudentDetailsService } from '../shared/services/student-details.service';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Link } from '../shared/models/link';
 
 @Component({
   selector: 'app-student-details',
@@ -17,15 +19,41 @@ export class StudentDetailsComponent implements OnInit {
 
   lessons: any[] = [];
 
-  constructor(private routeSnapshot: ActivatedRoute, private studentDetailService: StudentDetailsService, private errorHandlerService: ErrorHandlerService) { }
+  lessonSelected: any;
+
+  lessonForm: FormGroup
+  links: any[] = [];
+
+  /** Destroy Modal */
+  isVisibleDestroy: boolean = false;
+  isLoadingDestroy: boolean = false;
+
+  /** Add Modal */
+  isVisibleAdd: boolean = false; 
+  isLoadingAdd: boolean = false; 
+
+  /** Update Modal */
+  isVisibleUpdate: boolean = false;
+  isLoadingUpdate: boolean = false;
+
+  constructor(
+    private routeSnapshot: ActivatedRoute, 
+    private studentDetailService: StudentDetailsService, 
+    private errorHandlerService: ErrorHandlerService,
+    private toastService: ToastService,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.buildLessonForm();
     this.routeSnapshot.paramMap.subscribe({
       next: (paramsAsMap: any) => {
-        this.studentDetailService.getStudentById(paramsAsMap.params["id"]).subscribe({
+        const student_id = parseInt(paramsAsMap.params["id"]);
+        this.studentDetailService.getStudentById(student_id).subscribe({
           next: (resp: any) => {
-            this.lessons = resp.lessons.map((elem: any) => { return { status: 'Clase', date: elem.date, content: elem.content, icon: PrimeIcons.BOOK, color: '#59558f', links: elem.links, homework: elem.homework } });
+            this.lessons = resp.lessons.map(this.toLessonElement);
             this.student = resp;
+            this.student.id = student_id;
           },
           error: (responseError: any) => {
             this.errorHandlerService.handle(responseError);
@@ -36,7 +64,203 @@ export class StudentDetailsComponent implements OnInit {
 
       }
     });
+  }
 
+  toLessonElement(elem: any){
+    return { 
+      status: 'Clase',
+      date: elem.date,
+      content: elem.content, 
+      icon: PrimeIcons.BOOK, 
+      color: '#59558f', 
+      links: elem.links, 
+      homework: elem.homework, 
+      id: elem.id 
+    };
+  }
+
+  esPar(event){
+    return this.lessons.indexOf(event) % 2 !== 0;
+  }
+
+  destroyLesson(){
+    this.isLoadingDestroy = true;
+    this.studentDetailService.deleteLessonById(this.student.id, this.lessonSelected.id).subscribe({
+      next: (response: any) => {
+        const lessonIndex = this.lessons.indexOf(this.lessonSelected);
+        this.lessons = this.lessons.splice(lessonIndex, 1);
+        this.isLoadingDestroy = false;
+        this.hideDestroy();
+        this.toastService.displaySuccess("Clase borrada correctamente.");
+      },
+      error: (responseError: any) => {
+        this.isLoadingDestroy = false;
+        this.errorHandlerService.handle(responseError);
+      }
+    })
+  }
+  
+  addLesson(){
+    this.links = this.links.filter(link => link.title != "" && link.url != "");
+    this.lessonForm.get("linkDTOS").setValue(this.links);
+    if(this.lessonForm.valid){
+      this.isLoadingAdd = true;
+      this.studentDetailService.addLesson(this.student.id, this.lessonForm.getRawValue()).subscribe(
+        {
+          next: (response: any) => {
+            this.lessons = response.lessons.map(this.toLessonElement);
+            this.isLoadingAdd = false;
+            this.hideAdd();
+            this.toastService.displaySuccess("Clase agregada correctamente");
+          },  
+          error: (resposneError: any) => {
+            this.isLoadingAdd = false;
+            this.errorHandlerService.handle(resposneError);
+          }
+        }
+      )
+    }
+  }
+
+  updateLesson(){
+    this.links = this.links.filter(link => link.title != "" && link.url != "");
+    this.lessonForm.get("linkDTOS").setValue(this.links);
+    let lessonToSend =  this.lessonForm.getRawValue();
+    let d: string = lessonToSend.date.toLocaleDateString();
+    lessonToSend.date = d;
+    if(this.lessonForm.valid){
+      this.isLoadingAdd = true;
+      this.studentDetailService.updateLesson(this.lessonSelected.id, this.lessonForm.getRawValue()).subscribe(
+        {
+          next: (response: any) => {
+            this.lessons = response.lessons.map(this.toLessonElement);
+            this.isLoadingAdd = false;
+            this.hideAdd();
+            this.toastService.displaySuccess("Clase agregada correctamente");
+          },  
+          error: (resposneError: any) => {
+            this.isLoadingAdd = false;
+            this.errorHandlerService.handle(resposneError);
+          }
+        }
+      )
+    }
+  }
+
+  displayUpdate(lesson: any){
+    this.isVisibleUpdate = true;
+    this.lessonSelected = lesson;
+    this.lessonForm.get("date").setValue(new Date(lesson.date));
+    this.lessonForm.get("content").setValue(lesson.content);
+    this.lessonForm.get("homework").setValue(lesson.homework);
+    this.lessonForm.get("linkDTOS").setValue(lesson.links);
+    this.links = lesson.links;
+  }
+
+  hideUpdate(){
+    this.lessonSelected = false;
+    this.isVisibleUpdate = false;
+    this.lessonForm.reset();
+  }
+  
+  hideAdd(){
+    this.isVisibleAdd = false;
+    this.lessonForm.reset();
+  }
+
+  displayAdd(){
+    this.isVisibleAdd = true;
+  }
+
+  hideDestroy(){
+    this.isVisibleDestroy = false;
+    this.lessonSelected = null;
+  }
+
+  displayDestroy(lesson: any){
+    this.isVisibleDestroy = true;
+    this.lessonSelected = lesson;
+  }
+
+  buildLessonForm(){
+    this.lessonForm = this.formBuilder.group({
+      date: [null, Validators.compose([Validators.required])],
+      content: [null, Validators.required],
+      homework: [null],
+      linkDTOS: [null, Validators.required]
+    });
+  }
+
+  setDateInForm(event){
+    this.lessonForm.get("date").setValue(event);
+  }
+  
+  updateTitleLink(link, event){
+    link.title = event.target.value;
+  }
+
+  updateUrlLink(link, event){
+    link.url = event.target.value; 
+  }
+
+  addLink(){
+    this.links.push(new Link("", ""));
+  }
+
+  removeLink(link){
+    let index = this.links.indexOf(link);
+    this.links.splice(index, 1);
+  }
+
+  checkInvalid(fieldName: string) {
+    return (this.lessonForm.get(fieldName).invalid && this.lessonForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
+  }
+
+  //** */
+  validateDate(control: AbstractControl) {
+    let date: string = control.value;
+    let valid: boolean = true;
+    if(date){
+      let day: number = parseInt(date.slice(0, 2));
+      valid &&= day > 0 && day <= 31;
+  
+      let month = parseInt(date.slice(3, 5));
+      valid &&= month > 0 && month <= 12;
+  
+      let year = parseInt(date.slice(6, 10));
+      valid &&= year > 1900 && year <= 2100;
+
+      let hours = parseInt(date.slice(11, 13));
+      valid &&= hours >= 0 && hours <= 23;
+
+      let minutes = parseInt(date.slice(14, 17));
+      valid &&= minutes >= 0 && minutes <= 60;            
+    }
+
+    if (!valid) {
+      return { invalidDate: true };
+    }
+    return null;
+  }
+
+  validateDateWithoutHours(control: AbstractControl){
+    let date: string = control.value?.toLocaleDateString();
+    let valid: boolean = true;
+    if(date){
+      let day: number = parseInt(date.slice(0, 2));
+      valid &&= day > 0 && day <= 31;
+  
+      let month = parseInt(date.slice(3, 5));
+      valid &&= month > 0 && month <= 12;
+  
+      let year = parseInt(date.slice(6, 10));
+      valid &&= year > 1900 && year <= 2100;     
+    }
+
+    if (!valid) {
+      return { invalidDate: true };
+    }
+    return null;
   }
 
 }
