@@ -160,6 +160,7 @@ export class TeachersComponent implements OnInit {
   }
 
   hideAddOrUpdateModal(){
+    this.teacherId = null;
     this.displayAddOrUpdateTeacherModal = false;
     this.teacherForm.reset();
   }

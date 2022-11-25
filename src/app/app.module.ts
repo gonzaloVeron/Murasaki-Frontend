@@ -27,6 +27,7 @@ import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DividerModule } from 'primeng/divider';
 import { CalendarModule } from 'primeng/calendar';
+import { PickListModule } from 'primeng/picklist';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,7 +84,8 @@ import { InterestsComponent } from './components/interests/interests.component';
     AuthModule,
     OverlayPanelModule,
     DividerModule,
-    CalendarModule
+    CalendarModule,
+    PickListModule
   ],
   providers: [StudentFormService, TeachersService],
   bootstrap: [AppComponent]

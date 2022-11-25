@@ -49,19 +49,23 @@ export class StudentDetailsComponent implements OnInit {
     this.routeSnapshot.paramMap.subscribe({
       next: (paramsAsMap: any) => {
         const student_id = parseInt(paramsAsMap.params["id"]);
-        this.studentDetailService.getStudentById(student_id).subscribe({
-          next: (resp: any) => {
-            this.lessons = resp.lessons.map(this.toLessonElement);
-            this.student = resp;
-            this.student.id = student_id;
-          },
-          error: (responseError: any) => {
-            this.errorHandlerService.handle(responseError);
-          }
-        })
+        this.getStudentById(student_id);
       },
       error: (err: any) => {
+        console.error("Hubo un error al obtener la id de la url");
+      }
+    });
+  }
 
+  getStudentById(student_id: number){
+    this.studentDetailService.getStudentById(student_id).subscribe({
+      next: (resp: any) => {
+        this.lessons = resp.lessons.map(this.toLessonElement);
+        this.student = resp;
+        this.student.id = student_id;
+      },
+      error: (responseError: any) => {
+        this.errorHandlerService.handle(responseError);
       }
     });
   }
@@ -87,8 +91,9 @@ export class StudentDetailsComponent implements OnInit {
     this.isLoadingDestroy = true;
     this.studentDetailService.deleteLessonById(this.student.id, this.lessonSelected.id).subscribe({
       next: (response: any) => {
-        const lessonIndex = this.lessons.indexOf(this.lessonSelected);
-        this.lessons = this.lessons.splice(lessonIndex, 1);
+        // const lessonIndex = this.lessons.indexOf(this.lessonSelected);
+        // this.lessons = this.lessons.splice(lessonIndex, 1);
+        this.getStudentById(this.student.id);
         this.isLoadingDestroy = false;
         this.hideDestroy();
         this.toastService.displaySuccess("Clase borrada correctamente.");
@@ -133,9 +138,7 @@ export class StudentDetailsComponent implements OnInit {
       this.studentDetailService.updateLesson(this.lessonSelected.id, this.lessonForm.getRawValue()).subscribe(
         {
           next: (response: any) => {
-            console.log(response);
-            // this.lessons = response.lessons.map(this.toLessonElement); // get de todas las clases
-            
+            this.getStudentById(this.student.id);
             this.isLoadingUpdate = false;
             this.hideUpdate();
             this.toastService.displaySuccess("Clase agregada correctamente");
@@ -152,11 +155,17 @@ export class StudentDetailsComponent implements OnInit {
   displayUpdate(lesson: any){
     this.isVisibleUpdate = true;
     this.lessonSelected = lesson;
-    this.lessonForm.get("date").setValue(new Date(lesson.date));
+    this.lessonForm.get("date").setValue(this.addHours(lesson.date, 3));
     this.lessonForm.get("content").setValue(lesson.content);
     this.lessonForm.get("homework").setValue(lesson.homework);
     this.lessonForm.get("linkDTOS").setValue(lesson.links);
     this.links = lesson.links;
+  }
+
+  addHours(date, hours) {
+    const dateCopy = new Date(date);
+    dateCopy.setHours(dateCopy.getHours() + hours);
+    return dateCopy;
   }
 
   hideUpdate(){

@@ -7,8 +7,12 @@ import { DatePipe } from '@angular/common';
 export class TimePipe implements PipeTransform {
 
   transform(date: Date | string, format: string = "dd-MM-yyyy"): string {
+    // console.log("raw date: ", date);
     const dateObj = new Date(date);
-    const localeDate = dateObj.toLocaleDateString();
+    // console.log("date obj: ", dateObj);
+    const localeDate = `${dateObj.getUTCDate()}/${dateObj.getUTCMonth() + 1}/${dateObj.getUTCFullYear()}`
+    // console.log(`${dateObj.getUTCDate()}/${dateObj.getUTCMonth() + 1}/${dateObj.getUTCFullYear()}`);
+    // console.log("local date: ", localeDate)
     let day = "";
     let month = "";
     let year = "";
