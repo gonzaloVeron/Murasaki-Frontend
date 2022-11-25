@@ -45,9 +45,24 @@
           <label for="inputtext">Nivel de japonés <span class="mandatory">(*)</span></label>
         </span>
       </div>
-      <div class="field col-12 md:col-4">
+      <div *ngIf="!isAdmin" class="field col-12 md:col-4">
         <span class="p-float-label">
           <input type="text" id="inputtext" data-testid="teacher_name" [value]="actualTeacherName" pInputText disabled> 
+          <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div *ngIf="isAdmin" class="fielñd col-12 md:col-4">
+        <span class="p-float-label">
+          <p-dropdown
+            styleClass="p-dropdown"
+            [ngClass]="[checkInvalid('teacherAsignedId')]"
+            [options]="teachersAvailables" 
+            formControlName="teacherAsignedId"
+            optionLabel="name"
+            optionValue="id"
+            [autoDisplayFirst]="false"
+          >
+          </p-dropdown>
           <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
         </span>
       </div>
@@ -93,16 +108,3 @@
 
 
 
-<!-- <span class="p-float-label">
-  <p-dropdown
-    styleClass="p-dropdown"
-    [ngClass]="[checkInvalid('teacherAsignedId')]"
-    [options]="teachersAvailables" 
-    formControlName="teacherAsignedId" 
-    optionLabel="name"
-    optionValue="id"
-    [autoDisplayFirst]="false"
-  >
-  </p-dropdown>
-  <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
-</span> -->

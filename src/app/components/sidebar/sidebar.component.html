@@ -28,9 +28,8 @@
         </label>
       </span>
     </li>
-    <li>
+    <li *ngIf="isAdmin">
       <a class="cursor-pointer" (click)="navigate('app/sidebar/teachers')">
-        <!-- <i class="fas fa-user"></i> -->
         <i class="fas fa-chalkboard-teacher"></i>
         <span class="links_name"> Profesores </span>
       </a>
@@ -40,9 +39,8 @@
         </label>
       </span>
     </li>
-    <li>
+    <li *ngIf="isAdmin">
       <a class="cursor-pointer" (click)="navigate('app/sidebar/interests')">
-        <!-- <i class="fas fa-user"></i -->
         <i class="fas fa-icons"></i>
         <span class="links_name"> Intereses </span>
       </a>
@@ -59,7 +57,7 @@
         <img src="../../../assets/images/profile.jpg" alt="">
         <div class="name_job"> 
           <div class="name"> {{ userName }} </div>
-          <div class="job"> Prof. Japonés </div>
+          <div class="job"> {{ (isAdmin) ? "Administrador" : "Prof. Japonés"}} </div>
         </div>
       </div>
       <i class="fas fa-sign-out pointer" id="log_out" (click)="logout()"></i>

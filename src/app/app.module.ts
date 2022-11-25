@@ -36,7 +36,7 @@ import { StudentDetailsComponent } from './components/student-details/student-de
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SharedModule } from './components/shared/shared.module';
 import { StudentFormComponent } from './components/student-form/student-form.component';
-import { StudentFormService } from './components/student-form/student-form.service';
+import { StudentFormService } from './components/shared/services/student-form.service';
 import { TeachersComponent } from './components/teachers/teachers.component';
 import { SidebarService } from './components/shared/services/sidebar.service';
 import { TeachersService } from './components/shared/services/teachers.service';

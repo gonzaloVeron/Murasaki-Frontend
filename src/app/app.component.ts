@@ -16,6 +16,14 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.primeNgConfig.ripple = true;
+    this.primeNgConfig.setTranslation(
+      {
+        dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+        dayNamesShort: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+        dayNamesMin: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+        monthNames: ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+      }
+    )
   }
 
 }

@@ -7,6 +7,7 @@ import { StudentsService } from '../shared/services/students.service';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Link } from '../shared/models/link';
+import { LocalUserService } from '../shared/services/local-user.service';
 
 @Component({
   selector: 'app-students',
@@ -20,14 +21,7 @@ export class StudentsComponent implements OnInit{
   students: any[] = [];
   total: number = 0;
   limit: number = 5;
-  headers: TableHeader[] = [
-    { name: "Nombre", key: "name" },
-    { name: "Nivel", key: "jlptLevel" },
-    { name: "Email", key: "email"},
-    { name: "teléfono", key: "tel"},
-    { name: "", key: "" },
-  ];
-
+  headers: TableHeader[] = [];
   totalRecords: number = 0;
   page: number = 0;
   size: number = 5;
@@ -45,6 +39,8 @@ export class StudentsComponent implements OnInit{
 
   links: any[] = [];
 
+  isAdmin: boolean = false;
+
   onSort(event: any){ //falta tipar
 
   }
@@ -55,11 +51,29 @@ export class StudentsComponent implements OnInit{
     private toastService: ToastService,
     private sidebarService: SidebarService,
     private errorHandlerService: ErrorHandlerService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private localUserService: LocalUserService
   ) { }
 
   ngOnInit() {
     this.buildLessonForm();
+    this.isAdmin = this.localUserService.getUser() === "Administrador"; 
+    this.headers = (this.isAdmin) ?
+    [
+      { name: "Nombre", key: "name" },
+      { name: "Nivel", key: "jlptLevel" },
+      { name: "Email", key: "email" },
+      { name: "teléfono", key: "tel" },
+      { name: "Profesor", key: "teacherDTO.name" },
+      { name: "", key: "" },
+    ] :
+    [
+      { name: "Nombre", key: "name" },
+      { name: "Nivel", key: "jlptLevel" },
+      { name: "Email", key: "email" },
+      { name: "teléfono", key: "tel" },
+      { name: "", key: "" },
+    ];
     this.sidebarService.changeTitle("Estudiantes");
     this.studentsService.find("", 0, 5).subscribe(
       {

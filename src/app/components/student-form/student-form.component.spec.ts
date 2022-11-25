@@ -14,7 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { StudentFormService } from './student-form.service';
+import { StudentFormService } from '../shared/services/student-form.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ApiRestBase } from '../shared/services/api_rest_base.service';

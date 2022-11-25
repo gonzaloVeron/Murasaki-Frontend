@@ -15,6 +15,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   userName: string = "";
 
+  isAdmin: boolean = false;
+
   valueIconRight: string = "";
 
   constructor(
@@ -26,6 +28,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.sidebarService.register(this);
     this.userName = this.localUserService.getUser();
+    this.isAdmin = this.userName == "Administrador";
   }
 
   ngAfterViewInit(): void {

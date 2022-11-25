@@ -17,8 +17,21 @@ export class TimePipe implements PipeTransform {
       month = this.parseToString(localeDate.substring(3, 5));
       year = localeDate.substring(6, 11);
     }else{
-      day = localeDate.substring(0, 1);
-      month = this.parseToString(localeDate.substring(2, 4));
+      // console.log("la longitud de la fecha es: ", localeDate.length)
+      // console.log("fecha: ", localeDate);
+      day = localeDate.substring(0, 2);
+      let esUnDiaConUnDigito = day.includes('/');
+      if(esUnDiaConUnDigito){
+        day = localeDate.substring(0, 1);
+        month = localeDate.substring(3, 4);
+      }else{
+        month = localeDate.substring(2, 4);
+      }
+      let esUnMesConUnDigito = month.includes('/');
+      if(esUnMesConUnDigito){
+        month = localeDate.substring(2, 3)
+      }
+      month = this.parseToString(month);
       year = localeDate.substring(5, 10);
     }
     return `${day} de ${month} del ${year}`;
@@ -54,6 +67,21 @@ export class TimePipe implements PipeTransform {
         return "Mes no identificado";
     }
   }
+
+  // digitsToSlash(date: string){
+  //   let digits: number = 0;
+  //   let found: boolean = false;
+  //   for(let i of date){
+  //     if(!found){
+  //       if(i == '/'){
+  //         found = true;
+  //       }else{
+  //         digits++;
+  //       }
+  //     }
+  //   }
+  //   return digits;
+  // }
 
 }
 

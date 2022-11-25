@@ -129,17 +129,19 @@ export class StudentDetailsComponent implements OnInit {
     let d: string = lessonToSend.date.toLocaleDateString();
     lessonToSend.date = d;
     if(this.lessonForm.valid){
-      this.isLoadingAdd = true;
+      this.isLoadingUpdate = true;
       this.studentDetailService.updateLesson(this.lessonSelected.id, this.lessonForm.getRawValue()).subscribe(
         {
           next: (response: any) => {
-            this.lessons = response.lessons.map(this.toLessonElement);
-            this.isLoadingAdd = false;
-            this.hideAdd();
+            console.log(response);
+            // this.lessons = response.lessons.map(this.toLessonElement); // get de todas las clases
+            
+            this.isLoadingUpdate = false;
+            this.hideUpdate();
             this.toastService.displaySuccess("Clase agregada correctamente");
           },  
           error: (resposneError: any) => {
-            this.isLoadingAdd = false;
+            this.isLoadingUpdate = false;
             this.errorHandlerService.handle(resposneError);
           }
         }
@@ -187,7 +189,7 @@ export class StudentDetailsComponent implements OnInit {
       date: [null, Validators.compose([Validators.required])],
       content: [null, Validators.required],
       homework: [null],
-      linkDTOS: [null, Validators.required]
+      linkDTOS: [[]]
     });
   }
 

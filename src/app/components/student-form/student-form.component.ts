@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { ToastService } from '../shared/services/toast.service';
-import { StudentFormService } from './student-form.service';
 import { LocalUserService } from '../shared/services/local-user.service';
+import { StudentFormService } from '../shared/services/student-form.service';
 
 @Component({
   selector: 'app-student-form',
@@ -25,6 +25,8 @@ export class StudentFormComponent implements OnInit {
 
   actualTeacherName: string;
 
+  isAdmin: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     public studentFormService: StudentFormService,
@@ -36,6 +38,7 @@ export class StudentFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isAdmin = this.localUserService.getUser() === "Administrador";
     this.activatedRoute.params.subscribe((params: any) => {
       this.actualTeacherName = this.localUserService.getUser();
       this.getAllTeachers();
@@ -49,16 +52,30 @@ export class StudentFormComponent implements OnInit {
   }
 
   buildForm() {
-    this.studentForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      jlptLevel: [null, Validators.required],
-      priorKnowledge: [null],
-      tel: [null, Validators.required],
-      email: [null, Validators.compose([Validators.required, Validators.email])],
-      emailTutor: [null, Validators.compose([Validators.required, Validators.email])],
-      age: [null, Validators.required],
-      interests: [null, Validators.required]
-    });
+    if(this.isAdmin){
+      this.studentForm = this.formBuilder.group({
+        name: [null, Validators.required],
+        jlptLevel: [null, Validators.required],
+        priorKnowledge: [null],
+        teacherAsignedId: [null, Validators.required],
+        tel: [null, Validators.required],
+        email: [null, Validators.compose([Validators.required, Validators.email])],
+        emailTutor: [null, Validators.compose([Validators.required, Validators.email])],
+        age: [null, Validators.required],
+        interests: [null, Validators.required]
+      });
+    }else{
+      this.studentForm = this.formBuilder.group({
+        name: [null, Validators.required],
+        jlptLevel: [null, Validators.required],
+        priorKnowledge: [null],
+        tel: [null, Validators.required],
+        email: [null, Validators.compose([Validators.required, Validators.email])],
+        emailTutor: [null, Validators.compose([Validators.required, Validators.email])],
+        age: [null, Validators.required],
+        interests: [null, Validators.required]
+      });
+    }
   }
 
   checkInvalid(fieldName: string) {

@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <div class="d-flex justify-content-start gap-2 w-100">
+          <div class="d-flex justify-content-start gap-2 w-100 flex-wrap">
             <p-tag *ngFor="let interest of student.interests" [icon]="interest.icon" [value]="interest.name" [style]="{'background-color': '#59558f'}"></p-tag>
           </div>
         </div>
@@ -44,15 +44,15 @@
         </div>
         <div class="card-body">
           <div class="d-flex flex-column justify-content-around h-100">
-            <div class="d-flex justify-content-start align-items-center gap-2">
+            <div class="d-flex justify-content-start align-items-center gap-2 flex-wrap">
               <i class="fa-solid fa-envelope contact-number icons"></i>
               <label class="contact-number"> {{ student.email + " [Alumno]" }} </label>
             </div>
-            <div class="d-flex justify-content-start align-items-center gap-2">
+            <div class="d-flex justify-content-start align-items-center gap-2 flex-wrap">
               <i class="fa-solid fa-envelope contact-number icons"></i>
               <label class="contact-number"> {{ student.emailTutor + " [Tutor]" }} </label>
             </div>
-            <div class="d-flex justify-content-start align-items-center gap-2">
+            <div class="d-flex justify-content-start align-items-center gap-2 flex-wrap">
               <i class="fa-solid fa-phone contact-number icons"></i>
               <label class="contact-number"> {{ student.tel }} </label>
             </div>
@@ -137,7 +137,7 @@
 >
   <div body>
     <div class="p-fluid grid pt-4" [formGroup]="lessonForm">
-      <div class="field col-12 md:col-12">
+      <!-- <div class="field col-12 md:col-12">
         <app-input-date
           [title]="'Fecha de la clase'"
           [isImportant]="true"
@@ -145,6 +145,12 @@
           (setDate)="setDateInForm($event)"
         >
         </app-input-date>
+      </div> -->
+      <div class="field col-12 md:col-12">
+        <span class="p-float-label">
+          <p-calendar appendTo="body" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" inputId="basic" formControlName="date"></p-calendar>
+          <label for="inputtext">Fecha de la clase <span class="mandatory">(*)</span></label>
+        </span>
       </div>
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
@@ -196,18 +202,18 @@
 >
   <div body>
     <div class="p-fluid grid pt-4" [formGroup]="lessonForm">
-      <div class="field col-12 md:col-12">
-        <!-- <app-input-date
+      <!-- <div class="field col-12 md:col-12">
+        <app-input-date
           [title]="'Fecha de la clase'"
           [isImportant]="true"
           [needHours]="false"
           (setDate)="setDateInForm($event)"
         >
-        </app-input-date> -->
-      </div>
+        </app-input-date>
+      </div> -->
       <div class="field col-12 md:col-12">
         <span class="p-float-label">
-          <p-calendar placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" inputId="basic" formControlName="date"></p-calendar>
+          <p-calendar appendTo="body" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" inputId="basic" formControlName="date"></p-calendar>
           <label for="inputtext">Fecha de la clase <span class="mandatory">(*)</span></label>
         </span>
       </div>
