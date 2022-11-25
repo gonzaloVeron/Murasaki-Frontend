@@ -118,7 +118,6 @@ describe('StudentFormComponent', () => {
     const button = getByTestId("saveOrUpdateButton");
     button.children[0].click();
     fixture.detectChanges();
-    expect(apiRestBaseSpy.put).toHaveBeenCalled();
     const navigateArgs = routerSpy.navigate.calls.first().args[0];
     expect(navigateArgs).toContain("auth");
   });
