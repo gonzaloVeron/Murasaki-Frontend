@@ -9,15 +9,15 @@ export class TeachersService {
   constructor(private apiRestBase: ApiRestBase) { }
 
   getAllTeachers(){
-    return this.apiRestBase.get("/teacher");
+    return this.apiRestBase.get("/teacher/jwt");
   }
 
   find(searchText: string, page: number, size: number){
-    return this.apiRestBase.get(`/teacher/find/${searchText}?page=${page}&size=${size}`);
+    return this.apiRestBase.get(`/teacher/jwt/find/${searchText}?page=${page}&size=${size}`);
   }
   
   delete(id: number){
-    return this.apiRestBase.delete(`/teacher/${id}`);
+    return this.apiRestBase.delete(`/teacher/jwt/${id}`);
   }
 
   save(data: any){
@@ -25,11 +25,11 @@ export class TeachersService {
   }
 
   update(id: number, data: any){
-    return this.apiRestBase.put(`/teacher/${id}`, data);
+    return this.apiRestBase.put(`/teacher/jwt/${id}`, data);
   }
 
   getTeacherById(id: number){
-    return this.apiRestBase.get(`/teacher/${id}`);
+    return this.apiRestBase.get(`/teacher/jwt/${id}`);
   }
 
   getUserTeacherById(id: number){

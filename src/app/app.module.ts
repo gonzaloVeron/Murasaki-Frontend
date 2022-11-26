@@ -43,6 +43,7 @@ import { SidebarService } from './components/shared/services/sidebar.service';
 import { TeachersService } from './components/shared/services/teachers.service';
 import { AuthModule } from './components/auth/auth.module';
 import { InterestsComponent } from './components/interests/interests.component';
+import { TransferStudentsComponent } from './components/transfer-students/transfer-students.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { InterestsComponent } from './components/interests/interests.component';
     SidebarComponent,
     TeachersComponent,
     //LoginComponent
-    InterestsComponent
+    InterestsComponent,
+    TransferStudentsComponent
   ],
   imports: [
     BrowserModule,

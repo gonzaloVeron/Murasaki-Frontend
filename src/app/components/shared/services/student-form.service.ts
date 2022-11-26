@@ -10,7 +10,7 @@ export class StudentFormService {
   constructor(private apiRestBase: ApiRestBase) { }
 
   getAllTeachers(){
-    return this.apiRestBase.get("/teacher");
+    return this.apiRestBase.get("/teacher/jwt");
   }
 
   getStudentById(id: number){

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { ToastService } from '../shared/services/toast.service';
 import { SidebarService } from '../shared/services/sidebar.service';
 import { TableHeader } from '../table/models/table-header';
 import { TeachersService } from '../shared/services/teachers.service';
+import { LocalUserService } from '../shared/services/local-user.service';
 
 @Component({
   selector: 'app-teachers',
@@ -41,6 +42,16 @@ export class TeachersComponent implements OnInit {
 
   teacherId: number;
 
+  teachersAvailables: any[] = [];
+
+  selectedIdTransferTeacher: any;
+
+  isVisibleTransf: boolean = false;
+  isLoadingTransf: boolean = false;
+
+  teacherTransfSelectedName: string = "";
+
+  isAdmin: boolean = false;
 
   onSort(event: any){ //falta tipar
 
@@ -51,18 +62,19 @@ export class TeachersComponent implements OnInit {
     private teachersService: TeachersService,
     private formBuilder: FormBuilder,
     private sidebarService: SidebarService,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService,
+    private router: Router,
+    private localUserService: LocalUserService
   ) { }
 
   ngOnInit() {
+    this.isAdmin = this.localUserService.getUser() == "Administrador";
     this.sidebarService.changeTitle("Profesores");
     this.buildForm();
-    // this.teacherForm.get("email").disable
     this.teachersService.find("", 0, 5).subscribe(
       {
         next: (response: any) => {
           this.teachers = response.content;
-
           this.totalRecords = response.totalElements;
         },
         error: (responseError: any) => {
@@ -205,6 +217,38 @@ export class TeachersComponent implements OnInit {
 
   checkInvalid(fieldName: string){
     return (this.teacherForm.get(fieldName).invalid && this.teacherForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
+  }
+
+  /** ------------------------------------------------------- */
+
+  hideTransf(){
+    this.teacherId = null;
+    this.selectedIdTransferTeacher = null;
+    this.teacherTransfSelectedName = "";
+    this.isVisibleTransf = false;
+  }
+
+  acceptTransf(){
+    this.router.navigate(['app', 'sidebar', 'transfer', this.teacherId, this.selectedIdTransferTeacher]);
+  }
+
+  onTransf(teacher){
+    if(this.isAdmin){
+      this.teacherTransfSelectedName = teacher.name;
+      this.teacherId = teacher.id;
+      this.teachersAvailables = this.teachers.map(elem => {return { name: elem.name, id: elem.id }}).filter(elem => elem.id != this.teacherId);
+      this.isVisibleTransf = true;
+    }else{
+      this.teachersAvailables = this.teachers.map(elem => {return { name: elem.name, id: elem.id }});
+    }
+  }
+
+  getTransfModalTitle(){
+    if(this.isAdmin){
+      return 'Transferir alumnos de ' + this.teacherTransfSelectedName + ' con...';
+    }else{
+      return 'Transferir tus alumnos con...';
+    }
   }
 
 }

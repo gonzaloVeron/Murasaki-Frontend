@@ -29,4 +29,8 @@ export class StudentDetailsService {
     return this.apiRestBase.put(`/lesson/jwt/${lesson_id}`, data);
   }
 
+  getLessonsOf(student_id: number) {
+    return this.apiRestBase.get(`/lesson/jwt/${student_id}`);
+  }
+
 }

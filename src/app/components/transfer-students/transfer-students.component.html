@@ -1,0 +1,49 @@
+<p-pickList 
+  [source]="source_students" 
+  [target]="target_students"
+  [sourceHeader]="source_name"
+  [targetHeader]="target_name"
+  [dragdrop]="true"
+  [responsive]="true" 
+  [sourceStyle]="{'height':'30rem'}"
+  [targetStyle]="{'height':'30rem'}"
+  filterBy="name"
+  sourceFilterPlaceholder="Buscar por nombre" 
+  targetFilterPlaceholder="Buscar por nombre"
+>
+  <ng-template let-student pTemplate="item">
+    <div class="d-flex justify-content-between">
+      <i class="fa-solid fa-graduation-cap student-icon w-25"></i>
+      <div class="student-data d-flex flex-column justify-content-center align-items-center w-25">
+        <div style="font-size: 1.5rem; font-weight: 600;">
+          {{ student.jlptLevel }}
+        </div>
+        <div style="font-weight: 600;">
+          {{ "Nivel" }}
+        </div>
+      </div>
+      <div class="student-data d-flex flex-column justify-content-center w-50">
+        <div>
+          {{ student.name + " | " + student.age + " años" }}
+        </div>
+        <div>
+          {{ student.email }}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-pickList>
+<div class="mt-4 d-flex justify-content-center">
+  <button 
+    class="p-button-primary accept-button" 
+    pButton
+    pRipple
+    (click)="accept()"
+    [disabled]="isLoading"
+  >
+    <div class="button-text">
+      <i *ngIf="isLoading" class="pi pi-spin pi-spinner spin-icon"></i>
+      Transferir alumnos
+    </div>
+  </button>
+</div>

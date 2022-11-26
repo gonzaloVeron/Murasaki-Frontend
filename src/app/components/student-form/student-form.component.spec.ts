@@ -15,7 +15,6 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { StudentFormService } from '../shared/services/student-form.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ApiRestBase } from '../shared/services/api_rest_base.service';
 import { SharedModule } from '../shared/shared.module';
@@ -37,6 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { apiRestBaseSpy } from '../shared/spies/api-rest-base-spy';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 import { LocalUserService } from '../shared/services/local-user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('StudentFormComponent', () => {
   let component: StudentFormComponent;

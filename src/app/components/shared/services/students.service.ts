@@ -28,4 +28,8 @@ export class StudentsService {
     return this.apiRestBase.post(`/student/jwt/addLesson/${student_id}`, data);
   }
 
+  traslateStudents(source_teacher_id: number, target_teacher_id: number, data: any){
+    return this.apiRestBase.post(`/student/jwt/${source_teacher_id}/${target_teacher_id}`, data);
+  }
+
 }

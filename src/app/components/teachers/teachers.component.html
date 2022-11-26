@@ -16,8 +16,9 @@
           <td *ngIf="!loading">{{ teacher.name }}</td>
           <td *ngIf="!loading">
             <div class="d-flex justify-content-end gap-2 align-items-center">
-              <i class="fa-solid fa-pen icon-pen-color" (click)="onUpdate(teacher)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
-              <i class="fa-solid fa-trash-can icon-trash-color" (click)="displayDestroyModal(teacher)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
+              <i *ngIf="isAdmin" class="fa-solid fa-pen icon-pen-color" (click)="onUpdate(teacher)" [pTooltip]="'Actualizar'" [tooltipPosition]="'top'"></i>
+              <i class="fa-solid fa-right-left icon-pen-color" (click)="onTransf(teacher)" [pTooltip]="'Transferir alumnos'" [tooltipPosition]="'left'"></i>
+              <i *ngIf="isAdmin" class="fa-solid fa-trash-can icon-trash-color" (click)="displayDestroyModal(teacher)" [pTooltip]="'Borrar'" [tooltipPosition]="'top'"></i>
             </div>
           </td>
         </tr>
@@ -64,5 +65,36 @@
         </span>
       </div>
     </div>
+  </div>
+</app-modal>
+
+<app-modal 
+  [title]="getTransfModalTitle()" 
+  [isVisible]="isVisibleTransf" 
+  [isLoading]="isLoadingTransf" 
+  [minWidth]="{ width: '78vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideTransf()"
+  (onAccept)="acceptTransf()"
+>
+  <div body>
+    <div class="p-fluid grid mt-3">
+      <div class="fielñd col-12 md:col-12">
+        <span class="p-float-label">
+          <p-dropdown
+            styleClass="p-dropdown"
+            [options]="teachersAvailables" 
+            [(ngModel)]="selectedIdTransferTeacher"
+            optionLabel="name"
+            optionValue="id"
+            [autoDisplayFirst]="false"
+            appendTo="body"
+          >
+          </p-dropdown>
+          <label for="inputtext">Profesores disponibles</label>
+        </span>
+      </div>
+    </div>
+
   </div>
 </app-modal>

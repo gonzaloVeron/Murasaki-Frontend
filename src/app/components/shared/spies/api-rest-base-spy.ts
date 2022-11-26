@@ -51,7 +51,7 @@ export const apiRestBaseSpy = jasmine.createSpyObj('ApiRestBase', ['get', 'put',
 
 apiRestBaseSpy.get.withArgs(`/interest/jwt`).and.returnValue(of(interestsList));
 apiRestBaseSpy.get.withArgs(`/student/jwt/5`).and.returnValue(of(user));
-apiRestBaseSpy.get.withArgs(`/teacher`).and.returnValue(of(teachers));
+apiRestBaseSpy.get.withArgs(`/teacher/jwt`).and.returnValue(of(teachers));
 apiRestBaseSpy.put.and.returnValue(of());
 // save(data: any){
 //     return this.apiRestBase.post("/student/jwt", data);

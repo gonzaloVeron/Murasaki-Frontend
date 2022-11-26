@@ -60,7 +60,7 @@ export class StudentFormComponent implements OnInit {
         teacherAsignedId: [null, Validators.required],
         tel: [null, Validators.required],
         email: [null, Validators.compose([Validators.required, Validators.email])],
-        emailTutor: [null, Validators.compose([Validators.required, Validators.email])],
+        emailTutor: [null, Validators.email],
         age: [null, Validators.required],
         interests: [null, Validators.required]
       });
@@ -71,7 +71,7 @@ export class StudentFormComponent implements OnInit {
         priorKnowledge: [null],
         tel: [null, Validators.required],
         email: [null, Validators.compose([Validators.required, Validators.email])],
-        emailTutor: [null, Validators.compose([Validators.required, Validators.email])],
+        emailTutor: [null, Validators.email],
         age: [null, Validators.required],
         interests: [null, Validators.required]
       });

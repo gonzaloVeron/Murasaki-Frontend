@@ -60,7 +60,7 @@ export class StudentDetailsComponent implements OnInit {
   getStudentById(student_id: number){
     this.studentDetailService.getStudentById(student_id).subscribe({
       next: (resp: any) => {
-        this.lessons = resp.lessons.map(this.toLessonElement);
+        this.lessons = resp.lessons.map(this.toLessonElement).reverse();
         this.student = resp;
         this.student.id = student_id;
       },
@@ -113,7 +113,8 @@ export class StudentDetailsComponent implements OnInit {
       this.studentDetailService.addLesson(this.student.id, this.lessonForm.getRawValue()).subscribe(
         {
           next: (response: any) => {
-            this.lessons = response.lessons.map(this.toLessonElement);
+            // this.lessons = response.lessons.map(this.toLessonElement);
+            this.getStudentById(this.student.id);
             this.isLoadingAdd = false;
             this.hideAdd();
             this.toastService.displaySuccess("Clase agregada correctamente");

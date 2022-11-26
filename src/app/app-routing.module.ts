@@ -10,6 +10,7 @@ import { StudentDetailsComponent } from './components/student-details/student-de
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { StudentsComponent } from './components/students/students.component';
 import { TeachersComponent } from './components/teachers/teachers.component';
+import { TransferStudentsComponent } from './components/transfer-students/transfer-students.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
           {
             path: 'interests',
             component: InterestsComponent
+          },
+          {
+            path: 'transfer/:idSource/:idTarget',
+            component: TransferStudentsComponent
           }
         ]
       }
