@@ -60,6 +60,10 @@ const routes: Routes = [
           {
             path: 'transfer/:idSource/:idTarget',
             component: TransferStudentsComponent
+          },
+          {
+            path: 'transfer/:idTarget',
+            component: TransferStudentsComponent
           }
         ]
       }

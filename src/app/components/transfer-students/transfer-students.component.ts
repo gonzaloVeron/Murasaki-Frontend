@@ -2,6 +2,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
+import { LocalUserService } from '../shared/services/local-user.service';
 import { SidebarService } from '../shared/services/sidebar.service';
 import { StudentsService } from '../shared/services/students.service';
 import { TeachersService } from '../shared/services/teachers.service';
@@ -23,7 +24,11 @@ export class TransferStudentsComponent implements OnInit {
   target_name: string = "";
   target_students: any[];
 
+  original_target_students: number[];
+
   isLoading: boolean = false;
+
+  isAdmin: boolean = false;
 
   constructor(
     private routeSnapshot: ActivatedRoute,
@@ -32,30 +37,46 @@ export class TransferStudentsComponent implements OnInit {
     private router: Router,
     private toastService: ToastService,
     private studentService: StudentsService,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private localUserService: LocalUserService
   ) { }
 
   ngOnInit() {
+    this.isAdmin = this.localUserService.getUser() == "Administrador";
     this.sidebarService.changeTitle("Transferencia de alumnos");
     this.routeSnapshot.paramMap.subscribe({
       next: (paramsAsMap: any) => {
         this.source_id = parseInt(paramsAsMap.params["idSource"]);
         this.target_id = parseInt(paramsAsMap.params["idTarget"]);
-        this.teacherService.getTeacherById(this.source_id).subscribe({
-          next: (response: any) => {
-            console.log(response);
-            this.source_name = 'Alumnos de ' + response.name;
-            this.source_students = response.students;
-          },
-          error: (responseError: any) => {
-            this.errorHandlerService.handle(responseError);
-          }
-        });
+        if(this.source_id){
+          this.teacherService.getTeacherById(this.source_id).subscribe({
+            next: (response: any) => {
+              // console.log(response);
+              this.source_name = 'Alumnos de ' + response.name;
+              this.source_students = response.students;
+            },
+            error: (responseError: any) => {
+              this.errorHandlerService.handle(responseError);
+            }
+          });
+        }else{
+          this.teacherService.getActualTeacher().subscribe(
+            {
+              next: (response: any) => {
+                // console.log(response);
+                this.source_id = response.id;
+                this.source_name = 'Tus alumnos';
+                this.source_students = response.students;
+              }
+            }
+          )
+        }
         this.teacherService.getTeacherById(this.target_id).subscribe({
           next: (response: any) => {
-            console.log(response);
+            // console.log(response);
             this.target_name = 'Alumnos de ' + response.name;
             this.target_students = response.students;
+            this.original_target_students = response.students.map(elem => elem.id);
           },
           error: (responseError: any) => {
             this.errorHandlerService.handle(responseError);
@@ -70,8 +91,8 @@ export class TransferStudentsComponent implements OnInit {
 
   accept(){
     this.isLoading = true;
-    console.log("source: ", this.source_students.map(student => student.id));
-    console.log("target: ", this.target_students.map(student => student.id));
+    // console.log("source: ", this.source_students.map(student => student.id));
+    // console.log("target: ", this.target_students.map(student => student.id));
     this.studentService.traslateStudents(
       this.source_id, 
       this.target_id, 
@@ -90,6 +111,17 @@ export class TransferStudentsComponent implements OnInit {
         this.errorHandlerService.handle(responseError);
       }
     });
+  }
+
+  testMoveToSource(event){
+    if(!this.isAdmin){
+      const elem = event.items[0];
+      if(this.original_target_students.includes(elem.id)){
+        const elemSouceIndex = this.source_students.indexOf(elem); 
+        this.source_students.splice(elemSouceIndex, 1);
+        this.target_students.push(elem);
+      }
+    }
   }
 
 }

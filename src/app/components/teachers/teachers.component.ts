@@ -236,19 +236,16 @@ export class TeachersComponent implements OnInit {
     if(this.isAdmin){
       this.teacherTransfSelectedName = teacher.name;
       this.teacherId = teacher.id;
-      this.teachersAvailables = this.teachers.map(elem => {return { name: elem.name, id: elem.id }}).filter(elem => elem.id != this.teacherId);
+      // this.teachersAvailables = this.teachers.map(elem => {return { name: elem.name, id: elem.id }}).filter(elem => elem.id != this.teacherId);
+      this.teachersAvailables = this.teachers.map(elem => {return { name: elem.name, id: elem.id }});
       this.isVisibleTransf = true;
     }else{
-      this.teachersAvailables = this.teachers.map(elem => {return { name: elem.name, id: elem.id }});
+      this.router.navigate(['app', 'sidebar', 'transfer', teacher.id]);
     }
   }
 
   getTransfModalTitle(){
-    if(this.isAdmin){
-      return 'Transferir alumnos de ' + this.teacherTransfSelectedName + ' con...';
-    }else{
-      return 'Transferir tus alumnos con...';
-    }
+    return 'Transferir alumnos de ' + this.teacherTransfSelectedName + ' a...';
   }
 
 }

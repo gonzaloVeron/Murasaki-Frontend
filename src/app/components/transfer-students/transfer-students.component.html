@@ -7,9 +7,12 @@
   [responsive]="true" 
   [sourceStyle]="{'height':'30rem'}"
   [targetStyle]="{'height':'30rem'}"
+  [showTargetControls]="false"
+  [showSourceControls]="false"
   filterBy="name"
   sourceFilterPlaceholder="Buscar por nombre" 
   targetFilterPlaceholder="Buscar por nombre"
+  (onMoveToSource)="testMoveToSource($event)"
 >
   <ng-template let-student pTemplate="item">
     <div class="d-flex justify-content-between">

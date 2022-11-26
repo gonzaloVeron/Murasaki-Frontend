@@ -36,4 +36,8 @@ export class TeachersService {
     return this.apiRestBase.get(`/user/getByTeacherId/${id}`);
   }
 
+  getActualTeacher(){
+    return this.apiRestBase.get(`/teacher/jwt/actual`);
+  }
+
 }
