@@ -92,7 +92,11 @@ export class TeachersComponent implements OnInit {
   }
 
   onAdd(){
-    this.displayAddOrUpdateTeacherModal = true;
+    if(this.isAdmin){
+      this.displayAddOrUpdateTeacherModal = true;
+    }else{
+      this.toastService.displayInfo("Solo los Administradores pueden crear nuevos profesores");
+    }
   }
 
   onUpdate(teacher: any){
