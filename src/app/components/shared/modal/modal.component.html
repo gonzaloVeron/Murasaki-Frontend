@@ -1,4 +1,4 @@
-<p-dialog  [(visible)]="isVisible" [modal]="isModal" (onHide)="cancel()" [style]="minWidth">
+<p-dialog  [(visible)]="isVisible" [modal]="isModal" (onHide)="cancel()" [style]="minWidth" [closeOnEscape]="false" [closable]="isClosable">
   <ng-template pTemplate="header">
     <label class="title title-color">
       {{ title }}
@@ -25,6 +25,7 @@
       [disabled]="isLoading"
     ></button> -->
     <app-button
+      *ngIf="isClosable"
       [text]="'Cancelar'"
       (onClick)="cancel()"
       [icon]="''"

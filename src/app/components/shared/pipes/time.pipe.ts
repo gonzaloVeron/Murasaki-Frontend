@@ -16,7 +16,8 @@ export class TimePipe implements PipeTransform {
     let day = "";
     let month = "";
     let year = "";
-    if(localeDate.length > 9){
+    console.log(localeDate);
+    if(localeDate.length >= 9){
       day = localeDate.substring(0, 2);
       month = this.parseToString(localeDate.substring(3, 5));
       year = localeDate.substring(6, 11);

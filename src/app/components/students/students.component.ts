@@ -8,6 +8,8 @@ import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Link } from '../shared/models/link';
 import { LocalUserService } from '../shared/services/local-user.service';
+import { UserService } from '../shared/services/user.service';
+import { RecoveryService } from '../shared/services/recovery.service';
 
 @Component({
   selector: 'app-students',
@@ -52,12 +54,25 @@ export class StudentsComponent implements OnInit{
     private sidebarService: SidebarService,
     private errorHandlerService: ErrorHandlerService,
     private formBuilder: FormBuilder,
-    private localUserService: LocalUserService
+    private localUserService: LocalUserService,
+    private userService: UserService,
+    private recoveryService: RecoveryService
   ) { }
 
   ngOnInit() {
+    this.userService.isFirstTimeInApp().subscribe({
+      next: (response: boolean) => {
+        if(response){
+          this.isVisibleChangePass = true;
+        }
+      },
+      error: (responseError: any) => {
+        this.errorHandlerService.handle(responseError);
+      }
+    });
     this.buildLessonForm();
-    this.isAdmin = this.localUserService.getUser() === "Administrador"; 
+    this.buildPassForm();
+    this.isAdmin = this.localUserService.getUser() === "Administrador";
     this.headers = (this.isAdmin) ?
     [
       { name: "Nombre", key: "name" },
@@ -220,5 +235,45 @@ export class StudentsComponent implements OnInit{
     this.links.splice(index, 1);
   }
   
+  //** Change password */
+
+  isVisibleChangePass: boolean = false;
+  isLoadingChangePass: boolean = false;
+  passForm: FormGroup;
+
+  buildPassForm(){
+    this.passForm = this.formBuilder.group(
+      {
+        password: [null, Validators.compose([Validators.required, Validators.minLength(4)])]
+      }
+    );
+  }
+
+  hideChangePass(){
+    this.isVisibleChangePass = false;
+  }
+
+  changePass(){
+    this.passForm.markAllAsTouched();
+    if(this.passForm.valid){
+      this.isLoadingChangePass = true;
+      this.recoveryService.changePasswordInApp(this.passForm.get("password").value).subscribe(
+        {
+          next: (response: any) => {
+            this.isLoadingChangePass = false;
+            this.toastService.displaySuccess("La contraseña se ha cambiado");
+            this.localUserService.removeUser(); //Logout
+            this.router.navigate(["auth"]); //Logout
+          },
+          error: (responseError: any) => {
+            this.isLoadingChangePass = false;
+            this.errorHandlerService.handle(responseError);
+          }
+        }
+      )
+    }else{
+      this.toastService.displayInfo("Se necesita cambiar la contraseña para continuar");
+    }
+  }
 
 }

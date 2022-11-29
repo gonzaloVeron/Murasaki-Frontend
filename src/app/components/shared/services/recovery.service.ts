@@ -12,6 +12,10 @@ export class RecoveryService {
     return this.apiRestBase.post(`/user/recovery/${email}`, {});
   }
 
+  changePasswordInApp(password: string){
+    return this.apiRestBase.post(`/user/jwt/changePass/${password}`, {});
+  }
+
   changePassword(token: string, password: string){
     return this.apiRestBase.recovery("/user/jwt/changePass", token, password);
   }

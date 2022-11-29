@@ -10,6 +10,7 @@ import { WidthConfig } from './models/width-config';
 export class ModalComponent implements OnInit {
 
   @Input('title') title: string = '';
+  @Input('isClosable') isClosable: boolean = true;
   
   @Input('isVisible') isVisible: boolean = false;
   @Input('isLoading') isLoading: boolean = false;

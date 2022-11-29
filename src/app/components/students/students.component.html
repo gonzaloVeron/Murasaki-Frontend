@@ -104,3 +104,27 @@
     </div>
   </div>
 </app-modal>
+
+<app-modal 
+  [title]="'Cambiar contraseña'" 
+  [isVisible]="isVisibleChangePass" 
+  [isLoading]="isLoadingChangePass" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  [isClosable]="false"
+  (onCancel)="hideChangePass()"
+  (onAccept)="changePass()"
+>
+  <div body>
+    <div class="p-fluid grid" [formGroup]="passForm">
+      <span class="pt-3 w-100 text-center"> Parece que es la primera vez que entras en la aplicación </span>
+      <div class="field pt-5 col-12 md:col-12">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" placeholder="La contraseña debe tener mas de 4 caracteres" pInputText formControlName="password"> 
+          <label for="inputtext">Nueva contraseña</label>
+        </span>
+        <span class="mandatory">La sesión se cerrará al cambiar la contraseña</span>
+      </div>
+    </div>
+  </div>
+</app-modal>
