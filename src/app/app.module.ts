@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -44,6 +44,7 @@ import { TeachersService } from './components/shared/services/teachers.service';
 import { AuthModule } from './components/auth/auth.module';
 import { InterestsComponent } from './components/interests/interests.component';
 import { TransferStudentsComponent } from './components/transfer-students/transfer-students.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,13 @@ import { TransferStudentsComponent } from './components/transfer-students/transf
     OverlayPanelModule,
     DividerModule,
     CalendarModule,
-    PickListModule
+    PickListModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [StudentFormService, TeachersService],
   bootstrap: [AppComponent]
