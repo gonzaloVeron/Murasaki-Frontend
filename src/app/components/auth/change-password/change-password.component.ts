@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+// import { ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from '../../shared/services/error-handler.service';
@@ -8,7 +9,8 @@ import { ToastService } from '../../shared/services/toast.service';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  styleUrls: ['./change-password.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ChangePasswordComponent implements OnInit {
 

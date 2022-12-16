@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from '../../shared/services/error-handler.service';
@@ -8,7 +8,8 @@ import { ToastService } from '../../shared/services/toast.service';
 @Component({
   selector: 'app-recovery',
   templateUrl: './recovery.component.html',
-  styleUrls: ['./recovery.component.scss']
+  styleUrls: ['./recovery.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RecoveryComponent implements OnInit {
 

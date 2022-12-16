@@ -51,7 +51,6 @@ export class TransferStudentsComponent implements OnInit {
         if(this.source_id){
           this.teacherService.getTeacherById(this.source_id).subscribe({
             next: (response: any) => {
-              // console.log(response);
               this.source_name = 'Alumnos de ' + response.name;
               this.source_students = response.students;
             },
@@ -63,7 +62,6 @@ export class TransferStudentsComponent implements OnInit {
           this.teacherService.getActualTeacher().subscribe(
             {
               next: (response: any) => {
-                // console.log(response);
                 this.source_id = response.id;
                 this.source_name = 'Tus alumnos';
                 this.source_students = response.students;
@@ -73,7 +71,6 @@ export class TransferStudentsComponent implements OnInit {
         }
         this.teacherService.getTeacherById(this.target_id).subscribe({
           next: (response: any) => {
-            // console.log(response);
             this.target_name = 'Alumnos de ' + response.name;
             this.target_students = response.students;
             this.original_target_students = response.students.map(elem => elem.id);
@@ -91,8 +88,6 @@ export class TransferStudentsComponent implements OnInit {
 
   accept(){
     this.isLoading = true;
-    // console.log("source: ", this.source_students.map(student => student.id));
-    // console.log("target: ", this.target_students.map(student => student.id));
     this.studentService.traslateStudents(
       this.source_id, 
       this.target_id, 

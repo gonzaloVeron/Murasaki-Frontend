@@ -9,6 +9,8 @@ import { TableHeader } from 'src/app/components/table/models/table-header';
 })
 export class TableComponent implements OnInit {
 
+  @Input('addButton') addButton: boolean = true;
+
   @Input() isLoading: boolean = false;
   @Input() totalRecords: number = 0;
   @Input() data: Array<any> = [];

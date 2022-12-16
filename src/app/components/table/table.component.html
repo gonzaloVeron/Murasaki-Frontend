@@ -8,13 +8,19 @@
 >
   <ng-template pTemplate="caption">
     <div class="p-fluid grid">
-      <div class="col-10 md:col-10">
+      <div *ngIf="!addButton" class="col-12 md:col-12">
         <span class="p-input-icon-left">
           <i class="pi pi-search pointer" (click)="emitSearch()"></i>
           <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" />
         </span>
       </div>
-      <div class="col-2 md:col-2">
+      <div *ngIf="addButton" class="col-10 md:col-10">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search pointer" (click)="emitSearch()"></i>
+          <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" />
+        </span>
+      </div>
+      <div *ngIf="addButton" class="col-2 md:col-2">
         <app-button
           [text]="'Agregar'"
           [isLoading]="false"

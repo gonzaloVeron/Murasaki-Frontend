@@ -11,6 +11,7 @@
         (pageChange)="changePage($event)"
         (onSearch)="search($event)"
         (onAdd)="onAdd()"
+        [addButton]="isAdmin"
       >
         <tr body *ngFor="let teacher of teachers">
           <td *ngIf="!loading">{{ teacher.name }}</td>

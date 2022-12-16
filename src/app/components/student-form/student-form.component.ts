@@ -60,7 +60,7 @@ export class StudentFormComponent implements OnInit {
         teacherAsignedId: [null, Validators.required],
         tel: [null, Validators.required],
         email: [null, Validators.compose([Validators.required, Validators.email])],
-        emailTutor: [null, Validators.email],
+        emailTutor: [null],
         age: [null, Validators.required],
         interests: [null, Validators.required]
       });
@@ -71,7 +71,7 @@ export class StudentFormComponent implements OnInit {
         priorKnowledge: [null],
         tel: [null, Validators.required],
         email: [null, Validators.compose([Validators.required, Validators.email])],
-        emailTutor: [null, Validators.email],
+        emailTutor: [null],
         age: [null, Validators.required],
         interests: [null, Validators.required]
       });
@@ -102,11 +102,19 @@ export class StudentFormComponent implements OnInit {
       {
         next: (response: any) => {
           let keys = Object.keys(response);
-          keys.forEach(k => {
-            if (!(k == 'lessons' || k == 'id' || k == 'teacherAsignedId')) {
-              this.studentForm.get(k).setValue(response[k]);
-            }
-          });
+          if(this.isAdmin){
+            keys.forEach(k => {
+              if (!(k == 'lessons' || k == 'id')) {
+                this.studentForm.get(k).setValue(response[k]);
+              }
+            });
+          }else{
+            keys.forEach(k => {
+              if (!(k == 'lessons' || k == 'id' || k == 'teacherAsignedId')) {
+                this.studentForm.get(k).setValue(response[k]);
+              }
+            });
+          }
         },
         error: (responseError: any) => {
           this.errorHandlerService.handle(responseError);

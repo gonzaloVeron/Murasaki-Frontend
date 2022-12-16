@@ -60,6 +60,7 @@ export class StudentDetailsComponent implements OnInit {
   getStudentById(student_id: number){
     this.studentDetailService.getStudentById(student_id).subscribe({
       next: (resp: any) => {
+        console.log(resp);
         this.lessons = resp.lessons.map(this.toLessonElement).reverse();
         this.student = resp;
         this.student.id = student_id;
@@ -72,7 +73,7 @@ export class StudentDetailsComponent implements OnInit {
 
   toLessonElement(elem: any){
     return { 
-      status: 'Clase',
+      status: elem.title,
       date: elem.date,
       content: elem.content, 
       icon: PrimeIcons.BOOK, 
@@ -156,6 +157,7 @@ export class StudentDetailsComponent implements OnInit {
   displayUpdate(lesson: any){
     this.isVisibleUpdate = true;
     this.lessonSelected = lesson;
+    this.lessonForm.get("title").setValue(lesson.status);
     this.lessonForm.get("date").setValue(this.addHours(lesson.date, 3));
     this.lessonForm.get("content").setValue(lesson.content);
     this.lessonForm.get("homework").setValue(lesson.homework);
@@ -173,11 +175,13 @@ export class StudentDetailsComponent implements OnInit {
     this.lessonSelected = false;
     this.isVisibleUpdate = false;
     this.lessonForm.reset();
+    this.links = [];
   }
   
   hideAdd(){
     this.isVisibleAdd = false;
     this.lessonForm.reset();
+    this.links = [];
   }
 
   displayAdd(){
@@ -196,6 +200,7 @@ export class StudentDetailsComponent implements OnInit {
 
   buildLessonForm(){
     this.lessonForm = this.formBuilder.group({
+      title: [null, Validators.required],
       date: [null, Validators.compose([Validators.required])],
       content: [null, Validators.required],
       homework: [null],

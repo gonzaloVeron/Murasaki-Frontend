@@ -7,23 +7,16 @@ import { DatePipe } from '@angular/common';
 export class TimePipe implements PipeTransform {
 
   transform(date: Date | string, format: string = "dd-MM-yyyy"): string {
-    // console.log("raw date: ", date);
     const dateObj = new Date(date);
-    // console.log("date obj: ", dateObj);
     const localeDate = `${dateObj.getUTCDate()}/${dateObj.getUTCMonth() + 1}/${dateObj.getUTCFullYear()}`
-    // console.log(`${dateObj.getUTCDate()}/${dateObj.getUTCMonth() + 1}/${dateObj.getUTCFullYear()}`);
-    // console.log("local date: ", localeDate)
     let day = "";
     let month = "";
     let year = "";
-    console.log(localeDate);
     if(localeDate.length >= 9){
       day = localeDate.substring(0, 2);
       month = this.parseToString(localeDate.substring(3, 5));
-      year = localeDate.substring(6, 11);
+      year = localeDate.substring(5, 11);
     }else{
-      // console.log("la longitud de la fecha es: ", localeDate.length)
-      // console.log("fecha: ", localeDate);
       day = localeDate.substring(0, 2);
       let esUnDiaConUnDigito = day.includes('/');
       if(esUnDiaConUnDigito){
@@ -37,7 +30,7 @@ export class TimePipe implements PipeTransform {
         month = localeDate.substring(2, 3)
       }
       month = this.parseToString(month);
-      year = localeDate.substring(5, 10);
+      year = localeDate.substring(4, 10);
     }
     return `${day} de ${month} del ${year}`;
   }
