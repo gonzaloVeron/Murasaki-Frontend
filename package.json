@@ -25,6 +25,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fullcalendar/core": "^6.0.0",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.2.1",
     "primeflex": "^3.2.1",

@@ -71,7 +71,7 @@ const routes: Routes = [
   },
   {
     path: "auth",
-    canActivate: [IsNotAuthGuard],
+    // canActivate: [IsNotAuthGuard],
     loadChildren: () => import("./components/auth/auth.module").then((m) => m.AuthModule),
   },
   {
