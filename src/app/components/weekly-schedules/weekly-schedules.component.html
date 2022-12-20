@@ -1,0 +1,257 @@
+<!-- <div class="container-fluid w-100">
+  <div class="d-flex justify-content-center gap-3">
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Lunes
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.lunes">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Martes
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.martes">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Miércoles
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.miercoles">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Jueves
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.jueves">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Viernes
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.viernes">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Sábado
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.sabado">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mura-border"> 
+      <h4 class="text-center mb-3 title-color">
+        Domingo
+      </h4>
+      <div class="h-list" *ngIf="schedules">
+        <div class="card mb-3 c-color" *ngFor="let schedule of schedules.domingo">
+          <div class="card-body d-flex flex-column">
+            <label>
+              {{ schedule.time }}
+            </label>
+            <label class="text-center" *ngFor="let name of schedule.studentNames">
+              {{ name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid w-100">
+      <div class="d-flex justify-content-center gap-3">
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Lunes
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.lunes">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lain"></div>
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Martes
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.martes">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lain"></div>
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Miércoles
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.miercoles">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lain"></div>
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Jueves
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.jueves">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lain"></div>
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Viernes
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.viernes">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lain"></div>
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Sábado
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.sabado">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lain"></div>
+        <div class="w-100"> 
+          <h4 class="text-center mb-3 title-color2">
+            Domingo
+          </h4>
+          <div class="h-list" *ngIf="schedules">
+            <div class="card mb-3 c-color" *ngFor="let schedule of schedules.domingo">
+              <div class="card-body d-flex flex-column">
+                <label>
+                  {{ schedule.time }}
+                </label>
+                <label class="text-center" *ngFor="let name of schedule.studentNames">
+                  {{ name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

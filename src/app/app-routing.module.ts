@@ -11,6 +11,7 @@ import { StudentFormComponent } from './components/student-form/student-form.com
 import { StudentsComponent } from './components/students/students.component';
 import { TeachersComponent } from './components/teachers/teachers.component';
 import { TransferStudentsComponent } from './components/transfer-students/transfer-students.component';
+import { WeeklySchedulesComponent } from './components/weekly-schedules/weekly-schedules.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,10 @@ const routes: Routes = [
           {
             path: 'transfer/:idTarget',
             component: TransferStudentsComponent
+          },
+          {
+            path: 'weekly-schedules',
+            component: WeeklySchedulesComponent
           }
         ]
       }

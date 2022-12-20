@@ -45,6 +45,7 @@ import { AuthModule } from './components/auth/auth.module';
 import { InterestsComponent } from './components/interests/interests.component';
 import { TransferStudentsComponent } from './components/transfer-students/transfer-students.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { WeeklySchedulesComponent } from './components/weekly-schedules/weekly-schedules.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     TeachersComponent,
     //LoginComponent
     InterestsComponent,
-    TransferStudentsComponent
+    TransferStudentsComponent,
+    WeeklySchedulesComponent
   ],
   imports: [
     BrowserModule,
@@ -90,14 +92,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     CalendarModule,
     PickListModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      // enabled: !isDevMode(),
-      enabled: true,
+      enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
   providers: [StudentFormService, TeachersService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent]//
 })
 export class AppModule { }

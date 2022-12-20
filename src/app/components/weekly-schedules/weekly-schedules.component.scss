@@ -1,0 +1,44 @@
+.card{
+    border: none;
+}
+
+.mura-border {
+    background-color: #423f62;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: #423f62;
+    overflow-y: hidden;
+}
+
+.h-list {
+    height: 750px;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.h-list::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+
+.title-color {
+    color: #faebd7;
+}
+
+.c-color {
+    background-color: #eee8e8;
+}
+
+.lain {
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: rgb(196, 189, 189);
+}
+
+.title-color2 {
+    background-color: #eee8e8;
+    border-radius: 7px;
+    padding: 3px;
+}
