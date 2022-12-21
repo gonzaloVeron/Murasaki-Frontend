@@ -119,4 +119,17 @@ export class TransferStudentsComponent implements OnInit {
     }
   }
 
+  testMoveAllToSource(event){
+    for(let st of event.items){
+      if(!this.isAdmin){
+        const elem = st;
+        if(this.original_target_students.includes(elem.id)){
+          const elemSouceIndex = this.source_students.indexOf(elem); 
+          this.source_students.splice(elemSouceIndex, 1);
+          this.target_students.push(elem);
+        }
+      }
+    }
+  }
+
 }

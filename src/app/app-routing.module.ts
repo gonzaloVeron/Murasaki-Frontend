@@ -16,8 +16,7 @@ import { WeeklySchedulesComponent } from './components/weekly-schedules/weekly-s
 const routes: Routes = [
   {
     path: "",
-    //redirectTo: "app/sidebar/students",
-    redirectTo: "auth",
+    redirectTo: "app/sidebar/students",
     pathMatch: "full"
   },
   {
@@ -76,7 +75,7 @@ const routes: Routes = [
   },
   {
     path: "auth",
-    // canActivate: [IsNotAuthGuard],
+    canActivate: [IsNotAuthGuard],
     loadChildren: () => import("./components/auth/auth.module").then((m) => m.AuthModule),
   },
   {
