@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-6">
+    <div class="col-5">
       <div class="card" *ngIf="student">
         <div class="card-header">
           <h3 class="text-center title-color"> {{ student.name }} </h3>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-5">
       <div class="card h-100" *ngIf="student">
         <div class="card-header">
           <h3 class="text-center title-color"> Contacto </h3>
@@ -55,6 +55,23 @@
             <div class="d-flex justify-content-start align-items-center gap-2 flex-wrap">
               <i class="fa-solid fa-phone contact-number icons"></i>
               <label class="contact-number"> {{ student.tel }} </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="card h-100" *ngIf="student">
+        <div class="card-header">
+          <h3 class="text-center title-color"> Horarios </h3>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-center" style="overflow: hidden;">
+            <div class="h-list">
+              <div class="d-flex flex-column align-items-center gap-3">
+                <app-schedule-card *ngFor="let sched of schedules" [schedule]="sched" (onDelete)="deleteSched($event)"></app-schedule-card>
+                <i class="fas fa-plus-circle icons" [pTooltip]="'Agregar horario'" [tooltipPosition]="'top'" (click)="openSchedule()"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -264,6 +281,43 @@
         <button pButton pRipple type="button" label="Agregar enlace externo" class="p-button-text" (click)="addLink()"></button>
       </div>
       
+    </div>
+  </div>
+</app-modal>
+
+<app-modal 
+  [title]="'Agregar horario'" 
+  [isVisible]="isVisibleSchedule" 
+  [isLoading]="isLoadingSchedule" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideSchedule()"
+  (onAccept)="createSchedule()"
+>
+  <div body>
+    <div class="p-fluid grid mt-3 mb-5" [formGroup]="scheduleForm">
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <p-calendar [ngClass]="[checkInvalidSched('time')]" [timeOnly]="true" inputId="timeonly" appendTo="body" formControlName="time"></p-calendar>
+          <label for="timeonly">Horario <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <p-dropdown
+            [ngClass]="[checkInvalidSched('day')]"
+            styleClass="p-dropdown"
+            [options]="daysAvailables" 
+            optionLabel="name"
+            optionValue="id"
+            appendTo="body"
+            formControlName="day"
+            [autoDisplayFirst]="false"
+          >
+          </p-dropdown>
+          <label for="inputtext">Dia de semana <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
     </div>
   </div>
 </app-modal>

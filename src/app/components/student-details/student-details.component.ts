@@ -6,6 +6,7 @@ import { StudentDetailsService } from '../shared/services/student-details.servic
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Link } from '../shared/models/link';
+import { ScheduleCard } from '../shared/models/ScheduleCard';
 
 @Component({
   selector: 'app-student-details',
@@ -23,6 +24,46 @@ export class StudentDetailsComponent implements OnInit {
 
   lessonForm: FormGroup
   links: any[] = [];
+
+  /** Schedule Modal */
+  isVisibleSchedule: boolean = false;
+
+  isLoadingSchedule: boolean = false;
+
+  scheduleForm: FormGroup;
+
+  schedules: ScheduleCard[] = [];
+
+  daysAvailables: any[] = [
+    {
+      id: 'Lunes',
+      name: 'Lunes'
+    },
+    {
+      id: 'Martes',
+      name:'Martes'
+    },
+    {
+      id: 'Miercoles',
+      name:'Miercoles'
+    },
+    {
+      id: 'Jueves',
+      name:'Jueves'
+    },
+    {
+      id: 'Viernes',
+      name:'Viernes'
+    },
+    {
+      id: 'Sabado',
+      name:'Sabado'
+    },
+    {
+      id: 'Domingo',
+      name:'Domingo'
+    },
+  ];
 
   /** Destroy Modal */
   isVisibleDestroy: boolean = false;
@@ -44,8 +85,70 @@ export class StudentDetailsComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
+  deleteSched(e){
+    this.studentDetailService.removeSchedule(this.student.id, e.id).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.lessons = response.lessons.map(this.toLessonElement).reverse();
+        this.schedules = response.schedules;
+        this.student = response;
+        this.toastService.displaySuccess("Horario borrado");
+      },
+      error: (responseError: any) => {
+        this.errorHandlerService.handle(responseError);
+      }
+    })
+  }
+
+  openSchedule(){
+    this.isVisibleSchedule = true;
+  }
+
+  hideSchedule() {
+    this.isVisibleSchedule = false;
+    this.scheduleForm.reset();
+  }
+
+  createSchedule() {
+    this.scheduleForm.markAllAsTouched();
+    if(this.scheduleForm.valid){
+      let sched = new ScheduleCard();
+      let d: Date = this.scheduleForm.get('time').value;
+      let hours = d.getHours() + ':' + ((d.getMinutes() < 10) ? '0' + d.getMinutes() : d.getMinutes());
+      sched.time = hours;
+      sched.day = this.scheduleForm.get('day').value;
+      this.studentDetailService.addSchedule(this.student.id, sched).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.lessons = response.lessons.map(this.toLessonElement).reverse();
+          this.schedules = response.schedules;
+          this.student = response;
+          this.toastService.displaySuccess("Horario agregado");
+          this.isVisibleSchedule = false;
+          this.scheduleForm.reset();
+        },
+        error: (responseError: any) => {
+          this.errorHandlerService.handle(responseError);
+          this.scheduleForm.reset();
+        }
+      })
+    }
+  }
+
+  schedBuilForm() {
+    this.scheduleForm = this.formBuilder.group({
+      day: [null, Validators.required],
+      time: [null, Validators.required]
+    });
+  }
+
+  checkInvalidSched(fieldName: string) {
+    return (this.scheduleForm.get(fieldName).invalid && this.scheduleForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
+  }
+
   ngOnInit() {
     this.buildLessonForm();
+    this.schedBuilForm();
     this.routeSnapshot.paramMap.subscribe({
       next: (paramsAsMap: any) => {
         const student_id = parseInt(paramsAsMap.params["id"]);
@@ -62,6 +165,7 @@ export class StudentDetailsComponent implements OnInit {
       next: (resp: any) => {
         console.log(resp);
         this.lessons = resp.lessons.map(this.toLessonElement).reverse();
+        this.schedules = resp.schedules;
         this.student = resp;
         this.student.id = student_id;
       },

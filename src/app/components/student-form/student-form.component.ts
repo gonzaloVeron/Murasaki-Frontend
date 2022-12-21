@@ -23,8 +23,6 @@ export class StudentFormComponent implements OnInit {
 
   scheduleForm: FormGroup;
 
-  teachersAvailables: any[];
-  
   schedules: ScheduleCard[] = [];
 
   daysAvailables: any[] = [
@@ -58,6 +56,8 @@ export class StudentFormComponent implements OnInit {
     },
   ];
 
+  teachersAvailables: any[];
+  
   interestsList: any[];
 
   studentId: number;

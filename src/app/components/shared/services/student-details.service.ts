@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ScheduleCard } from '../models/ScheduleCard';
 import { ApiRestBase } from './api_rest_base.service';
 
 @Injectable({
@@ -31,6 +32,14 @@ export class StudentDetailsService {
 
   getLessonsOf(student_id: number) {
     return this.apiRestBase.get(`/lesson/jwt/${student_id}`);
+  }
+
+  removeSchedule(student_id: number, schedule_id: number) {
+    return this.apiRestBase.post(`/student/jwt/removeSchedule/${student_id}/${schedule_id}`, {});
+  }
+
+  addSchedule(student_id: number, data: ScheduleCard){
+    return this.apiRestBase.post(`/student/jwt/addSchedule/${student_id}`, data);
   }
 
 }

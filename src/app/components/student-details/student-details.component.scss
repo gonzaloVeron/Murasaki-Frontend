@@ -96,3 +96,20 @@
     font-size: 22px;
     margin-bottom: 0.5rem;
 }
+
+.h-list {
+    height: 180px;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.h-list::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+
+.icons {
+    font-size: 25px;
+    color: #59558f; //#7d7ab1; 
+}
