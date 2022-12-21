@@ -8,9 +8,16 @@
         <div class="card-body">
           <div class="grid">
             <div class="col-12 text-center">
-              <label>
-                Alumno de Murasaki
-              </label>
+              <div *ngIf="!student.status" class="s-inactive">
+                <label class="w-100 text-center text-white s-text">
+                  Inactivo
+                </label>
+              </div>
+              <div *ngIf="student.status" class="s-active">
+                <label class="w-100 text-center text-white s-text">
+                  Activo
+                </label>
+              </div>
             </div>
             <div class="col-4 text-center">
               <label>

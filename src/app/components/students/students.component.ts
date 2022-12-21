@@ -80,6 +80,7 @@ export class StudentsComponent implements OnInit{
       { name: "Email", key: "email" },
       { name: "teléfono", key: "tel" },
       { name: "Profesor", key: "teacherDTO.name" },
+      { name: "Estado", key: "status" },
       { name: "", key: "" },
     ] :
     [
@@ -87,12 +88,14 @@ export class StudentsComponent implements OnInit{
       { name: "Nivel", key: "jlptLevel" },
       { name: "Email", key: "email" },
       { name: "teléfono", key: "tel" },
+      { name: "Estado", key: "status" },
       { name: "", key: "" },
     ];
     this.sidebarService.changeTitle("Estudiantes");
     this.studentsService.find("", 0, 5).subscribe(
       {
         next: (response: any) => { //falta tipar
+          console.log(response);
           this.students = response.content;
           this.totalRecords = response.totalElements;
         },
@@ -101,6 +104,30 @@ export class StudentsComponent implements OnInit{
         }
       }
     );
+  }
+
+  activateStudent(student: any){
+    this.studentsService.changeStudentStatus(student.id).subscribe({
+      next: (response: any) => {
+        this.findStudents();
+        this.toastService.displaySuccess("Estudiante activado")
+      },
+      error: (responseError: any) => {
+        this.errorHandlerService.handle(responseError);
+      }
+    });
+  }
+
+  deactivateStudent(student: any){
+    this.studentsService.changeStudentStatus(student.id).subscribe({
+      next: (response: any) => {
+        this.findStudents();
+        this.toastService.displaySuccess("Estudiante desactivado")
+      },
+      error: (responseError: any) => {
+        this.errorHandlerService.handle(responseError);
+      }
+    });
   }
 
   toStudentDetail(student: any){ //falta tipar

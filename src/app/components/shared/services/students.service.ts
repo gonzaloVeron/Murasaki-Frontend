@@ -32,4 +32,8 @@ export class StudentsService {
     return this.apiRestBase.post(`/student/jwt/${source_teacher_id}/${target_teacher_id}`, data);
   }
 
+  changeStudentStatus(student_id: number){
+    return this.apiRestBase.post(`/student/jwt/changeStatus/${student_id}`, {});
+  }
+
 }

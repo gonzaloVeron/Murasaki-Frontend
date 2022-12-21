@@ -20,3 +20,32 @@
 .p-button:focus{
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #9591ca, 0 1px 2px 0 black !important;
 }
+
+.s-active {
+    background-color: rgb(108, 231, 139);
+    border-radius: 10px;
+    .s-text {
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+.s-inactive {
+    background-color: rgb(230, 87, 87);
+    border-radius: 10px;
+    .s-text {
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+.level {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 50%;
+    background-color: #59558f;
+    color: white;
+    font-weight: bold;
+}

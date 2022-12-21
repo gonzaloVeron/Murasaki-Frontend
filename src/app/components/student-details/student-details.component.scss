@@ -113,3 +113,19 @@
     font-size: 25px;
     color: #59558f; //#7d7ab1; 
 }
+
+.s-active {
+    background-color: rgb(108, 231, 139);
+    border-radius: 10px;
+    .s-text {
+        font-weight: bold;
+    }
+}
+
+.s-inactive {
+    background-color: rgb(230, 87, 87);
+    border-radius: 10px;
+    .s-text {
+        font-weight: bold;
+    }
+}
