@@ -5,6 +5,8 @@ import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { ToastService } from '../shared/services/toast.service';
 import { LocalUserService } from '../shared/services/local-user.service';
 import { StudentFormService } from '../shared/services/student-form.service';
+import { SidebarService } from '../shared/services/sidebar.service';
+import { ScheduleCard } from '../shared/models/ScheduleCard';
 
 @Component({
   selector: 'app-student-form',
@@ -15,7 +17,46 @@ export class StudentFormComponent implements OnInit {
 
   studentForm: FormGroup;
 
+  isVisibleSchedule: boolean = false;
+
+  isLoadingSchedule: boolean = false;
+
+  scheduleForm: FormGroup;
+
   teachersAvailables: any[];
+  
+  schedules: ScheduleCard[] = [];
+
+  daysAvailables: any[] = [
+    {
+      id: 'Lunes',
+      name: 'Lunes'
+    },
+    {
+      id: 'Martes',
+      name:'Martes'
+    },
+    {
+      id: 'Miercoles',
+      name:'Miercoles'
+    },
+    {
+      id: 'Jueves',
+      name:'Jueves'
+    },
+    {
+      id: 'Viernes',
+      name:'Viernes'
+    },
+    {
+      id: 'Sabado',
+      name:'Sabado'
+    },
+    {
+      id: 'Domingo',
+      name:'Domingo'
+    },
+  ];
 
   interestsList: any[];
 
@@ -34,8 +75,45 @@ export class StudentFormComponent implements OnInit {
     private toastService: ToastService,
     private errorHandlerService: ErrorHandlerService,
     private router: Router,
-    private localUserService: LocalUserService
+    private localUserService: LocalUserService,
+    private sidebarService: SidebarService
   ) { }
+  
+  openSchedule(){
+    this.isVisibleSchedule = true;
+  }
+
+  hideSchedule() {
+    this.isVisibleSchedule = false;
+    this.scheduleForm.reset();
+  }
+
+  createSchedule() {
+    this.scheduleForm.markAllAsTouched();
+    if(this.scheduleForm.valid){
+      let sched = new ScheduleCard();
+      let d: Date = this.scheduleForm.get('time').value;
+      let hours = d.getHours() + ':' + ((d.getMinutes() < 10) ? '0' + d.getMinutes() : d.getMinutes());
+      sched.time = hours;
+      sched.day = this.scheduleForm.get('day').value;
+      this.schedules.push(sched);
+      this.isVisibleSchedule = false;
+      this.scheduleForm.reset();
+      this.studentForm.get('schedules').setValue(this.schedules);
+    }
+  }
+
+  deleteSched(e){
+    let index = this.schedules.indexOf(this.schedules.find(sched => sched === e));
+    this.schedules.splice(index, 1)
+  }
+
+  schedBuilForm() {
+    this.scheduleForm = this.formBuilder.group({
+      day: [null, Validators.required],
+      time: [null, Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.isAdmin = this.localUserService.getUser() === "Administrador";
@@ -44,10 +122,12 @@ export class StudentFormComponent implements OnInit {
       this.getAllTeachers();
       this.getAllInterests();
       this.buildForm();
+      this.schedBuilForm();
       if (params.id) {
         this.studentId = params.id;
         this.getStudentToModify();
       }
+      this.sidebarService.changeTitle((!this.studentId) ? "Nuevo estudiante" : "Modificación de estudiante");
     });
   }
 
@@ -55,31 +135,37 @@ export class StudentFormComponent implements OnInit {
     if(this.isAdmin){
       this.studentForm = this.formBuilder.group({
         name: [null, Validators.required],
-        jlptLevel: [null, Validators.required],
+        jlptLevel: [null, Validators.compose([Validators.required, Validators.max(5), Validators.min(1)])],
         priorKnowledge: [null],
         teacherAsignedId: [null, Validators.required],
         tel: [null, Validators.required],
         email: [null, Validators.compose([Validators.required, Validators.email])],
         emailTutor: [null],
         age: [null, Validators.required],
-        interests: [null, Validators.required]
+        interests: [null, Validators.required],
+        schedules: [null, Validators.required]
       });
     }else{
       this.studentForm = this.formBuilder.group({
         name: [null, Validators.required],
-        jlptLevel: [null, Validators.required],
+        jlptLevel: [null, Validators.compose([Validators.required, Validators.max(5), Validators.min(1)])],
         priorKnowledge: [null],
         tel: [null, Validators.required],
         email: [null, Validators.compose([Validators.required, Validators.email])],
         emailTutor: [null],
         age: [null, Validators.required],
-        interests: [null, Validators.required]
+        interests: [null, Validators.required],
+        schedules: [null, Validators.required]
       });
     }
   }
 
   checkInvalid(fieldName: string) {
     return (this.studentForm.get(fieldName).invalid && this.studentForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
+  }
+
+  checkInvalidSched(fieldName: string) {
+    return (this.scheduleForm.get(fieldName).invalid && this.scheduleForm.get(fieldName).touched) ? 'ng-invalid ng-dirty' : ''
   }
 
   getAllTeachers() {

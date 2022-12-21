@@ -1,0 +1,64 @@
+.c {
+    position: relative;
+    background-color: white; 
+    width: 85px;
+    border-radius: 10px;
+    overflow: hidden;
+    
+    .c-t {
+        display: inherit;
+        position: absolute;
+        top: 12px;
+        right: 27px;
+        .icons {
+            transition: 0.5s;
+            font-size: 25px;
+            color: #ff000000;
+            // background-color: white;
+        }
+    }
+
+    .c-header {
+        background-color: #7d7ab1; 
+        width: 100%;
+        transition: 0.5s;
+        .c-text {
+            color: white;
+            font-weight: bold;
+        }
+    }
+    
+    .c-footer {
+        background-color: #7d7ab1;
+        width: 100%;
+        transition: 0.5s;
+        .c-text {
+            color: white;
+            font-weight: bold;
+        }
+    }
+    
+
+}
+
+.c:hover {
+    .c-t {
+        .icons {
+            color: #ff0000;
+        }
+    }
+
+    .c-header {
+        background-color: black;
+        .c-text {
+            color: black;
+        }
+    }
+
+    .c-footer {
+        background-color: black;
+        .c-text {
+            color: black;
+        }
+    }
+}

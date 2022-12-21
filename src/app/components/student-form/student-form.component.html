@@ -1,110 +1,178 @@
-<!-- <div>
-  asd
-</div> -->
-<div class="card">
-  <div class="card-header">
-    <h3 class="text-center">
-      {{ (!studentId) ? "Formulario de nuevo estudiante" : "Modificación de estudiante" }}
-    </h3>
-  </div>
-  <div class="card-body">
-    <div class="p-fluid grid" [formGroup]="studentForm">
-      <div class="field col-12 md:col-3">
-        <span class="p-float-label">
-          <input type="text" id="inputtext" data-testid="student_name" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
-          <label for="inputtext">Nombre completo <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-3">
-        <span class="p-float-label">
-          <input type="text" id="inputtext" data-testid="student_email" [ngClass]="[checkInvalid('email')]" pInputText formControlName="email"> 
-          <label for="inputtext">Correo electrónico <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-3">
-        <span class="p-float-label">
-          <p-inputNumber id="inputnumber" data-testid="student_age" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
-          <label for="inputtext">Edad <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-3">
-        <span class="p-float-label">
-          <input type="text" id="inputtext" data-testid="student_emailTutor" pInputText formControlName="emailTutor"> 
-          <label for="inputtext">Correo electrónico del tutor </label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-          <p-inputNumber id="inputnumber" data-testid="student_tel" [ngClass]="[checkInvalid('tel')]" [useGrouping]="false" formControlName="tel"></p-inputNumber> 
-          <label for="inputtext">Teléfono <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-          <p-inputNumber id="inputnumber" data-testid="student_jlptLevel" [ngClass]="[checkInvalid('jlptLevel')]" [useGrouping]="false" formControlName="jlptLevel"></p-inputNumber> 
-          <label for="inputtext">Nivel de japonés <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div *ngIf="!isAdmin" class="field col-12 md:col-4">
-        <span class="p-float-label">
-          <input type="text" id="inputtext" data-testid="teacher_name" [value]="actualTeacherName" pInputText disabled> 
-          <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div *ngIf="isAdmin" class="fielñd col-12 md:col-4">
-        <span class="p-float-label">
-          <p-dropdown
-            styleClass="p-dropdown"
-            [ngClass]="[checkInvalid('teacherAsignedId')]"
-            [options]="teachersAvailables" 
-            formControlName="teacherAsignedId"
-            optionLabel="name"
-            optionValue="id"
-            [autoDisplayFirst]="false"
-          >
-          </p-dropdown>
-          <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-12">
-        <span class="p-float-label">
-          <p-multiSelect
-            data-testid="student_interests"
-            inputId="interests"
-            formControlName = "interests"
-            [ngClass]="[checkInvalid('interests')]"
-            [options]="interestsList"
-            optionLabel="name"
-            display="chip"
-          >
-          </p-multiSelect>
-          <label for="inputtext">Intereses <span class="mandatory">(*)</span></label>
-        </span>
-      </div>
-      <div class="field col-12 md:col-12">
-        <span class="p-float-label">
-          <textarea inputId="textarea" rows="3" cols="30" data-testid="student_priorKnowledge" formControlName="priorKnowledge" pInputTextarea></textarea>
-          <label for="inputtext">Conocimientos previos</label>
-        </span>
-      </div>
-      <div class="col-12 md:col-12">
-        <label class="mandatory">(*) Campos obligatorios.</label>
-      </div>
-      <div class="field col-12 md:col-12">
-        <div class="w-100">
-          <app-button
-            data-testid="saveOrUpdateButton"
-            [text]="(studentId) ? 'Modificar' : 'Agregar'"
-            [isLoading]="isLoading"
-            [isDisabled]="isLoading || !studentForm.valid"
-            (onClick)="saveOrUpdate()"  
-          >
-          </app-button>
+<div class="w-100 d-flex justify-content-between gap-3">
+  <div class="card w-75">
+    <div class="card-header">
+      <h3 class="text-center">
+        Datos de alumno
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="p-fluid grid" [formGroup]="studentForm">
+        <div class="field col-12 md:col-6">
+          <span class="p-float-label">
+            <input type="text" id="inputtext" data-testid="student_name" [ngClass]="[checkInvalid('name')]" pInputText formControlName="name"> 
+            <label for="inputtext">Nombre completo <span class="mandatory">(*)</span></label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-3">
+          <span class="p-float-label">
+            <p-inputNumber id="inputnumber" data-testid="student_age" [ngClass]="[checkInvalid('age')]" [useGrouping]="false" formControlName="age"></p-inputNumber> 
+            <label for="inputtext">Edad <span class="mandatory">(*)</span></label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-3">
+          <span class="p-float-label">
+            <p-inputNumber id="inputnumber" data-testid="student_jlptLevel" [ngClass]="[checkInvalid('jlptLevel')]" [useGrouping]="false" formControlName="jlptLevel"></p-inputNumber> 
+            <label for="inputtext">Nivel de japonés <span class="mandatory">(*)</span></label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-12">
+          <span class="p-float-label">
+            <p-multiSelect
+              data-testid="student_interests"
+              inputId="interests"
+              formControlName = "interests"
+              [ngClass]="[checkInvalid('interests')]"
+              [options]="interestsList"
+              optionLabel="name"
+              display="chip"
+            >
+            </p-multiSelect>
+            <label for="inputtext">Intereses <span class="mandatory">(*)</span></label>
+          </span>
+        </div>
+        <div class="col-12 md:col-12">
+          <span class="p-float-label">
+            <textarea inputId="textarea" rows="3" cols="30" data-testid="student_priorKnowledge" formControlName="priorKnowledge" pInputTextarea></textarea>
+            <label for="inputtext">Conocimientos previos</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-12">
+          <div class="d-flex align-items-center gap-2">
+            <app-schedule-card *ngFor="let sched of schedules" [schedule]="sched" (onDelete)="deleteSched($event)"></app-schedule-card>
+            <i class="fas fa-plus-circle icons" [pTooltip]="'Agregar horario'" [tooltipPosition]="'top'" (click)="openSchedule()"></i>
+          </div>
+        </div>
+        <div class="col-12 md:col-12">
+          <label class="mandatory">(*) Campos obligatorios.</label>
+        </div>
+        <div class="col-12 md:col-12">
+          <div class="w-100">
+            <app-button
+              data-testid="saveOrUpdateButton"
+              [text]="(studentId) ? 'Modificar' : 'Agregar'"
+              [isLoading]="isLoading"
+              [isDisabled]="isLoading || !studentForm.valid"
+              (onClick)="saveOrUpdate()"  
+            >
+            </app-button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="w-25 d-flex flex-column justify-content-between">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="text-center">
+          Datos de contacto
+        </h3>
+      </div>
+      <div class="card-body">
+        <div class="p-fluid grid" [formGroup]="studentForm">
+          <div class="field col-12 md:col-12">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" data-testid="student_email" [ngClass]="[checkInvalid('email')]" pInputText formControlName="email"> 
+              <label for="inputtext">Correo electrónico <span class="mandatory">(*)</span></label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-12">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" data-testid="student_emailTutor" pInputText formControlName="emailTutor"> 
+              <label for="inputtext">Correo electrónico del tutor </label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-12">
+            <span class="p-float-label">
+              <p-inputNumber id="inputnumber" data-testid="student_tel" [ngClass]="[checkInvalid('tel')]" [useGrouping]="false" formControlName="tel"></p-inputNumber> 
+              <label for="inputtext">Teléfono <span class="mandatory">(*)</span></label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-header">
+        <h3 class="text-center">
+          Datos de profesor
+        </h3>
+      </div>
+      <div class="card-body">
+        <div class="p-fluid grid" [formGroup]="studentForm">
+          <div *ngIf="!isAdmin" class="field col-12 md:col-12">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" data-testid="teacher_name" [value]="actualTeacherName" pInputText disabled> 
+              <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
+            </span>
+          </div>
+          <div *ngIf="isAdmin" class="field col-12 md:col-12">
+            <span class="p-float-label">
+              <p-dropdown
+                styleClass="p-dropdown"
+                [ngClass]="[checkInvalid('teacherAsignedId')]"
+                [options]="teachersAvailables" 
+                formControlName="teacherAsignedId"
+                optionLabel="name"
+                optionValue="id"
+                [autoDisplayFirst]="false"
+              >
+              </p-dropdown>
+              <label for="inputtext">Profesor a asignar <span class="mandatory">(*)</span></label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
 </div>
+
+<app-modal 
+  [title]="'Agregar horario'" 
+  [isVisible]="isVisibleSchedule" 
+  [isLoading]="isLoadingSchedule" 
+  [minWidth]="{ width: '46vw' }" 
+  [isModal]="true" 
+  (onCancel)="hideSchedule()"
+  (onAccept)="createSchedule()"
+>
+  <div body>
+    <div class="p-fluid grid mt-3 mb-5" [formGroup]="scheduleForm">
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <p-calendar [ngClass]="[checkInvalidSched('time')]" [timeOnly]="true" inputId="timeonly" appendTo="body" formControlName="time"></p-calendar>
+          <label for="timeonly">Horario <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <p-dropdown
+            [ngClass]="[checkInvalidSched('day')]"
+            styleClass="p-dropdown"
+            [options]="daysAvailables" 
+            optionLabel="name"
+            optionValue="id"
+            appendTo="body"
+            formControlName="day"
+            [autoDisplayFirst]="false"
+          >
+          </p-dropdown>
+          <label for="inputtext">Dia de semana <span class="mandatory">(*)</span></label>
+        </span>
+      </div>
+    </div>
+  </div>
+</app-modal>
 
 
 
