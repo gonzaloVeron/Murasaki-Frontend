@@ -47,7 +47,7 @@ export class ApiRestBase {
       httpOptions = {
         headers: new HttpHeaders({
           "Content-Type": contentType,
-          // "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "*",
           Authorization: JSON.parse(localStorage.getItem("token")!),
         }),
       };
@@ -55,7 +55,7 @@ export class ApiRestBase {
       httpOptions = {
         headers: new HttpHeaders({
           "Content-Type": contentType,
-          // "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "*",
         }),
       };
     }

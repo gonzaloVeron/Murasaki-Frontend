@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  basePath: "http://localhost:8080/api/v1"
+  basePath: "https://murasaki.herokuapp.com/api/v1"
 };
